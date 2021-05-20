@@ -1,0 +1,269 @@
+{{ define "header" }}
+{{ end }}
+
+{{ define "content" }}
+
+<div class="grid grid-cols-12 gap-4">
+  <div class="col-span-12 md:col-span-4">
+    <!-- component -->
+
+    <div class="container mx-auto max-w-xs rounded-lg shadow-lg my-2 bg-white">
+      <div class="relative mb-6">
+        <img class="w-full rounded-t-lg" src="{{ $.profile.AvatarURL }}"
+             alt="Profile picture" />
+        <div class="text-center absolute w-full" style="bottom: -30px">
+          <div class="mb-10">
+            <p class="text-white tracking-wide uppercase text-lg font-bold">{{ $.profile.Name }}</p>
+            <!--          <p class="text-gray-400 text-sm">@witch_forever</p>-->
+          </div>
+          {{ if $.ownPage }}
+
+          {{ template "tooltip" args "element" `<a href="/user/rate-book" title="Rate a new book" class="inline-block p-4 rounded-full transition ease-in duration-200 focus:outline-none bg-mbrdarkbrown hover:bg-mbrblue transition ease-in duration-200">
+          <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6">
+            <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                        C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                        C15.952,9,16,9.447,16,10z" />
+          </svg>
+          </a>` "text" "Rate a new book" }}
+
+
+          {{ end }}
+        </div>
+      </div>
+      <div class="py-10 px-6 text-center tracking-wide grid grid-cols-3 gap-6">
+        <div class="posts">
+          <p class="text-lg">{{ $.ratingsCount }}</p>
+          <p class="text-mbrbrown text-sm">Books rated</p>
+        </div>
+        <div class="followers">
+          <p class="text-lg">{{ $.avRate }}</p>
+           {{ template "tooltip" args "element" `<p class="text-mbrbrown text-sm">Average rating</p>` "text" "An average rating across all rated books by this user" }}
+        </div>
+        <div class="following">
+          <p class="text-lg">{{ .positiveRatingsCount }} / {{ .negativeRatingsCount }}</p>
+          {{ template "tooltip" args "element" `<p class="text-mbrbrown text-sm">Positive vs Negative</p>` "text" "Amount of liked and disliked books." }}
+
+        </div>
+      </div>
+    </div>
+    {{ if (gt (len $.topRatings) 0) }}
+      <div class="container mx-auto max-w-xs rounded-lg overflow-hidden my-2">
+      <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">My top 10 books</h2>
+      <ul>
+        {{ range $.topRatings }}
+        <li class="mb-4">
+          <a href="{{ call $.reverse "bookProfile" .Book.ID }}">
+            <div class="rounded-xl overflow-hidden flex shadow hover:shadow-md max-w-sm bg-white cursor-pointer h-28">
+            <div class="w-7/12 pl-3 p-3 text-text1 flex flex-col justify-center">
+              <p class="text-base mb-2 font-bold truncate">{{ .Book.Title }}</p>
+              <div class="text-xs text-primary mb-2">
+                <div class="flex items-center">
+                  <span class="font-bold tracking-wide text-sm text-mbrbrown">
+                    {{ range $k, $author := .Book.Authors }}
+                       {{ if gt $k 0 }}
+                       , {{ $author.Name }}
+                       {{ else }}
+                         {{ $author.Name }}
+                       {{ end }}
+                     {{ end }}
+                  </span>
+                </div>
+              </div>
+<!--              <div class="text-sm text-text2 tracking-wider mt-10"></div>-->
+            </div>
+            <div class="lg:flex flex w-5/12 p-2">
+              <img src="{{ .Book.Thumbnail }}" title="{{ .Book.Title }}" alt="{{ .Book.Title }}" class="rounded-xl object-cover w-full h-full"/>
+            </div>
+          </div>
+          </a>
+        </li>
+        {{ end }}
+
+      </ul>
+    </div>
+    {{ end }}
+
+  </div>
+  <div class="col-span-12 md:col-span-8">
+    <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Latest ratings</h2>
+
+    <div class="min-h-screen">
+      <div class="max-w-md md:max-w-2xl px-2">
+        {{ if (eq (len $.ratings) 0) }}
+          <div class="text-gray-800">
+            🥺 You did not rate any books yet. You can easily do it <a class="text-mbrdarkbrown" href="{{ call $.reverse "rateBook" }}">here!</a>
+          </div>
+        {{ end }}
+        {{ if (gt (len $.ratings) 0) }}
+        <div class="pagecontainer">
+        {{ range $.ratings }}
+          <div x-data="{ descopen: false, copied: false }" class="relative item" id="book-rate-{{.Book.ID}}">
+            <p class="hidden" id="br-{{.Book.ID}}">https://mybooksrating.com/reader/{{$.profile.ID}}?page={{$.page}}#book-rate-{{.Book.ID}}</p>
+
+            <div class="bg-white shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative" :class="{'rounded-b-xl': !descopen}" >
+              {{ if eq .Book.Image "" }}
+                <a href="{{ call $.reverse "bookProfile" .Book.ID }}" class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url({{ .Book.Thumbnail }})">
+              {{ else }}
+                <a href="{{ call $.reverse "bookProfile" .Book.ID }}" class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url({{ .Book.Image }})">
+              {{ end }}
+                </a>
+
+               <div class="w-full">
+                 <button @click="copied = (copied) ? false : true" onclick="copyToClipboard('br-{{.Book.ID}}')" class="float-right tooltip mr-2 mt-2 text-gray-500 hover:text-gray-700">
+                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                   </svg>
+                   <span class="tooltiptext tleft" x-show="!copied">Copy the review link to the clipboard</span>
+                   <span class="tooltiptext tleft" x-show="copied">Copied!</span>
+                 </button>
+                 <div class="p-4 md:p-5">
+
+                   <p class="font-bold text-xl md:text-xl leading-6"><a href="{{ call $.reverse "bookProfile" .Book.ID }}"> {{ .Book.Title }} </a> </p>
+
+
+                   <p class="font-semibold text-xl md:text-xl"> {{ .Book.Subtitle }}</p>
+                   <p class="text-base text-mbrbrown">
+                     {{ range $k, $author := .Book.Authors }}
+                       {{ if gt $k 0 }}
+                       , {{ $author.Name }}
+                       {{ else }}
+                         {{ $author.Name }}
+                       {{ end }}
+                     {{ end }}
+                   </p>
+
+<!--                   <p class="text-gray-700 md:text-lg">{{ .Comment }}</p>-->
+                 </div>
+
+                 <div class="p-4 md:p-5 bg-gray-100">
+                   {{ template "rating" .Rate }}
+                   <div class="sm:flex sm:justify-between sm:items-center">
+
+                     <div>
+
+                       <div class="text-sm text-gray-700"><span class="text-gray-900 font-bold">{{ .CreatedAt | date "02" }} </span> {{ .CreatedAt | date "January 2006" }}</div>
+
+                       <div class="flex items-center">
+                         <div class="text-gray-600 ml-2 text-sm md:text-base mt-1"> </div>
+
+                       </div>
+                     </div>
+
+                     {{ if $.ownPage }}
+                       <a href="{{ call $.reverse "rateBook" }}?book={{ .Book.ID }}" class="mt-3 sm:mt-0 py-2 px-5 md:py-3 md:px-6 bg-mbrdarkbrown hover:bg-mbrblue font-bold text-white md:text-lg rounded-lg shadow-md">Edit</a>
+                     {{ end }}
+                   </div>
+
+                   <div class="mt-3 text-mbrbrown text-lg font-semibold">{{ .Comment }}</div>
+                   <div class="cursor-pointer mt-5 text-center text-mbrblue hover:text-mbrbrown"  @click="descopen = (descopen) ? false : true">
+                     <div x-show="!descopen" class="inline-block">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
+                       </svg>
+                     </div>
+                     <div x-show="descopen" class="inline-block">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+                       </svg>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+            <div class="bg-gray-100 shadow-xl rounded-b-xl w-full -mt-8 mb-5 p-5 text-base inline-block" x-show="descopen"
+                 x-show="animate"
+                 @click.away="animate = false"
+                 x-transition:enter="transition-transform transition-opacity ease-out duration-500"
+                 x-transition:enter-start="opacity-0 transform -translate-y-48"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-500"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-48"
+            >
+              {{ if gt (len .Book.Description) 0 }}
+                {{ .Book.Description }}
+              {{ else }}
+                Unfortunately, we don't have a description for this book
+              {{ end }}
+            </div>
+
+          </div>
+
+        {{ end }}
+        </div>
+        {{ end }}
+        {{ if (gt (len $.ratings) 0) }}
+          <div class="inline-block w-full text-center">
+            <div class="lds-ellipsis inline-block justify-items-center"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <div class="pagination">
+
+            {{ if gt $.nextPage 0 }}
+              <a href="?page={{ $.nextPage}}" class="next">Next</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </div>
+
+
+
+    <!-- component -->
+
+  </div>
+</div>
+
+
+
+
+<style>
+  .content-div{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+  }
+
+  .image-cover  {
+    height:260px;
+  }
+  /*
+  -remove the classes below if you have the 'group-hover'property added in your tailwind config file
+  -also remove the class from the html template
+  */
+  .content-div:hover .fd-cl{
+    opacity: 0.25;
+  }
+  .content-div:hover .fd-sh{
+    opacity: 1;
+  }
+
+
+</style>
+
+
+{{ end }}
+
+
+{{ define "additional_head" }}
+<script src="/libs/scroll/scroll.js"></script>
+<script async src="/js/pagination.js"></script>
+<meta name="description" content="Check what books {{ $.profile.Name }} likes and dislikes. Be inspired about next your books to read."/>
+
+<meta property="og:title" content="{{ $.profile.Name }}">
+<meta property="og:site_name" content="MyBooksRating">
+<meta property="og:type" content="profile">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://mybooksratings.com/reader/{{$.profile.ID}}">
+<meta property="og:url" content="https://mybooksratings.com/reader/{{$.profile.ID}}">
+<meta property="og:image" content="https://mybooksratings.com/{{ $.profile.AvatarURL }}">
+<meta property="og:image:secure_url" content="https://mybooksratings.com/{{ $.profile.AvatarURL }}">
+<meta property="og:image:width" content="50">
+<meta property="og:image:height" content="50">
+<meta property="og:image:type" content="image/png">
+<meta property="profile:username" content="{{ $.profile.Name }}">
+{{ end }}
+
+{{ define "title" }}
+ {{ $.profile.Name }}
+{{ end }}

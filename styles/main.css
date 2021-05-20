@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #825758;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 20px 0;
+    width: 100%;
+    background-color: transparent;
+
+
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 15px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: rgb(255,157,157);
+    background: -moz-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: -webkit-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff9d9d",endColorstr="#83cbfa",GradientType=1);
+    border-radius: 25px;
+}
+input[type=range]::-webkit-slider-thumb {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0, 1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -9px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: rgb(255,157,157);
+    background: -moz-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: -webkit-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff9d9d",endColorstr="#83cbfa",GradientType=1);
+}
+
+
+
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 15px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: rgb(255,157,157);
+    background: -moz-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: -webkit-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff9d9d",endColorstr="#83cbfa",GradientType=1);
+    border-radius: 25px;
+}
+
+input[type=range]::-moz-range-thumb {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0, 1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -9px;
+}
+
+input[type=range]:focus::-moz-range-track {
+    background: rgb(255,157,157);
+    background: -moz-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: -webkit-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff9d9d",endColorstr="#83cbfa",GradientType=1);
+}
+
+
+
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 15px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: rgb(255,157,157);
+    background: -moz-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: -webkit-linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    background: linear-gradient(90deg, rgba(255,157,157,1) 0%, rgba(255,192,120,1) 47%, rgba(131,203,250,1) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff9d9d",endColorstr="#83cbfa",GradientType=1);
+    border-radius: 25px;
+}
+
+input[type=range]::-ms-thumb {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0, 1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -9px;
+}
+
+
+.tooltip {
+    position: relative;
+    z-index: 999;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #ed8936;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 4px;
+    font-size: small;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .tooltiptext.tbottom {
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext.tleft {
+    top: -5px;
+    right: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+@layer utilities {
+    @variants responsive {
+        .text-shadow {
+            text-shadow: 1px 1px 1px gray;
+        }
+        .text-shadow-md {
+            text-shadow: 4px 4px 8px black;
+        }
+        .text-shadow-lg {
+            text-shadow: 15px 15px 30px black;
+        }
+        .text-shadow-none {
+            text-shadow: none;
+        }
+    }
+}

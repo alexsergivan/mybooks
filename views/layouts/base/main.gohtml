@@ -1,0 +1,41 @@
+{{ define "main" }}
+   <!DOCTYPE html>
+   <html lang="en">
+
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="ie=edge">
+       <title>{{ template "title" . }} | MyBooksRating </title>
+       <meta name=”robots” content="index, follow">
+       <link rel="preconnect" href="https://fonts.gstatic.com">
+       <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+       <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+       <link rel="stylesheet" href="/build/main.css">
+       <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+       <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+       <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+       <link rel="manifest" href="/images/favicon/site.webmanifest">
+       {{ template "additional_head" . }}
+   </head>
+   {{ template "menu" . }}
+   <body class="flex flex-col h-full bg-opacity-75 bg-gradient-to-r from-mbrblue via-mbrrosa to-mbrblue">
+     {{ template "header" . }}
+     <div class="w-full">
+         <div class="container w-full mx-auto">
+
+         </div>
+     </div>
+     <main class="container w-full mx-auto">
+         <div class="w-full px-4 md:px-0 md:mt-8 pb-10 text-gray-800 leading-normal">
+             {{ template "messages" . }}
+             {{ template "content" . }}
+         </div>
+
+     </main>
+     {{ template "footer" . }}
+   </body>
+
+   </html>
+
+{{ end }}

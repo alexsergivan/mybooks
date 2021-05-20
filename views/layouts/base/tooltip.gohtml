@@ -1,0 +1,21 @@
+{{ define "tooltip" }}
+<div x-data="{ tooltip: false }" class="inline-flex">
+    <div x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" class="cursor-pointer">
+        {{ if $.element }}
+          {{ $.element | safeHTML }}
+        {{ else }}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 float-right" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+        </svg>
+        {{ end }}
+    </div>
+    <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
+        <div class="absolute top-0 z-50 w-32 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-orange-500 rounded-lg shadow-lg">
+            {{ $.text }}
+        </div>
+        <svg class="absolute z-50 w-6 h-6 text-orange-500 transform -translate-x-12 -translate-y-3 fill-current stroke-current" width="8" height="8">
+            <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+        </svg>
+    </div>
+</div>
+{{ end }}
