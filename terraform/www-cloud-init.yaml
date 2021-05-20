@@ -7,6 +7,7 @@ package_reboot_if_required: true
 packages:
   - curl
   - docker-compose
+  - git-all
 
 write_files:
   - content: |
@@ -49,14 +50,13 @@ write_files:
 
         mybooks:
           build:
-            context: .
-            dockerfile: /opt/scripts/Dockerfile
+            context: https://github.com/alexsergivan/mybooks.git
           volumes:
             - /mnt/${digitalocean_volume_name}/www_data:/app
           restart: always
           environment:
             DATABASE_HOST: db-mysql
-            DATABASE_PORT: 3301
+            DATABASE_PORT: 3306
             DATABASE_USER: ${mysql_user}
             DATABASE_PASS: ${mysql_password}
             DATABASE_NAME: mybooks
@@ -233,10 +233,11 @@ write_files:
       RUN apk add --no-cache --update \
                 git \
                 ca-certificates
-      ADD . /app
-      ADD public /app/public
+      ADD /app /app
+      ADD /app/public /app/public
       WORKDIR /app
-      COPY go.mod go.sum ./
+      COPY /app/go.mod ./
+      COPY /app/go.sum ./
       RUN  go mod download
       RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o /main .
 
