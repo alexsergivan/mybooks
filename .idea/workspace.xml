@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cf8199c-1fb4-4811-a9b6-3fc7cbbd753f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/.terraform.tfstate.lock.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx-proxy-compose.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
