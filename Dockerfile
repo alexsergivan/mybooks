@@ -23,8 +23,8 @@ COPY --from=builder /app/public /app/public
 COPY --from=builder /app/public/build /app/public/build
 COPY --from=builder /app/public/js /app/public/js
 COPY --from=builder /app/public/libs /app/public/libs
-COPY --from=builder /app/public/autocomplete /app/public/autocomplete
-COPY --from=builder /app/public/scroll /app/public/scroll
+COPY --from=builder /app/public/libs/autocomplete /app/public/libs/autocomplete
+COPY --from=builder /app/public/libs/scroll /app/public/libs/scroll
 
 COPY --from=builder /app/main /app/main
 
