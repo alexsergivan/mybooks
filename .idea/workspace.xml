@@ -4,8 +4,7 @@
     <list default="true" id="4cf8199c-1fb4-4811-a9b6-3fc7cbbd753f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx-proxy-compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/infra.out" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/infra.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" afterDir="false" />
