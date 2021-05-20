@@ -1,0 +1,5 @@
+{{ define "bookteaser" }}
+  <a href="/book/{{ .Book.ID }}">
+    <img src="{{ .Book.Thumbnail }}" title="{{ .Book.Title }}" alt="{{ .Book.Title }}" class="rounded-xl object-cover w-full h-full shadow-lg hover:shadow-none"/>
+  </a>
+{{ end }}
