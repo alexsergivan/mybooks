@@ -258,5 +258,5 @@ runcmd:
   - mkdir -p /mnt/${digitalocean_volume_name}/certificates_data
   - mkdir -p /mnt/${digitalocean_volume_name}/logs_data
   - cd /opt/scripts
-  - docker-compose up -d
+  - docker-compose up --build -d
   - (crontab -l ; echo "0 17 * * * bash /opt/scripts/certbot-renew.sh") | crontab -
