@@ -1,6 +1,7 @@
 package userbook
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
 
@@ -77,12 +78,15 @@ func GetUserBookRatingsCount(id int64, db *gorm.DB) int64 {
 }
 
 func GetAverageRatingByUser(id int64, db *gorm.DB) float64 {
-	var avRate float64
+	var avRate sql.NullFloat64
 	result := db.Table("book_ratings").Select("AVG(rate) as rate").Where("user_id = ?", id).Find(&avRate)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}
-	return avRate
+	if !avRate.Valid {
+		return 0
+	}
+	return avRate.Float64
 }
 
 func GePositiveBookRatingsFromUserCount(id int64, db *gorm.DB) int64 {
