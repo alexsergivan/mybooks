@@ -22639,6 +22639,44 @@ input[type=range]::-ms-thumb {
   visibility: visible;
 }
 
+body .cc_dialog.simple {
+  max-width: 100%;
+  background-color: rgba(130, 87, 88, var(--bg-opacity));
+}
+
+body .light.cc_dialog .cc_dialog_headline {
+  color: white;
+}
+
+body .light.cc_dialog .cc_dialog_text {
+  color: white;
+}
+
+body .light.cc_dialog button.cc_b_ok {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #83cbfa;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  border: 2px solid white;
+}
+
+body .light.cc_dialog button.cc_b_cp {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid white;
+}
+
+body  .light.cookie-consent-preferences-overlay .cookie-consent-preferences-dialog .cc_cp_container .cc_cp_footer .cc_cp_f_save button {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #83cbfa;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  border: 2px solid white;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
