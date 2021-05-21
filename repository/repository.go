@@ -54,6 +54,8 @@ func (r *MySQLRepository) Connect() (*gorm.DB, error) {
 		if pingErr == nil {
 			log.Println("Connected to the DB!")
 			break
+		} else {
+			log.Println("Waiting for DB...")
 		}
 		time.Sleep(30 * time.Second)
 
