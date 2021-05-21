@@ -162,7 +162,7 @@
 
 {{ define "additional_head" }}
 <script src="/libs/scroll/scroll.js"></script>
-<script async src="/js/pagination.js"></script>
+<script defer src="/js/pagination.js"></script>
 <meta name="description" content="{{ $.book.Title }} {{ $.book.Subtitle }}: check the rating and read reviews about the book."/>
 {{ $img := $.book.Thumbnail }}
 {{ if not (eq $.book.Image "") }}
