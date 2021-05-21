@@ -1,3 +1,5 @@
 node_modules
 terraform/terraform.tfvars
 .env
+
+public/images

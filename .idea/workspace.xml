@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cf8199c-1fb4-4811-a9b6-3fc7cbbd753f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resolvers/policy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/components/pages/privacy.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userbook/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/userbook/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/cloudflare.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/cloudflare.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/components/book/rate/rate.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/book/rate/rate.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/components/user/profile/profile.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/user/profile/profile.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/base/footer.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/base/footer.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/base/main.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/base/main.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/base/menu.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/base/menu.gohtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +57,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">

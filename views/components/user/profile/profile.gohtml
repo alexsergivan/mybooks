@@ -91,7 +91,10 @@
       <div class="max-w-md md:max-w-2xl px-2">
         {{ if (eq (len $.ratings) 0) }}
           <div class="text-gray-800">
-            🥺 You did not rate any books yet. You can easily do it <a class="text-mbrdarkbrown" href="{{ call $.reverse "rateBook" }}">here!</a>
+            <div class="max-w-2xl shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg inline-block">
+              🥺 You did not rate any books yet. You can easily do it <a class="text-mbrdarkbrown" href="{{ call $.reverse "rateBook" }}">here!</a>
+            </div>
+
           </div>
         {{ end }}
         {{ if (gt (len $.ratings) 0) }}
