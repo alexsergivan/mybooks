@@ -3,6 +3,7 @@ package repository
 import (
 	"log"
 	"sync"
+	"time"
 
 	"github.com/alexsergivan/mybooks/config"
 	"github.com/alexsergivan/mybooks/userbook"
@@ -41,7 +42,22 @@ func NewMySQLRepository(host, port, dbName, user, pass string) *MySQLRepository 
 func (r *MySQLRepository) Connect() (*gorm.DB, error) {
 	dsn := r.user + ":" + r.pass + "@tcp(" + r.host + ":" + r.port + ")/" + r.dbName + "?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
-	r.db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	for {
+		r.db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		if err != nil {
+			log.Println(err.Error())
+			return nil, err
+		}
+
+		db, _ := r.db.DB()
+		pingErr := db.Ping()
+		if pingErr == nil {
+			log.Println("Connected to the DB!")
+			break
+		}
+		time.Sleep(30 * time.Second)
+
+	}
 	r.migrate()
 	return r.db, err
 }

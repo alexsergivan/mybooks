@@ -34,15 +34,15 @@ resource "cloudflare_zone_settings_override" "mybooks_zone_settings" {
 }
 
 # Add a page rule to the domain
-resource "cloudflare_page_rule" "wwwtononwww" {
+resource "cloudflare_page_rule" "www-to-non-www" {
   zone_id = lookup(data.cloudflare_zones.mybooks_domain_zones.zones[0], "id")
-  target = "www.${lookup(data.cloudflare_zones.mybooks_domain_zones.zones[0], "id")}"
+  target = "www.${var.cloudflare_domain}"
   priority = 1
 
   actions {
     forwarding_url {
+      url = "https://${var.cloudflare_domain}"
       status_code = 302
-      url = "https://${lookup(data.cloudflare_zones.mybooks_domain_zones.zones[0], "id")}"
     }
   }
 }
