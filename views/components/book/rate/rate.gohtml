@@ -95,7 +95,9 @@
 
                                </div>
                                <div class="flex flex-col text-sm text-gray-500" x-data="{ count: 0 }" x-init="count = $refs.countme.value.length">
+
                                   <textarea id="comment" x-ref="countme" x-on:keyup="count = $refs.countme.value.length" name="comment" maxlength="300" class="description focus:outline-none bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200" spellcheck="true" placeholder="Describe shortly your feelings regarding this book">{{ if $.bookRating }} {{ $.bookRating.Comment }} {{ end }}</textarea>
+
                                   <div class="icons flex text-gray-500 m-2">
                                       <div class="count ml-auto text-gray-400 text-xs font-semibold"><span x-html="count"></span>/<span x-html="$refs.countme.maxLength"></span></div>
                                   </div>
