@@ -15,7 +15,7 @@ resource "digitalocean_droplet" "www" {
   image = "ubuntu-20-04-x64"
   name = "mybooks-droplet"
   region = var.digitalocean_droplet_region
-  size = "s-1vcpu-1gb"
+  size = "s-1vcpu-2gb"
   private_networking = true
   ssh_keys = [
     data.digitalocean_ssh_key.terraform.id
