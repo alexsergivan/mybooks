@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbf8a026-cd9d-46e7-bc51-6a37c2969b86" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cache/cache.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/ristretto.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spaces/spaces.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resolvers/home.go" beforeDir="false" afterPath="$PROJECT_DIR$/resolvers/home.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/services.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/services.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/digitalocean.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/digitalocean.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/infra.out" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/provider.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/provider.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/variables.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cache/ristretto.go" beforeDir="false" afterPath="$PROJECT_DIR$/cache/ristretto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/session/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/session/session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/components/about/about.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/about/about.gohtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

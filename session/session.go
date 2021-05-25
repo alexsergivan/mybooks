@@ -10,11 +10,11 @@ import (
 	"github.com/wader/gormstore/v2"
 )
 
-var once sync.Once
+var onceStore sync.Once
 var store *gormstore.Store
 
 func GetStore() *gormstore.Store {
-	once.Do(func() {
+	onceStore.Do(func() {
 		store = gormstore.New(repository.GetDB(), []byte(config.Config("SESSION_SECRET")))
 		// db cleanup every hour
 		// close quit channel to stop cleanup
