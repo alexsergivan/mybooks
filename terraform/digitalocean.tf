@@ -1,10 +1,3 @@
-resource "digitalocean_project" "mybooks" {
-  name        = "mybooks"
-  description = "MyBooksRating"
-  purpose     = "Web Application"
-  environment = "Production"
-  resources = [digitalocean_droplet.www.urn]
-}
 
 data "digitalocean_volume" "block-volume" {
   name   = var.digitalocean_volume_name
@@ -13,7 +6,7 @@ data "digitalocean_volume" "block-volume" {
 
 resource "digitalocean_droplet" "www" {
   image = "ubuntu-20-04-x64"
-  name = "mybooks-droplet"
+  name = "mybooks-www"
   region = var.digitalocean_droplet_region
   size = "s-1vcpu-2gb"
   private_networking = true
@@ -32,7 +25,9 @@ resource "digitalocean_droplet" "www" {
     "digitalocean_volume_name" = var.digitalocean_volume_name,
     "google_client_id" = var.google_client_id,
     "google_client_secret" = var.google_client_secret,
-    "google_api_key" = var.google_api_key
+    "google_api_key" = var.google_api_key,
+    "spaces_key" = var.access_id,
+    "spaces_secret" = var.secret_key
   })
   connection {
     host = self.ipv4_address
@@ -41,41 +36,9 @@ resource "digitalocean_droplet" "www" {
     private_key = file(var.pvt_key)
     timeout = "2m"
   }
-//  provisioner "remote-exec" {
-//    inline = [
-//      "export PATH=$PATH:/usr/bin",
-//      # install nginx
-//      "sudo apt-get update",
-//      "sudo apt-get -y install nginx",
-//      # install mysql
-//      "sudo rm /var/lib/mysql/ -R",
-//      "sudo rm /etc/mysql/ -R",
-//      "sudo apt-get autoremove mysql* --purge",
-//      "wget https://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.56-linux-glibc2.5-x86_64.tar.gz",
-//      "sudo groupadd mysql",
-//      "sudo useradd -g mysql mysql",
-//      "sudo tar -xvf mysql-5.5.56-linux-glibc2.5-x86_64.tar.gz",
-//      "sudo mv mysql-5.5.56-linux-glibc2.5-x86_64 /usr/local/",
-//      "cd /usr/local",
-//      "sudo mv mysql-5.5.56-linux-glibc2.5-x86_64 mysql",
-//      "cd mysql",
-//      "sudo chown -R mysql:mysql *",
-//      "sudo apt-get install libaio1",
-//      "sudo scripts/mysql_install_db --user=mysql",
-//      "sudo chown -R root",
-//      "sudo chown -R mysql data",
-//      "sudo cp support-files/my-medium.cnf /etc/my.cnf",
-//      "sudo bin/mysqld_safe --user=mysql & sudo cp support-files/mysql.server /etc/init.d/mysql.server",
-//      "sudo bin/mysqladmin -u root password 'mybooks2021!'",
-//      "sudo ln -s /usr/local/mysql/bin/mysql /usr/local/bin/mysql",
-//      "sudo /etc/init.d/mysql.server start",
-//      "sudo /etc/init.d/mysql.server status",
-//      "sudo update-rc.d -f mysql.server defaults"
-//
-//    ]
-//  }
-
 }
+
+
 
 resource "digitalocean_volume_attachment" "vol-attachment" {
   droplet_id = digitalocean_droplet.www.id
@@ -129,6 +92,34 @@ data "cloudflare_ip_ranges" "cloudflare" {}
 
 
 data "digitalocean_droplet" "www" {
-  name = "mybooks-droplet"
+  name = "mybooks-www"
   depends_on = [digitalocean_droplet.www]
+}
+
+
+resource "digitalocean_spaces_bucket" "mybooks-static-bucket" {
+  name   = "mybooks-static-bucket"
+  region = "fra1"
+  acl    = "public-read"
+}
+
+# Add a CDN endpoint to the Spaces Bucket
+resource "digitalocean_cdn" "mycdn" {
+  origin = digitalocean_spaces_bucket.mybooks-static-bucket.bucket_domain_name
+}
+
+# Output the endpoint for the CDN resource
+output "fqdn" {
+  value = digitalocean_cdn.mycdn.endpoint
+}
+
+resource "digitalocean_project" "mybooks-prod" {
+  name        = "mybooks-prod"
+  description = "MyBooksRating"
+  purpose     = "Web Application"
+  environment = "Production"
+  resources = [
+    digitalocean_droplet.www.urn,
+    digitalocean_spaces_bucket.mybooks-static-bucket.urn
+  ]
 }

@@ -53,6 +53,7 @@ write_files:
             context: https://github.com/alexsergivan/mybooks.git
           volumes:
             - /mnt/${digitalocean_volume_name}/www_data:/app
+            - /mnt/${digitalocean_volume_name}/images:/app/public/images
           restart: always
           environment:
             DATABASE_HOST: db-mysql
@@ -65,6 +66,9 @@ write_files:
             GOOGLE_CALLBACK_URL: https://${mybooks_dns}/auth/google/callback
             GOOGLE_API_KEY: ${google_api_key}
             SESSION_SECRET: mybookssesssecret
+            SPACES_KEY: ${spaces_key}
+            SPACES_SECRET: ${spaces_secret}
+            BUCKET: mybooks-static-bucket
           depends_on:
             - db-mysql
           networks:

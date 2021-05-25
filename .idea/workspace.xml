@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbf8a026-cd9d-46e7-bc51-6a37c2969b86" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cache/cache.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ristretto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spaces/spaces.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resolvers/home.go" beforeDir="false" afterPath="$PROJECT_DIR$/resolvers/home.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/services.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/services.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/terraform/digitalocean.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/digitalocean.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/infra.out" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/infra.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/infra.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/provider.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/provider.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/terraform.tfstate.backup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/terraform/www-cloud-init.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +29,18 @@
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/terraform/cloudflare.tf" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/repository/repository.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/terraform/variables.tf" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/terraform/provider.tf" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.env" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/terraform/digitalocean.tf" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/docker-compose.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/terraform/.terraform.lock.hcl" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/terraform/terraform.tfvars" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1sr9ozDxtXltnPXpbKXYzWSPs1Q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -35,8 +57,13 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="go.dep" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
@@ -56,6 +83,17 @@
       <package value="github.com/alexsergivan/mybooks" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="mybooks" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <package value="github.com/alexsergivan/mybooks" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>

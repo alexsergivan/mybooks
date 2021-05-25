@@ -25,3 +25,7 @@ variable "cloudflare_api_token" {
 variable "google_client_id" {}
 variable "google_client_secret" {}
 variable "google_api_key" {}
+
+# DO Spaces.
+variable "access_id" {}
+variable "secret_key" {}

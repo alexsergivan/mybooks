@@ -1,10 +1,17 @@
 package services
 
 import (
-	"io"
+	"bytes"
 	"net/http"
-	"os"
 	"strconv"
+
+	"github.com/alexsergivan/mybooks/config"
+
+	"github.com/aws/aws-sdk-go/aws"
+
+	"github.com/aws/aws-sdk-go/service/s3"
+
+	"github.com/alexsergivan/mybooks/spaces"
 
 	"github.com/labstack/echo/v4"
 
@@ -26,22 +33,45 @@ func SaveFile(url, filePath string) (string, error) {
 	}
 	defer response.Body.Close()
 
-	//open a file for writing
-	dir, _ := os.Getwd()
+	////open a file for writing
+	//dir, _ := os.Getwd()
+	//
+	//file, err := os.Create(dir + "/public" + filePath)
+	//if err != nil {
+	//	return "", err
+	//}
+	//defer file.Close()
+	//
+	//// Use io.Copy to just dump the response body to the file. This supports huge files
+	//_, err = io.Copy(file, response.Body)
+	//if err != nil {
+	//	return "", err
+	//}
 
-	file, err := os.Create(dir + "/public" + filePath)
+	buf := bytes.NewBuffer(make([]byte, 0, response.ContentLength))
+	_, readErr := buf.ReadFrom(response.Body)
+	if readErr != nil {
+		return "", readErr
+	}
+	body := buf.Bytes()
+
+	s3spaces := spaces.GetSpacesClient()
+	input := &s3.PutObjectInput{
+		Bucket: aws.String(config.Config("BUCKET")),
+		Key:    aws.String(filePath),
+		ACL:    aws.String("public-read"),
+		Body:   bytes.NewReader(body),
+		//Metadata: map[string]*string{
+		//	"x-amz-meta-my-key": aws.String("your-value"),
+		//},
+	}
+	_, err := s3spaces.PutObject(input)
+
 	if err != nil {
 		return "", err
 	}
-	defer file.Close()
 
-	// Use io.Copy to just dump the response body to the file. This supports huge files
-	_, err = io.Copy(file, response.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return filePath, nil
+	return "https://mybooks-static-bucket.fra1.cdn.digitaloceanspaces.com" + filePath, nil
 }
 
 func Paginate(c echo.Context, pageSize int) func(db *gorm.DB) *gorm.DB {
