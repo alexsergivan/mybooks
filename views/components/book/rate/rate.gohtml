@@ -92,7 +92,7 @@
                                              <span class="text-4xl" x-show="rate <= 100 && rate >= 95">🔥</span>
 
 
-                                             <input id="rate" name="rate" class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-gray-100" :class="{'text-mbrbad': rate < 40, 'text-mbrok': rate >= 40 && rate < 75, 'text-mbrgood': rate >= 75}" spellcheck="false" placeholder="Rate the book" type="number" step="1" min="0" max="100"  x-model="rate">
+                                             <input id="rate" name="rate" class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-gray-100 w-24" :class="{'text-mbrbad': rate < 40, 'text-mbrok': rate >= 40 && rate < 75, 'text-mbrgood': rate >= 75}" spellcheck="false" placeholder="Rate the book" type="number" step="1" min="0" max="100"  x-model="rate">
 
                                        </div>
 
