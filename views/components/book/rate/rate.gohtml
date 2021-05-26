@@ -114,6 +114,7 @@
                    <div class="py-4 content-center">
                        <input class="inline-block tracking-widest uppercase text-center shadow bg-mbrdarkbrown hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer" type="submit" value="Save and publish">
                    </div>
+                    <input type="hidden" name="csrf" value="{{index . "csrf"}}">
                 </form>
             </div>
         </div>

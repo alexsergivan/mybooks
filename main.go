@@ -41,6 +41,10 @@ func main() {
 		Level: 3,
 	}))
 
+	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+		TokenLookup: "form:csrf",
+	}))
+
 	e.Static("/", "./public")
 
 	//assetHandler := http.FileServer(getFileSystem())

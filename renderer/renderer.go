@@ -16,6 +16,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/labstack/echo/v4/middleware"
+
 	"github.com/alexsergivan/mybooks/services"
 
 	"github.com/Masterminds/sprig/v3"
@@ -143,6 +145,7 @@ func (v *View) Render(w io.Writer, componentName string, data interface{}, c ech
 		viewContext["reverse"] = c.Echo().Reverse
 		viewContext["activePath"] = c.Request().URL.Path
 		viewContext["user"] = resolvers.GetCurrentUser(c)
+		viewContext["csrf"] = c.Get(middleware.DefaultCSRFConfig.ContextKey).(string)
 		messageTypes := make(map[string][]string)
 		for _, messageType := range flash.GetMessageTypes() {
 			message, _ := flash.GetFlashMessage(c, messageType)
