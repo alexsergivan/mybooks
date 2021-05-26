@@ -111,3 +111,14 @@ func GetTopUserBookRatings(id int64, db *gorm.DB, topAmount int) []*BookRating {
 	}
 	return ratings
 }
+
+func GetAllUsers(db *gorm.DB) []*User {
+	var u []*User
+
+	result := db.Model(&User{}).Find(&u)
+	if result.Error != nil {
+		log.Println(result.Error)
+	}
+
+	return u
+}

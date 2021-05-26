@@ -137,6 +137,17 @@ func GetBooks(db *gorm.DB) []*Book {
 	return b
 }
 
+func GetBooksLight(db *gorm.DB) []*Book {
+	var b []*Book
+
+	result := db.Model(&Book{}).Order("created_at desc").Find(&b)
+	if result.Error != nil {
+		log.Println(result.Error)
+	}
+
+	return b
+}
+
 func GetBooksWithRating(db *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
 	books := GetBooks(db.Scopes(services.Paginate(c, pageSize)))
 	var br []*BookWithRate

@@ -62,6 +62,7 @@ func main() {
 
 	e.GET("/about", resolvers.AboutPage(db, store)).Name = "about"
 	e.GET("/privacy-policy", resolvers.PrivacyPage(db, store)).Name = "policy"
+	e.GET("/sitemap.xml", resolvers.GetSitemap(db, store))
 
 	booksApiService := book.NewBooksApiService()
 
