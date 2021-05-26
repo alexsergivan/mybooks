@@ -1,10 +1,10 @@
 {{ define "content" }}
-<div class="container text-center p-10">
+<div class="container text-center p-1 md:p-10">
     <!-- component -->
     <!-- This is an example component -->
     <div class="w-full flex flex-col items-center">
-        <div class='max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
-            <div class="py-4 px-8 mt-3">
+        <div class='sm:max-w-xs md:max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
+            <div class="py-2 px-4 md:py-4 md:px-8 mt-3">
                 <form action="{{ call $.reverse `rateBookSubmit` }}" method="post">
                    <div class="flex flex-col mb-8">
                        {{ if not $.bookRating }}
@@ -21,7 +21,7 @@
                        {{ end }}
                    </div>
                    <div class="bg-gray-100 rounded-lg">
-                       <div class="py-4 px-4">
+                       <div class="py-1 px-1 md:py-4 md:px-4">
                            <div class="flex flex-col">
                                {{ if not $.book }}
                                  <h4 class="text-lg font-semibold mb-3">Find and rate a book</h4>
