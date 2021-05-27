@@ -92,7 +92,7 @@ func GetAverageBookRating(id string, db *gorm.DB) float64 {
 
 func GetBestBooks(db *gorm.DB, duration time.Time, limit int) []BookRates {
 	var books []BookRates
-	result := db.Table("book_ratings").Select("AVG(rate) as rate, book_id, COUNT(rate) as count").Where("created_at > ?", duration).Group("book_id").Limit(limit).Find(&books)
+	result := db.Table("book_ratings").Select("AVG(rate) as rate, book_id, COUNT(rate) as count").Where("created_at > ?", duration).Order("rate desc").Group("book_id").Limit(limit).Find(&books)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}
