@@ -26,9 +26,9 @@
 
             <div class="h-full w-full md:w-1/3 pb-5/6 text-center">
                {{ if eq $.book.Image "" }}
-                 <img class="shadow-lg  object-cover rounded-lg inline-block" src="{{ $.book.Thumbnail }}">
+                 <img class="shadow-lg  object-cover rounded-lg inline-block w-full" src="{{ $.book.Thumbnail }}">
                {{ else }}
-                 <img class="shadow-lg  object-cover rounded-lg inline-block" src="{{ $.book.Image }}">
+                 <img class="shadow-lg  object-cover rounded-lg inline-block w-full" src="{{ $.book.Image }}">
                {{ end }}
 
                 <div class="inline-block">
