@@ -106,7 +106,7 @@
   <div class="pagecontainer grid grid-cols-1 md:grid-cols-2 gap-4">
     {{ range $.ratings }}
     <div class="relative item">
-      <div class="bg-white shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative rounded-b-xl">
+      <div class="bg-white shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative rounded-b-xl h-full">
         {{ if eq .Book.Image "" }}
         <a href="{{ call $.reverse "bookProfile" .Book.ID }}" class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url({{ .Book.Thumbnail }})">
         {{ else }}
