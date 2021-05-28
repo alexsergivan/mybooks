@@ -184,7 +184,7 @@
         "description": "{{ $.book.Description }}",
         "sku": "{{ $.book.ID }}",
         "mpn": "{{ $.book.ID }}",
-        "image": "https://mybooksratings.com{{ $img }}",
+        "image": "{{ $img }}",
         "name": "{{ $.book.Title }}",
         "review": [
             {{ range $.ratings }}
@@ -216,7 +216,7 @@
         "@type": "AggregateRating",
         "itemReviewed": {
             "@type": "Book",
-            "image": "https://mybooksratings.com{{ $img }}",
+            "image": "{{ $img }}",
             "name": "{{ $.book.Title }}",
             "author": [
                 {{ range $k, $author := $.book.Authors }}
@@ -255,7 +255,7 @@
             ],
             "bookFormat": "http://schema.org/EBook",
             "datePublished": "{{ $.book.PublishedDate }}",
-            "image": "https://mybooksratings.com{{ $img }}",
+            "image": "{{ $img }}",
             "inLanguage": "English",
             "isbn": "00000000",
             "name": "{{ $.book.Title }}",
@@ -314,8 +314,8 @@
 <meta property="og:url" content="https://mybooksrating.com/book/{{ $.book.ID }}" />
 <meta property="og:site_name" content="MyBooksRating" />
 
-<meta property="og:image" content="https://mybooksratings.com{{ $img }}">
-<meta property="og:image:secure_url" content="https://mybooksratings.com{{ $img }}">
+<meta property="og:image" content="{{ $img }}">
+<meta property="og:image:secure_url" content="{{ $img }}">
 <meta property="og:image:width" content="220" />
 <meta property="og:image:height" content="333" />
 <meta property="og:image:alt" content="{{ $.book.Title }}" />
