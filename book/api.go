@@ -43,7 +43,7 @@ func NewBooksApiService() *BooksApi {
 }
 
 func (api *BooksApi) SearchBooks(q string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(q).OrderBy("newest").MaxResults(30).Do()
+	volumes, err := api.svc.Volumes.List(q).MaxResults(30).Do()
 	if err != nil {
 		log.Println(err)
 	}
