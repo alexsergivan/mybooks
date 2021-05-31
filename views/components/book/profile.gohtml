@@ -186,6 +186,15 @@
         "mpn": "{{ $.book.ID }}",
         "image": "{{ $img }}",
         "name": "{{ $.book.Title }}",
+        "offers": {
+             "@type": "Offer",
+             "url": "https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrating-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}",
+             "priceCurrency": "USD",
+             "price": "9.99",
+             "priceValidUntil": "2030-11-20",
+             "itemCondition": "https://schema.org/NewCondition",
+             "availability": "https://schema.org/InStock"
+        },
         "review": [
             {{ range $.ratings }}
             {
