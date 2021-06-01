@@ -105,3 +105,35 @@ func ConvertRateFrom100To5(rate float64) int {
 
 	return stars
 }
+
+func ConvertRateFrom100ToEmoji(rate float64) string {
+	if rate >= 95 {
+		return "🔥"
+	}
+	if rate < 95 && rate >= 90 {
+		return "💖"
+	}
+	if rate >= 75 && rate < 90 {
+		return "🤩"
+	}
+	if rate > 60 && rate < 75 {
+		return "👌"
+	}
+	if rate >= 40 && rate <= 60 {
+		return "😐"
+	}
+
+	if rate > 20 && rate < 40 {
+		return "👎"
+	}
+
+	if rate > 5 && rate <= 20 {
+		return "🤢"
+	}
+
+	if rate <= 5 {
+		return "💩"
+	}
+
+	return ""
+}

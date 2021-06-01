@@ -315,13 +315,20 @@
     }
 </script>
 
+
+
 <link rel="canonical" href="https://mybooksrating.com/book/{{ $.book.ID }}" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="book" />
-<meta property="og:title" content="{{ $.book.Title }}" />
+<meta property="og:title" content="{{ $.book.Title }}: Rating is {{ toEmoji $.rate }} {{ $.rate }}" />
 <meta property="og:description" content="{{ $.book.Title }} {{ $.book.Subtitle }}: check the rating and read reviews about the book." />
 <meta property="og:url" content="https://mybooksrating.com/book/{{ $.book.ID }}" />
 <meta property="og:site_name" content="MyBooksRating" />
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $.book.Title }}: Rating is {{ toEmoji $.rate }} {{ $.rate }}">
+<meta name="twitter:description" content="{{ $.book.Title }} {{ $.book.Subtitle }}: check the rating and read reviews about the book.">
+<meta name="twitter:image" content="{{ $img }}">
 
 <meta property="og:image" content="{{ $img }}">
 <meta property="og:image:secure_url" content="{{ $img }}">

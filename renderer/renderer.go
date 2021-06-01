@@ -134,6 +134,7 @@ func (v *View) Render(w io.Writer, componentName string, data interface{}, c ech
 		"hasField": HasField,
 		"args":     ArgsFn,
 		"to5Stars": services.ConvertRateFrom100To5,
+		"toEmoji":  services.ConvertRateFrom100ToEmoji,
 		"safeHTML": func(s string) template.HTML {
 			return template.HTML(s)
 		},
