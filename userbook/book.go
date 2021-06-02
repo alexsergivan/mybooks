@@ -101,7 +101,7 @@ func GetBestBooks(db *gorm.DB, duration time.Time, limit int) []BookRates {
 }
 
 func GetBestRatedBooks(db *gorm.DB, duration time.Time) []BookRates {
-	bookRates := GetBestBooks(db, duration, 18)
+	bookRates := GetBestBooks(db, duration, 20)
 	for k, br := range bookRates {
 		b := GetBookByID(br.BookId, db)
 		bookRates[k].Book = &b
