@@ -135,6 +135,14 @@ func (v *View) Render(w io.Writer, componentName string, data interface{}, c ech
 		"args":     ArgsFn,
 		"to5Stars": services.ConvertRateFrom100To5,
 		"toEmoji":  services.ConvertRateFrom100ToEmoji,
+		"Iterate": func(count int) []int {
+			var i int
+			var Items []int
+			for i = 0; i < (count); i++ {
+				Items = append(Items, i)
+			}
+			return Items
+		},
 		"safeHTML": func(s string) template.HTML {
 			return template.HTML(s)
 		},

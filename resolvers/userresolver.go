@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/alexsergivan/mybooks/book"
+
 	"github.com/alexsergivan/mybooks/services"
 
 	"github.com/wader/gormstore/v2"
@@ -62,7 +64,7 @@ func GetUserSession(store sessions.Store, req *http.Request) *sessions.Session {
 	return sess
 }
 
-func ProfilePage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
+func ProfilePage(db *gorm.DB, storage *gormstore.Store, booksApi *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := c.Param("id")
 		if id == "" {
@@ -103,6 +105,8 @@ func ProfilePage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 				"avRate":               int(userbook.GetAverageRatingByUser(int64(nId), db)),
 				"positiveRatingsCount": userbook.GePositiveBookRatingsFromUserCount(int64(nId), db),
 				"negativeRatingsCount": userbook.GeNegativeBookRatingsFromUserCount(int64(nId), db),
+				//TODO: move it to the homepage and add logic when go yo book page, create a new page, if does not exist.
+				//"recommendedBooks": userbook.GetBookRecommendations(nId, db, booksApi),
 			})
 		}
 		return c.Redirect(http.StatusSeeOther, "/")

@@ -3,7 +3,10 @@ package userbook
 import (
 	"html/template"
 	"log"
+	"strings"
 	"time"
+
+	"google.golang.org/api/books/v1"
 
 	"github.com/alexsergivan/mybooks/services"
 	"github.com/labstack/echo/v4"
@@ -179,11 +182,65 @@ func GetBestBooksByUser(db *gorm.DB, userID int, duration time.Time, limit int) 
 }
 
 func GetBestRatedBooksByUser(db *gorm.DB, userID int, duration time.Time) []BookRates {
-	bookRates := GetBestBooksByUser(db, userID, duration, 18)
+	bookRates := GetBestBooksByUser(db, userID, duration, 10)
 	for k, br := range bookRates {
 		b := GetBookByID(br.BookId, db)
 		bookRates[k].Book = &b
 	}
 
 	return bookRates
+}
+
+func ConvertVolumesToBooks(volumes *books.Volumes) []Book {
+	var convertedBooks []Book
+	for _, volumeItem := range volumes.Items {
+		convertedBooks = append(convertedBooks, ConvertVolumeToBook(volumeItem))
+	}
+	return convertedBooks
+}
+
+func ConvertVolumeToBook(volume *books.Volume) Book {
+	var authors []*Author
+	if len(volume.VolumeInfo.Authors) > 0 {
+		for _, author := range volume.VolumeInfo.Authors {
+			authors = append(authors, &Author{
+				Name: author,
+			})
+		}
+	}
+
+	var category string
+	if len(volume.VolumeInfo.Categories) > 0 {
+		// Use 1st category.
+		category = volume.VolumeInfo.Categories[0]
+	} else {
+		category = "No Category"
+	}
+
+	image, thumbnail := "", ""
+	if volume.VolumeInfo.ImageLinks.Large != "" {
+		image = strings.Replace(volume.VolumeInfo.ImageLinks.Large, "http://", "https://", -1)
+	} else {
+		if volume.VolumeInfo.ImageLinks.Medium != "" {
+			image = strings.Replace(volume.VolumeInfo.ImageLinks.Medium, "http://", "https://", -1)
+		}
+	}
+	if volume.VolumeInfo.ImageLinks.Thumbnail != "" {
+		thumbnail = strings.Replace(volume.VolumeInfo.ImageLinks.Thumbnail, "http://", "https://", -1)
+	}
+
+	return Book{
+		ID:            volume.Id,
+		Title:         volume.VolumeInfo.Title,
+		Subtitle:      volume.VolumeInfo.Subtitle,
+		PublishedDate: volume.VolumeInfo.PublishedDate,
+		GoogleID:      volume.Id,
+		Authors:       authors,
+		Category: Category{
+			Name: category,
+		},
+		Description: template.HTML(volume.VolumeInfo.Description),
+		Thumbnail:   thumbnail,
+		Image:       image,
+	}
 }

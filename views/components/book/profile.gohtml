@@ -45,9 +45,12 @@
                         <p class=" text-xs font-semibold text-gray-900">Rate this book</p>
                     </div>
                 </a>
+                    {{ $auth := "" }}
+                    {{ if (gt (len $.book.Authors) 0) }}
+                        {{ $auth = (index $.book.Authors 0).Name }}
+                    {{ end }}
 
-
-                <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrating-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}" alt="Buy {{ $.book.Title }} on Amazon" title="Buy {{ $.book.Title }} on Amazon" class="max-w-lg inline-block bg-mbrrosa border-gray-100 border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
+                <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrating-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }} {{ $auth }}" alt="Buy {{ $.book.Title }} on Amazon" title="Buy {{ $.book.Title }} on Amazon" class="max-w-lg inline-block bg-mbrrosa border-gray-100 border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
                     <div class="logo">
                         <img src="/images/amazon.svg"
                              class="w-6 h-6"
@@ -68,7 +71,9 @@
             <div class="shadow-lg w-full md:w-2/3 px-4 py-4 bg-white rounded-lg md:ml-3 mt-5 md:mt-0">
 
                 <div class="items-center">
-                    {{ template "rating" $.rate }}
+                    {{ if (gt (len $.ratings) 0) }}
+                      {{ template "rating" $.rate }}
+                    {{ end }}
                     <h2 class="text-xl text-gray-800 font-medium mr-auto">{{ $.book.Title }}</h2>
                     <h2 class="text-lg text-gray-700 font-medium mr-auto">{{ $.book.Subtitle }}</h2>
                     <p class="text-gray-700 text-sm text-mbrbrown">
@@ -98,8 +103,9 @@
 
 
         <div class="max-w-md md:max-w-2xl px-2 md:px-0 md:mx-auto mt-10">
-            <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Latest ratings</h2>
+
             {{ if (gt (len $.ratings) 0) }}
+            <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Latest ratings</h2>
             <div class="pagecontainer">
                 {{ range $.ratings }}
                 <div class="relative item">
@@ -139,17 +145,18 @@
 
                     {{ end }}
                 </div>
+                 <div class="inline-block w-full text-center">
+                     <div class="lds-ellipsis inline-block justify-items-center"><div></div><div></div><div></div><div></div></div>
+                 </div>
+                 <div class="pagination">
+
+                     {{ if gt $.nextPage 0 }}
+
+                         <a href="?page={{ $.nextPage}}" class="next">Next</a>
+                     {{ end }}
+                 </div>
                 {{ end }}
-                <div class="inline-block w-full text-center">
-                    <div class="lds-ellipsis inline-block justify-items-center"><div></div><div></div><div></div><div></div></div>
-                </div>
-                <div class="pagination">
 
-                    {{ if gt $.nextPage 0 }}
-
-                    <a href="?page={{ $.nextPage}}" class="next">Next</a>
-                    {{ end }}
-                </div>
             </div>
         </div>
 

@@ -9,7 +9,7 @@
       <div class="hero-text col-span-6">
         <h1 class=" font-bold text-4xl md:text-5xl max-w-xl text-white leading-tight text-shadow font-sanchez">Reading is a conversation. All books talk. But a good book listens as well.</h1>
         <hr class=" w-12 h-1 bg-mbrrosa rounded-full mt-8"> <p class="text-gray-100 text-sm "> Mark Haddon </p>
-        <p class="text-gray-100 text-base leading-relaxed mt-8 font-semibold">Welcome to a perfect place where you can share your reading experience and find what to read next. </p>
+        <p class="text-gray-100 text-base leading-relaxed mt-8 font-semibold">Welcome to a perfect place where you can share your reading experience and find what to read next in a fun way. Enjoy personalised book recommendations and read your another favorite book! </p>
         <div class="get-app flex space-x-5 mt-10 justify-center md:justify-start">
           {{ if not $.user }}
           <a href="/auth/google" alt="Sign in with Google" title="Sign in with Google" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4 hover:shadow-sm">
@@ -83,6 +83,18 @@
 
 {{ define "content" }}
 
+  <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">Your personal book recommendations</h2>
+  {{ if (gt (len $.recommendedBooks) 0) }}
+    {{ template "recbookteasers" $.recommendedBooks }}
+  {{ else }}
+    <div class="bg-gray-100 bg-opacity-50 pt-5 pb-5 shadow-inner rounded-t-lg text-center border-b-8 border-gray-600 text-gray-700">
+      As soon as you rate several books, we will recommend some books for you, that you might like to read 😉
+      <a href="{{ call $.reverse "rateBook" }}" class="block font-bold">
+        Rate now!
+      </a>
+    </div>
+
+  {{ end }}
 
 {{ if (gt (len $.topBooksDay) 0) }}
   <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">Top rated books of the day</h2>
@@ -185,7 +197,7 @@
   "url": "https://www.mybooksrating.com/"
 }</script>
 
-<meta name="description" content="Explore books rating from other people, rate books by yourself and be inspired about your next books to read."/>
+<meta name="description" content="Explore book ratings from other people, rate books by yourself, receive personal book recommendations and read your next favorite book!"/>
 <link rel="canonical" href="https://mybooksrating.com/" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="website" />

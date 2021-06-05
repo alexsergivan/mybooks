@@ -2,11 +2,9 @@ package resolvers
 
 import (
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/alexsergivan/mybooks/services"
@@ -74,23 +72,8 @@ func RateBookSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.
 			flash.SetFlashMessage(c, flash.MessageTypeError, fmt.Sprintf(`Something went wrong: %d`, bookFromApi.ServerResponse.HTTPStatusCode))
 			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("rateBook"))
 		}
-		// Prepare authors.
-		var authors []*userbook.Author
-		if len(bookFromApi.VolumeInfo.Authors) > 0 {
-			for _, author := range bookFromApi.VolumeInfo.Authors {
-				authors = append(authors, &userbook.Author{
-					Name: author,
-				})
-			}
-		}
 
-		var category string
-		if len(bookFromApi.VolumeInfo.Categories) > 0 {
-			// Use 1st category.
-			category = bookFromApi.VolumeInfo.Categories[0]
-		} else {
-			category = "No Category"
-		}
+		b := userbook.ConvertVolumeToBook(bookFromApi)
 
 		uID := GetUserIdFromSession(c, storage)
 		if uID == nil {
@@ -98,46 +81,22 @@ func RateBookSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.
 			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("rateBook"))
 		}
 		rate, _ := strconv.ParseFloat(c.FormValue("rate"), 64)
-		image, thumbnail := "", ""
-		if bookFromApi.VolumeInfo.ImageLinks.Large != "" {
-			image = strings.Replace(bookFromApi.VolumeInfo.ImageLinks.Large, "http://", "https://", -1)
-		} else {
-			if bookFromApi.VolumeInfo.ImageLinks.Medium != "" {
-				image = strings.Replace(bookFromApi.VolumeInfo.ImageLinks.Medium, "http://", "https://", -1)
-			}
-		}
-		if bookFromApi.VolumeInfo.ImageLinks.Thumbnail != "" {
-			thumbnail = strings.Replace(bookFromApi.VolumeInfo.ImageLinks.Thumbnail, "http://", "https://", -1)
-		}
 
-		if image != "" {
-			image, err = services.SaveBookCover(image, bookID, "large")
+		if b.Image != "" {
+			b.Image, err = services.SaveBookCover(b.Image, bookID, "large")
 			if err != nil {
 				log.Println(err)
 			}
 		}
-		if thumbnail != "" {
-			thumbnail, err = services.SaveBookCover(thumbnail, bookID, "thumbnail")
+		if b.Thumbnail != "" {
+			b.Thumbnail, err = services.SaveBookCover(b.Thumbnail, bookID, "thumbnail")
 			if err != nil {
 				log.Println(err)
 			}
 		}
 
 		rating := userbook.BookRating{
-			Book: userbook.Book{
-				ID:            bookID,
-				Title:         bookFromApi.VolumeInfo.Title,
-				Subtitle:      bookFromApi.VolumeInfo.Subtitle,
-				PublishedDate: bookFromApi.VolumeInfo.PublishedDate,
-				GoogleID:      bookID,
-				Authors:       authors,
-				Description:   template.HTML(bookFromApi.VolumeInfo.Description),
-				Category: userbook.Category{
-					Name: category,
-				},
-				Thumbnail: thumbnail,
-				Image:     image,
-			},
+			Book: b,
 			User: userbook.User{
 				Model: gorm.Model{
 					ID: *uID,
@@ -160,7 +119,7 @@ func RateBookSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.
 	}
 }
 
-func BookProfilePage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
+func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := c.Param("id")
 		book := userbook.GetBookByID(id, db)
@@ -191,7 +150,27 @@ func BookProfilePage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 				"rateCount": ratingsCount,
 			})
 		} else {
-			return c.Redirect(http.StatusSeeOther, "/")
+			b, err := getBookFromApi(c, id, bookApiService)
+			if err != nil {
+				flash.SetFlashMessage(c, flash.MessageTypeError, `Something went wrong.`)
+				return c.Redirect(http.StatusSeeOther, "/")
+			}
+			if b.Image != "" {
+				b.Image, err = services.SaveBookCover(b.Image, id, "large")
+				if err != nil {
+					log.Println(err)
+				}
+			}
+			if b.Thumbnail != "" {
+				b.Thumbnail, err = services.SaveBookCover(b.Thumbnail, id, "thumbnail")
+				if err != nil {
+					log.Println(err)
+				}
+			}
+
+			db.Create(&b)
+
+			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookProfile", id))
 		}
 	}
 }
@@ -236,4 +215,18 @@ func BookTitleLike(c echo.Context, title string) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Where("title LIKE ?", "%"+title+"%")
 	}
+}
+func getBookFromApi(c echo.Context, bookID string, bookApiService *book.BooksApi) (userbook.Book, error) {
+	bookFromApi, err := bookApiService.GetBook(bookID)
+	if err != nil {
+		flash.SetFlashMessage(c, flash.MessageTypeError, `Please try to select a book again`)
+		return userbook.Book{}, c.Redirect(http.StatusSeeOther, c.Echo().Reverse("home"))
+	}
+
+	if bookFromApi.ServerResponse.HTTPStatusCode != 200 {
+		flash.SetFlashMessage(c, flash.MessageTypeError, fmt.Sprintf(`Something went wrong: %d`, bookFromApi.ServerResponse.HTTPStatusCode))
+		return userbook.Book{}, c.Redirect(http.StatusSeeOther, c.Echo().Reverse("home"))
+	}
+
+	return userbook.ConvertVolumeToBook(bookFromApi), nil
 }

@@ -50,6 +50,23 @@ func (api *BooksApi) SearchBooks(q string) *books.Volumes {
 	return volumes
 }
 
+func (api *BooksApi) SearchBooksByCategory(category string) *books.Volumes {
+	volumes, err := api.svc.Volumes.List(`subject:"` + category + `"`).LangRestrict("en").MaxResults(30).Do()
+	if err != nil {
+		log.Println(err)
+	}
+
+	return volumes
+}
+
+func ConvertVolumesToAutocompleteItems(volumes *books.Volumes) []*AutocompleteBookItem {
+	var convertedBooks []*AutocompleteBookItem
+	for _, volume := range volumes.Items {
+		convertedBooks = append(convertedBooks, ConvertFromVolumeToAutocompleteItem(volume))
+	}
+	return convertedBooks
+}
+
 func (api *BooksApi) GetBook(id string) (*books.Volume, error) {
 	return api.svc.Volumes.Get(id).Do()
 }

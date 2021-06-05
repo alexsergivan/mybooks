@@ -1,0 +1,7 @@
+{{ define "recbookteaser" }}
+
+  <a href="/book/{{ .ID }}" class="block">
+
+    <img src="{{ .Thumbnail }}" title="{{ .Title }}" alt="{{ .Title }}" class="mx-auto rounded-sm w-30 h-40 shadow-lg hover:shadow-none"/>
+  </a>
+{{ end }}

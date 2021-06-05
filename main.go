@@ -50,7 +50,7 @@ func main() {
 	//assetHandler := http.FileServer(getFileSystem())
 	//e.GET("/", echo.WrapHandler(assetHandler))
 	//e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", assetHandler)))
-
+	booksApiService := book.NewBooksApiService()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.RemoveTrailingSlashWithConfig(middleware.TrailingSlashConfig{
@@ -58,22 +58,20 @@ func main() {
 	}))
 	e.Renderer = renderer.NewView(tpls)
 
-	e.GET("/", resolvers.HomePage(db, store)).Name = "home"
+	e.GET("/", resolvers.HomePage(db, store, booksApiService)).Name = "home"
 
 	e.GET("/about", resolvers.AboutPage(db, store)).Name = "about"
 	e.GET("/privacy-policy", resolvers.PrivacyPage(db, store)).Name = "policy"
 	e.GET("/sitemap.xml", resolvers.GetSitemap(db, store))
 	e.GET("/robots.txt", resolvers.GetRobots())
 
-	booksApiService := book.NewBooksApiService()
-
 	userGroup := e.Group("/user", auth.IsAuthMiddleware())
 	// Pass store and db, redirect to user/id
-	userGroup.GET("", resolvers.ProfilePage(db, store)).Name = "userHome"
+	userGroup.GET("", resolvers.ProfilePage(db, store, booksApiService)).Name = "userHome"
 	userGroup.GET("/rate-book", resolvers.RateBookForm(db, store)).Name = "rateBook"
 	userGroup.POST("/rate-book", resolvers.RateBookSubmit(db, store, booksApiService)).Name = "rateBookSubmit"
 
-	e.GET("/reader/:id", resolvers.ProfilePage(db, store)).Name = "userProfile"
+	e.GET("/reader/:id", resolvers.ProfilePage(db, store, booksApiService)).Name = "userProfile"
 
 	e.GET("/login", userbook.LoginPage, auth.IsNotAuthMiddleware()).Name = "login"
 
@@ -85,7 +83,7 @@ func main() {
 	e.GET("/logout", authHandler.LogOut())
 
 	bookGroup := e.Group("/book")
-	bookGroup.GET("/:id", resolvers.BookProfilePage(db, store)).Name = "bookProfile"
+	bookGroup.GET("/:id", resolvers.BookProfilePage(db, store, booksApiService)).Name = "bookProfile"
 
 	apiGroup := e.Group("/api", auth.IsAuthMiddleware())
 	apiGroup.GET("/books/search", book.BooksAutocomplete(booksApiService))

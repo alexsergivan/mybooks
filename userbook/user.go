@@ -3,7 +3,11 @@ package userbook
 import (
 	"database/sql"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
+
+	"github.com/alexsergivan/mybooks/book"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -121,4 +125,37 @@ func GetAllUsers(db *gorm.DB) []*User {
 	}
 
 	return u
+}
+
+func GetBookRecommendations(userID int, db *gorm.DB, booksApi *book.BooksApi) []Book {
+	if userID == 0 {
+		return nil
+	}
+	topBooks := GetBestRatedBooksByUser(db, userID, time.Now().AddDate(0, -1, 0))
+	var booksPool []Book
+	for _, bookItem := range topBooks {
+		if bookItem.Book.CategoryName == "No Category" {
+			continue
+		}
+
+		booksPool = append(booksPool, ConvertVolumesToBooks(booksApi.SearchBooksByCategory(bookItem.Book.CategoryName))...)
+	}
+	if len(booksPool) > 0 {
+		var recommendations []Book
+		rand.Seed(time.Now().Unix())
+		for i := 0; i < 10; i++ {
+			randBookKey := rand.Intn(len(booksPool))
+			if booksPool[randBookKey].ID != "" {
+				recommendations = append(recommendations, booksPool[randBookKey])
+				booksPool[rand.Intn(len(booksPool))] = Book{}
+			} else {
+				i--
+			}
+		}
+
+		return recommendations
+	}
+
+	return booksPool
+
 }
