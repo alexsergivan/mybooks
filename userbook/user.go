@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/alexsergivan/mybooks/cache"
+
 	"github.com/alexsergivan/mybooks/book"
 
 	"github.com/labstack/echo/v4"
@@ -131,31 +133,42 @@ func GetBookRecommendations(userID int, db *gorm.DB, booksApi *book.BooksApi) []
 	if userID == 0 {
 		return nil
 	}
-	topBooks := GetBestRatedBooksByUser(db, userID, time.Now().AddDate(0, -1, 0))
-	var booksPool []Book
-	for _, bookItem := range topBooks {
-		if bookItem.Book.CategoryName == "No Category" {
-			continue
-		}
+	ristrettoCache := cache.NewRistrettoCache()
+	cacheKey := "bookRecom" + string(rune(userID))
+	recommendations, found := ristrettoCache.Get(cacheKey)
+	if !found {
 
-		booksPool = append(booksPool, ConvertVolumesToBooks(booksApi.SearchBooksByCategory(bookItem.Book.CategoryName))...)
-	}
-	if len(booksPool) > 0 {
-		var recommendations []Book
-		rand.Seed(time.Now().Unix())
-		for i := 0; i < 10; i++ {
-			randBookKey := rand.Intn(len(booksPool))
-			if booksPool[randBookKey].ID != "" {
-				recommendations = append(recommendations, booksPool[randBookKey])
-				booksPool[rand.Intn(len(booksPool))] = Book{}
-			} else {
-				i--
+		topBooks := GetBestRatedBooksByUser(db, userID, time.Now().AddDate(0, -1, 0))
+		var booksPool []Book
+		for _, bookItem := range topBooks {
+			if bookItem.Book.CategoryName == "No Category" {
+				continue
 			}
-		}
 
-		return recommendations
+			booksPool = append(booksPool, ConvertVolumesToBooks(booksApi.SearchBooksByCategory(bookItem.Book.CategoryName))...)
+		}
+		if len(booksPool) > 0 {
+			var recommendations []Book
+			rand.Seed(time.Now().Unix())
+			for i := 0; i < 10; i++ {
+				randBookKey := rand.Intn(len(booksPool))
+				if booksPool[randBookKey].ID != "" {
+					recommendations = append(recommendations, booksPool[randBookKey])
+					booksPool[rand.Intn(len(booksPool))] = Book{}
+				} else {
+					i--
+				}
+			}
+
+			ristrettoCache.Set(cacheKey, recommendations, time.Minute*60)
+			time.Sleep(10 * time.Millisecond)
+
+			return recommendations
+		} else {
+			return booksPool
+		}
 	}
 
-	return booksPool
+	return recommendations.([]Book)
 
 }
