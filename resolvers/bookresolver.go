@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/alexsergivan/mybooks/services"
@@ -21,8 +22,12 @@ import (
 	"gorm.io/gorm"
 )
 
+var mutex = sync.RWMutex{}
+
 func RateBookForm(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		mutex.Lock()
+		defer mutex.Unlock()
 
 		uID := GetUserIdFromSession(c, storage)
 
@@ -121,6 +126,8 @@ func RateBookSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.
 
 func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		mutex.Lock()
+		defer mutex.Unlock()
 		id := c.Param("id")
 		book := userbook.GetBookByID(id, db)
 		if book.Title != "" {
