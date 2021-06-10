@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/alexsergivan/mybooks/cache"
@@ -140,13 +141,23 @@ func GetBookRecommendations(userID int, db *gorm.DB, booksApi *book.BooksApi) []
 
 		topBooks := GetBestRatedBooksByUser(db, userID, time.Now().AddDate(0, -1, 0))
 		var booksPool []Book
+
+		var wg sync.WaitGroup
+
 		for _, bookItem := range topBooks {
 			if bookItem.Book.CategoryName == "No Category" {
 				continue
 			}
+			wg.Add(1)
+			bookItem := bookItem
+			go func() {
+				defer wg.Done()
+				booksPool = append(booksPool, ConvertVolumesToBooks(booksApi.SearchBooksByCategory(bookItem.Book.CategoryName))...)
+			}()
 
-			booksPool = append(booksPool, ConvertVolumesToBooks(booksApi.SearchBooksByCategory(bookItem.Book.CategoryName))...)
 		}
+		wg.Wait()
+
 		if len(booksPool) > 0 {
 			var recommendations []Book
 			rand.Seed(time.Now().Unix())

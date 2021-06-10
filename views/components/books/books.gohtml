@@ -26,7 +26,7 @@
             {{ if (gt (len $.books) 0) }}
             <div class="pagecontainer">
                 {{ range $.books }}
-                {{ if .Rate }}
+
                   <a href="{{ call $.reverse "bookProfile" .Book.ID }}" class="block relative item">
                     <div class="bg-white shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative rounded-b-xl">
                         {{ $img := .Book.Thumbnail }}
@@ -56,7 +56,11 @@
                             </div>
 
                             <div class="p-4 md:p-5 bg-gray-100">
-                                {{ template "rating" .Rate }}
+                                {{ if .Rate }}
+                                  {{ template "rating" .Rate }}
+                                {{ else }}
+                                   <span class="text-gray-600"> 🥺 Not rated yet </span>
+                                {{ end }}
                                 <div class="sm:flex sm:justify-between sm:items-center">
 
                                     <div>
@@ -76,7 +80,7 @@
 
 
                 </a>
-                {{ end }}
+
 
                 {{ end }}
             </div>
