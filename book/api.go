@@ -51,7 +51,7 @@ func (api *BooksApi) SearchBooks(q string) *books.Volumes {
 }
 
 func (api *BooksApi) SearchBooksByCategory(category string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(`subject:"` + category + `"`).LangRestrict("en").MaxResults(30).Do()
+	volumes, err := api.svc.Volumes.List(`subject:"` + category + `"`).LangRestrict("en").OrderBy("newest").MaxResults(10).Do()
 	if err != nil {
 		log.Println(err)
 	}

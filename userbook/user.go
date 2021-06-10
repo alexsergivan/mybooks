@@ -165,7 +165,7 @@ func GetBookRecommendations(userID int, db *gorm.DB, booksApi *book.BooksApi) []
 				randBookKey := rand.Intn(len(booksPool))
 				if booksPool[randBookKey].ID != "" {
 					recommendations = append(recommendations, booksPool[randBookKey])
-					booksPool[rand.Intn(len(booksPool))] = Book{}
+					booksPool[randBookKey] = Book{}
 				} else {
 					i--
 				}
