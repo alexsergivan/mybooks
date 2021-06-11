@@ -217,8 +217,8 @@ input[type=range]::-ms-thumb {
 
 body .cc_dialog.simple {
     max-width: 100%;
-    background-color: rgba(98, 88, 100, var(--bg-opacity));
-
+    background-color: rgba(152, 162, 174, 0.76);
+    color: rgba(152, 162, 174, 0.68);
 }
 
 body .light.cc_dialog .cc_dialog_headline {
@@ -233,7 +233,7 @@ body .light.cc_dialog button.cc_b_ok {
     padding: 0.75rem;
     border-radius: 0.5rem;
     background-color: #83cbfa;
-    color: rgba(255, 255, 255, var(--text-opacity));
+    color: white;
     border: 2px solid white;
 }
 
