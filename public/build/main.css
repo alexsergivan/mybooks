@@ -22677,6 +22677,10 @@ body  .light.cookie-consent-preferences-overlay .cookie-consent-preferences-dial
   border: 2px solid white;
 }
 
+.backgr {
+  background-image: url(/images/backgr.svg);
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

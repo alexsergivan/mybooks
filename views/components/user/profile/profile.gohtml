@@ -48,7 +48,7 @@
     </div>
     {{ if (gt (len $.topRatings) 0) }}
       <div class="container mx-auto max-w-xs rounded-lg overflow-hidden my-2">
-      <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">My top 10 books</h2>
+      <h2 class="text-2xl font-bold font-sanchez text-white mt-6 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25">My top 10 books</h2>
       <ul>
         {{ range $.topRatings }}
         <li class="mb-4">
@@ -87,7 +87,7 @@
   <div class="col-span-12 md:col-span-8">
 
 
-    <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Latest ratings</h2>
+    <h2 class="text-2xl font-bold font-sanchez text-white mt-2 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25 ml-0 md:-ml-3">Latest ratings</h2>
 
     <div class="min-h-screen">
       <div class="max-w-md md:max-w-2xl px-2">
