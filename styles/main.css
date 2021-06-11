@@ -217,7 +217,7 @@ input[type=range]::-ms-thumb {
 
 body .cc_dialog.simple {
     max-width: 100%;
-    background-color: rgba(130, 87, 88, var(--bg-opacity));
+    background-color: rgba(98, 88, 100, var(--bg-opacity));
 
 }
 
