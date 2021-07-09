@@ -1,6 +1,6 @@
 {{ define "messages" }}
 
-{{ if (gt (len $.messages) 0) }}
+{{ if or (gt (len $.messages.error) 0) (gt (len $.messages.message) 0) }}
   <div class="md:-m-2 m-2 text-center pb-3 md:pb-5">
     {{ range $type, $messages :=  $.messages}}
 

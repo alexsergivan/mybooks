@@ -51,6 +51,10 @@ func main() {
 	//e.GET("/", echo.WrapHandler(assetHandler))
 	//e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", assetHandler)))
 	booksApiService := book.NewBooksApiService()
+	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(30)))
+	e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
+		Timeout: 30 * time.Second,
+	}))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.RemoveTrailingSlashWithConfig(middleware.TrailingSlashConfig{
@@ -72,6 +76,20 @@ func main() {
 	userGroup.POST("/rate-book", resolvers.RateBookSubmit(db, store, booksApiService)).Name = "rateBookSubmit"
 
 	e.GET("/reader/:id", resolvers.ProfilePage(db, store, booksApiService)).Name = "userProfile"
+
+	e.GET("/reader/:id/bookshelves", resolvers.BookshelvesPage(db, store)).Name = "bookshelves"
+
+	e.GET("/bookshelves/new", resolvers.AddBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "addBookshelf"
+	e.POST("/bookshelves/new", resolvers.AddBookshelfSubmit(db, store), auth.IsAuthMiddleware()).Name = "addBookshelfSubmit"
+	e.GET("/bookshelves/:bookshelfSlug/edit", resolvers.AddBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "editBookshelf"
+	e.POST("/bookshelves/:bookshelfSlug/delete", resolvers.DeleteBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "deleteBookshelf"
+
+	e.GET("/reader/:id/bookshelves/:bookshelfSlug", resolvers.BookshelfPage(db, store)).Name = "bookshelf"
+	e.GET("/bookshelves/:bookshelfSlug/:bookId", resolvers.AddBookToBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "addBookToBookshelf"
+	e.GET("/bookshelves/:bookId", resolvers.AddBookToSelectedBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "addBookToSelectedBookshelf"
+
+	e.POST("/bookshelf/addBook", resolvers.AddBookToBookshelfSubmit(db, store), auth.IsAuthMiddleware()).Name = "addBookToBookshelfSubmit"
+	e.POST("/bookshelf/deleteBook", resolvers.DeleteBookFromBookshelfSubmit(db, store), auth.IsAuthMiddleware()).Name = "deleteBookFromBookshelfSubmit"
 
 	e.GET("/login", userbook.LoginPage, auth.IsNotAuthMiddleware()).Name = "login"
 

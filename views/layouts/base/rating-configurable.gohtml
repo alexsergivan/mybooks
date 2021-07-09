@@ -1,0 +1,74 @@
+{{ define "rating-configurable" }}
+
+       {{ $rate := $.rate | int }}
+
+       {{ $em := "" }}
+       {{ $class := "" }}
+
+       {{ if (lt $rate 40) }}
+         {{ $class = "text-mbrbad" }}
+       {{ end }}
+
+       {{ if and (ge $rate 40) (lt $rate 75) }}
+         {{ $class = "text-mbrok" }}
+       {{ end }}
+
+       {{ if and (ge $rate 75) (le $rate 100) }}
+         {{ $class = "text-mbrgood" }}
+       {{ end }}
+
+       {{ if and (ge $rate 0) (le $rate 5) }}
+         {{ $em ="💩" }}
+       {{ end }}
+
+       {{ if and (gt $rate 5) (le $rate 20) }}
+         {{ $em ="🤢" }}
+       {{ end }}
+
+       {{ if and (gt $rate 20) (lt $rate 40) }}
+         {{ $em ="👎" }}
+       {{ end }}
+
+       {{ if and (ge $rate 40) (le $rate 60) }}
+         {{ $em ="😐" }}
+       {{ end }}
+
+       {{ if and (gt $rate 60) (lt $rate 75) }}
+         {{ $em ="👌" }}
+       {{ end }}
+
+       {{ if and (ge $rate 75) (lt $rate 90) }}
+         {{ $em ="🤩" }}
+       {{ end }}
+
+       {{ if and (ge $rate 90) (lt $rate 95) }}
+         {{ $em ="💖" }}
+       {{ end }}
+
+       {{ if and (ge $rate 95) (le $rate 100) }}
+         {{ $em ="🔥" }}
+       {{ end }}
+
+
+    <div class="inline-block w-auto text-center pl-2">
+        {{ if $.noEmoji }}
+
+        {{ else }}
+        <span class="text-4xl">{{ $em }}</span>
+        {{ end }}
+        {{ if $.noRate }}
+        {{ else }}
+          <span class="text-3xl inline p-2 outline-none font-semibold bg-transparent {{ $class }}">{{ $rate }}</span>
+        {{ end }}
+
+
+    </div>
+    {{ if $.noBar }}
+
+    {{ else }}
+      <input class="w-full mb-5" disabled="disabled" type="range" x-model="rate" min="0" max="100" step="1">
+    {{ end }}
+
+
+
+{{ end }}

@@ -65,10 +65,12 @@ func (r *MySQLRepository) Connect() (*gorm.DB, error) {
 }
 
 func (r *MySQLRepository) migrate() {
-	err := r.db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(userbook.User{}, userbook.Book{}, userbook.Category{}, userbook.Author{}, userbook.BookRating{})
+
+	err := r.db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(userbook.User{}, userbook.Book{}, userbook.Category{}, userbook.Author{}, userbook.BookRating{}, userbook.Bookshelf{})
 	if err != nil {
 		log.Println(err)
 	}
+
 }
 
 func GetDB() *gorm.DB {

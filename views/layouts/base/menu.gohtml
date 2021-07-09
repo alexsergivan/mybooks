@@ -61,6 +61,8 @@
                         {{ if $.user }}
                         <a href="{{ call $.reverse "userHome" }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
                         <a href="{{ call $.reverse "rateBook" }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Rate a new book</a>
+                        <a href="{{ call $.reverse "bookshelf" $.user.ID `reading-queue` }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">My reading queue</a>
+                        <a href="{{ call $.reverse "bookshelves" $.user.ID }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">My bookshelves</a>
                         <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Log Out</a>
                         {{ else }}
                           <a href="/auth/google" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign In with Google</a>

@@ -1,0 +1,96 @@
+{{ define "header" }}
+{{ end }}
+
+{{ define "content" }}
+    <div class="container text-center p-1 md:p-10">
+        <!-- component -->
+        <!-- This is an example component -->
+        <div class="w-full flex flex-col items-center">
+            <div class='sm:max-w-xs md:max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
+                <div class="py-2 px-4 md:py-4 md:px-8 mt-3">
+                    <form action="{{ call $.reverse `addBookshelfSubmit` }}" method="post">
+                        <div class="flex flex-col mb-8">
+                            {{ if $.bookshelf }}
+                                <h2 class="text-gray-700 font-normal text-2xl tracking-wide mb-2">You are about to edit
+                                    <span class="font-semibold"> {{ $.bookshelf.Name }} </span> bookshelf</h2>
+                                <p class="text-gray-500 text-base">Below you can rename this bookshelf and change description.</p>
+                            {{ else }}
+                                <h2 class="text-gray-700 font-normal text-2xl tracking-wide mb-2">You are about to create a new bookshelf</h2>
+                                <p class="text-gray-500 text-base">Below you just need to specify a bookshelf name and description. After that you can start adding books to it.</p>
+                            {{ end }}
+                        </div>
+                        <div class="bg-gray-100 rounded-lg">
+                            <div class="py-1 px-1 md:py-4 md:px-4">
+                                <div class="flex flex-col">
+
+                                    <div class="flex flex-col text-sm text-gray-500">
+                                        <div class=" bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200">
+
+                                            <label for="name"></label><input name="name" id="name"
+                                                                             placeholder="Bookshelf name"
+                                                                             class="w-full pl-4 text-sm outline-none focus:outline-none bg-transparent"
+                                                                             value="{{ if $.bookshelf }}{{ $.bookshelf.Name }}{{ end }}">
+
+                                        </div>
+                                        <div class="flex flex-col text-sm text-gray-500 mt-6" x-data="{ count: 0 }"
+                                             x-init="count = $refs.countme.value.length">
+
+                                            <textarea id="description" x-ref="countme" x-on:keyup="count = $refs.countme.value.length" name="description" maxlength="200"
+                                                      class="description focus:outline-none bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200"
+                                                      spellcheck="true"
+                                                      placeholder="Add a short description of this bookshelf">{{ if $.bookshelf }}{{ $.bookshelf.Description }}{{ end }}</textarea>
+
+                                            <div class="icons flex text-gray-500 m-2">
+                                                <div class="count ml-auto text-gray-400 text-xs font-semibold"><span x-html="count"></span>/<span x-html="$refs.countme.maxLength"></span></div>
+                                            </div>
+                                        </div>
+
+
+                                        <input id="userID" name="userID" type="hidden" value="{{ $.profile.ID }}"
+                                               required="required">
+                                        {{ if $.bookshelf }}
+                                            <input id="bookshelfSlug" name="bookshelfSlug" type="hidden"
+                                                   value="{{ $.bookshelf.Slug }}" required="required">
+                                        {{ end }}
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="py-4 content-center">
+                            <button type="submit"
+                                    class="inline-block tracking-widest uppercase text-center shadow bg-mbrdarkbrown hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-left mr-2" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg> {{ if $.bookshelf }} Save {{ else }} Create {{ end }}
+                            </button>
+                           {{ if $.bookshelf }}
+                               {{ if (ne $.bookshelf.Slug "reading-queue")  }}
+                               <a href="{{ call $.reverse `editBookshelf` $.bookshelf.Slug }}?delete=1" class="ml-5 inline-block tracking-widest uppercase text-center shadow bg-red-400 hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-left mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                   </svg> Remove </a>
+                               {{ end }}
+                           {{ end }}
+
+                        </div>
+                        <input type="hidden" name="csrf" value="{{index . "csrf"}}">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{{ end }}
+
+{{ define "additional_head" }}
+{{ end }}
+
+{{ define "title" }}
+    Create a new bookshelf
+{{ end }}

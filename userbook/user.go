@@ -23,6 +23,16 @@ type User struct {
 	AvatarURL    string
 	BookRatings  []BookRating `gorm:"foreignKey:UserID"`
 	GoogleUserID string
+	BookShelves  []Bookshelf `gorm:"foreignKey:UserID"`
+}
+
+type UserBook struct {
+	gorm.Model
+	User   User
+	Book   Book
+	UserID int64
+	BookID string `gorm:"size:191"`
+	Status int
 }
 
 func LoginPage(c echo.Context) error {
@@ -182,4 +192,28 @@ func GetBookRecommendations(userID int, db *gorm.DB, booksApi *book.BooksApi) []
 
 	return recommendations.([]Book)
 
+}
+
+func GetUserBookByID(db *gorm.DB, userBookID int64) UserBook {
+	userBook := UserBook{}
+	db.First(&userBook, userBookID)
+
+	return userBook
+}
+
+func SaveUserBook(db *gorm.DB, userBook UserBook) error {
+	res := db.Save(&userBook)
+	if res.Error != nil {
+		return res.Error
+	}
+	return nil
+}
+
+func DeleteUserBookFromBookshelf(db *gorm.DB, userBookID, bookshelfID int64) error {
+
+	res := db.Exec("DELETE FROM bookshelf_user_books WHERE bookshelf_id=? AND user_book_id=?", bookshelfID, userBookID)
+	if res.Error != nil {
+		return res.Error
+	}
+	return nil
 }

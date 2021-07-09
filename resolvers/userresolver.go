@@ -105,8 +105,7 @@ func ProfilePage(db *gorm.DB, storage *gormstore.Store, booksApi *book.BooksApi)
 				"avRate":               int(userbook.GetAverageRatingByUser(int64(nId), db)),
 				"positiveRatingsCount": userbook.GePositiveBookRatingsFromUserCount(int64(nId), db),
 				"negativeRatingsCount": userbook.GeNegativeBookRatingsFromUserCount(int64(nId), db),
-				//TODO: move it to the homepage and add logic when go yo book page, create a new page, if does not exist.
-				//"recommendedBooks": userbook.GetBookRecommendations(nId, db, booksApi),
+				"readingQueue":         userbook.GetUserBookShelfBySlug(db, int64(nId), readingQueueSlug),
 			})
 		}
 		return c.Redirect(http.StatusSeeOther, "/")

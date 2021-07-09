@@ -1,0 +1,71 @@
+{{ define "header" }}
+{{ end }}
+
+{{ define "content" }}
+    <div class="container text-center p-1 md:p-10">
+        <!-- component -->
+        <!-- This is an example component -->
+        <div class="w-full flex flex-col items-center">
+            <div class='sm:max-w-xs md:max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
+                <div class="py-2 px-4 md:py-4 md:px-8 mt-3">
+                    <form action="{{ call $.reverse `addBookToBookshelfSubmit` }}" method="post">
+                        <div class="flex flex-col mb-8">
+                            <h2 class="text-gray-700 font-normal text-2xl tracking-wide mb-2">You are about to add the book <span class="font-semibold">{{ $.book.Title }}</span> to your bookshelf</h2>
+                                    <p class="text-gray-500 text-base">First, you need to select the needed bookshelf. If you want to create a new one, you can do it <a class="text-mbrdarkbrown font-semibold" href="{{ call $.reverse `addBookshelf` }}">here</a>.</p>
+
+                        </div>
+                        <div class="bg-gray-100 rounded-lg">
+                            <div class="py-1 px-1 md:py-4 md:px-4">
+                                <div class="flex flex-col">
+
+                                    <div class="flex flex-col text-sm text-gray-500">
+
+
+                                        <div class="selection">
+
+                                            {{ if $.book }}
+                                                {{ template "bookthumb" $.book }}
+                                            {{ end }}
+
+                                        </div>
+                                        <div class="relative mb-3">
+
+                                            <label class="" for="bookShelfSlug">Add this book to</label>
+                                            <svg class="w-2 h-2 m-4 pointer-events-none absolute right-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+                                            <select class="shadow block rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none w-full" name="bookShelfSlug" id="bookShelfSlug" required="required">
+                                                {{ range $.bookshelves }}
+                                                    <option value="{{ .Slug }}"> {{ .Name }} </option>
+                                                {{ end }}
+                                            </select>
+                                        </div>
+                                        <input id="bookID" name="bookID" type="hidden" value="{{ $.bookID }}" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="py-4 content-center">
+                            <button type="submit" class="inline-block tracking-widest uppercase text-center shadow bg-mbrdarkbrown hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-left mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg> Yes
+                            </button>
+
+                        </div>
+                        <input type="hidden" name="csrf" value="{{index . "csrf"}}">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{{ end }}
+
+{{ define "additional_head" }}
+{{ end }}
+
+{{ define "title" }}
+    Add the book to the bookshelf
+{{ end }}

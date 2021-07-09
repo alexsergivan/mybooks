@@ -1,0 +1,22 @@
+{{ define "bookthumb" }}
+    <div class="p-4 inline-block w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md">
+        <div class="col-span-1"><img class="w-full h-auto" src="{{ .Thumbnail }}"/></div>
+        <div class="col-span-5 text-left content-center flex flex-wrap">
+            <div>
+                <div class="text-base text-gray-800 font-bold tracking-wide"> {{ .Title }}</div>
+                <div class="text-gray-700 text-sm">{{ .Subtitle }}</div>
+                <div class="text-gray-700 text-sm uppercase">
+                    {{ range $k, $author := .Authors }}
+                        {{ if gt $k 0 }}
+                            , {{ $author.Name }}
+                        {{ else }}
+                            {{ $author.Name }}
+                        {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{{ end }}

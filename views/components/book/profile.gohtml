@@ -45,6 +45,32 @@
                         <p class=" text-xs font-semibold text-gray-900">Rate this book</p>
                     </div>
                 </a>
+                    <a href="{{ call $.reverse `addBookToBookshelf` `reading-queue` $.book.ID }}" title="Add this book to reading queue" alt="Add this book to reading queue" class="max-w-lg inline-block bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
+                        <div class="logo">
+                            <img src="/images/queue.svg"
+                                 class="w-6 h-6"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="419.955" height="512"
+                                 viewBox="0 0 419.955 512" />
+                        </div>
+                        <div class="text">
+                            <p class=" text-xs text-gray-600" style="font-size: 0.5rem;"></p>
+                            <p class=" text-xs font-semibold text-gray-900">Add to reading queue</p>
+                        </div>
+                    </a>
+                    <a href="{{ call $.reverse `addBookToSelectedBookshelf` $.book.ID }}" title="Add this book to your bookshelf" alt="Add this book to your bookshelf" class="max-w-lg inline-block bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
+                        <div class="logo">
+                            <img src="/images/bookshelf.svg"
+                                 class="w-6 h-6"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="419.955" height="512"
+                                 viewBox="0 0 419.955 512" />
+                        </div>
+                        <div class="text">
+                            <p class=" text-xs text-gray-600" style="font-size: 0.5rem;"></p>
+                            <p class=" text-xs font-semibold text-gray-900">Add to your bookshelf</p>
+                        </div>
+                    </a>
                     {{ $auth := "" }}
                     {{ if (gt (len $.book.Authors) 0) }}
                         {{ $auth = (index $.book.Authors 0).Name }}
