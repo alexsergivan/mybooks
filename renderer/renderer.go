@@ -11,19 +11,19 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
+	"io/ioutil"
 	"reflect"
 	"regexp"
 	"strings"
 	"sync"
 
+	"github.com/Masterminds/sprig/v3"
+
+	"github.com/alexsergivan/mybooks/flash"
+	"github.com/alexsergivan/mybooks/resolvers"
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/alexsergivan/mybooks/services"
-
-	"github.com/Masterminds/sprig/v3"
-	"github.com/alexsergivan/mybooks/flash"
-
-	"github.com/alexsergivan/mybooks/resolvers"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -47,6 +47,68 @@ type View struct {
 	Template    *template.Template
 	LayoutFiles []string
 	tpls        embed.FS
+	mux         sync.Mutex
+}
+
+type RenderData struct {
+	sync.RWMutex
+	Data map[string]interface{}
+}
+
+func (rd *RenderData) AddBulkData(values map[string]interface{}) {
+	rd.Lock()
+	defer rd.Unlock()
+	for key, value := range values {
+		rd.Data[key] = value
+	}
+}
+
+func (rd *RenderData) AddData(key string, value interface{}) {
+	rd.Lock()
+	defer rd.Unlock()
+	rd.Data[key] = value
+}
+
+func (rd *RenderData) GetData() map[string]interface{} {
+	rd.RLock()
+	defer rd.RUnlock()
+	d := make(map[string]interface{}, len(rd.Data))
+	for k, v := range rd.Data {
+		d[k] = v
+	}
+	return d
+}
+
+func (rd *RenderData) GetValue(key string) interface{} {
+	rd.RLock()
+	defer rd.RUnlock()
+	if val, ok := rd.Data[key]; ok {
+		var v = val
+		return v
+	}
+	return ""
+}
+
+func getFuncMap() template.FuncMap {
+
+	return template.FuncMap{
+		"hasField": HasField,
+		"args":     ArgsFn,
+		"to5Stars": services.ConvertRateFrom100To5,
+		"toEmoji":  services.ConvertRateFrom100ToEmoji,
+		"Iterate": func(count int) []int {
+			var i int
+			var Items []int
+			for i = 0; i < (count); i++ {
+				Items = append(Items, i)
+			}
+			return Items
+		},
+		"safeHTML": func(s string) template.HTML {
+			return template.HTML(s)
+		},
+	}
+
 }
 
 func NewView(tpls embed.FS) *View {
@@ -55,6 +117,7 @@ func NewView(tpls embed.FS) *View {
 			Template:    nil,
 			LayoutFiles: layoutFiles(tpls),
 			tpls:        tpls,
+			mux:         sync.Mutex{},
 		}
 	})
 
@@ -96,82 +159,73 @@ func MinifyHTML(html []byte) (string, error) {
 	return minifiedHTML, nil
 }
 
-func compileTemplates(tmpl *template.Template, filenames []string, tpls embed.FS) (*template.Template, error) {
+func (v *View) compileTemplates(tmpl *template.Template, filenames []string) (*template.Template, error) {
+	wg := sync.WaitGroup{}
 
 	for _, filename := range filenames {
-		name := filename
-		if tmpl == nil {
-			tmpl = template.New(name)
-		} else {
-			tmpl = tmpl.New(name)
-		}
+		wg.Add(1)
 
-		b, err := tpls.ReadFile(filename)
-		if err != nil {
-			return nil, err
-		}
+		go func(filename string) {
 
-		minifiedHTML, minifyErr := MinifyHTML(b)
-		if minifyErr != nil {
-			log.Printf("Error in Scanner during minifying the template", err)
-		}
+			b, err := ioutil.ReadFile(filename)
+			if err != nil {
+				log.Print(err)
+			}
 
-		tmpl.Parse(minifiedHTML)
+			minifiedHTML, minifyErr := MinifyHTML(b)
+			if minifyErr != nil {
+				log.Printf("Error in Scanner during minifying the template", err)
+			}
+			v.mux.Lock()
+			defer v.mux.Unlock()
+			_, err = tmpl.Parse(minifiedHTML)
+			if err != nil {
+				log.Print(err)
+			}
+			wg.Done()
+		}(filename)
+
 	}
+	wg.Wait()
 	return tmpl, nil
 }
 
 // Render renders a component
 func (v *View) Render(w io.Writer, componentName string, data interface{}, c echo.Context) error {
-	mutex.Lock()
+	templateName := `main`
+	if strings.HasPrefix(componentName, BaseTemplatePrefix) {
+		templateName = strings.TrimPrefix(componentName, BaseTemplatePrefix)
+	}
 	componentsFiles, err := componentsFiles(componentName, v.tpls)
 	if err != nil {
 		return err
 	}
 
 	files := append(v.LayoutFiles, componentsFiles...)
-	templ := template.New("").Funcs(template.FuncMap{
-		"hasField": HasField,
-		"args":     ArgsFn,
-		"to5Stars": services.ConvertRateFrom100To5,
-		"toEmoji":  services.ConvertRateFrom100ToEmoji,
-		"Iterate": func(count int) []int {
-			var i int
-			var Items []int
-			for i = 0; i < (count); i++ {
-				Items = append(Items, i)
-			}
-			return Items
-		},
-		"safeHTML": func(s string) template.HTML {
-			return template.HTML(s)
-		},
-	}).Funcs(sprig.FuncMap())
-	v.Template = template.Must(compileTemplates(templ, files, v.tpls))
 
-	// Add global methods if data is a map
-	if viewContext, isMap := data.(map[string]interface{}); isMap {
-		viewContext["reverse"] = c.Echo().Reverse
-		viewContext["activePath"] = c.Request().URL.Path
-		viewContext["user"] = resolvers.GetCurrentUser(c)
-		viewContext["csrf"] = c.Get(middleware.DefaultCSRFConfig.ContextKey).(string)
-		messageTypes := make(map[string][]string)
-		for _, messageType := range flash.GetMessageTypes() {
-			message, _ := flash.GetFlashMessage(c, messageType)
-			messageTypes[messageType] = message
-		}
+	templ := template.Must(v.compileTemplates(template.New("").Funcs(getFuncMap()).Funcs(sprig.FuncMap()), files))
 
-		viewContext["messages"] = messageTypes
-
+	messageTypes := make(map[string][]string)
+	mutex.Lock()
+	for _, messageType := range flash.GetMessageTypes() {
+		message, _ := flash.GetFlashMessage(c, messageType)
+		messageTypes[messageType] = message
 	}
+	mutex.Unlock()
 
-	templateName := `main`
-	if strings.HasPrefix(componentName, BaseTemplatePrefix) {
-		templateName = strings.TrimPrefix(componentName, BaseTemplatePrefix)
+	rd := &RenderData{
+		Data: map[string]interface{}{},
 	}
-	defer mutex.Unlock()
+	rd.AddBulkData(data.(map[string]interface{}))
+	rd.AddBulkData(map[string]interface{}{
+		"reverse":    c.Echo().Reverse,
+		"activePath": c.Request().URL.Path,
+		"user":       resolvers.GetCurrentUser(c),
+		"csrf":       c.Get(middleware.DefaultCSRFConfig.ContextKey),
+		"messages":   messageTypes,
+	})
 
-	return v.Template.ExecuteTemplate(w, templateName, data)
+	return templ.ExecuteTemplate(w, templateName, rd.GetData())
 }
 
 // Gets list of all template files needed for the layout.
