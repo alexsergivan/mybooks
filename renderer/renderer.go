@@ -11,7 +11,6 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"reflect"
 	"regexp"
 	"strings"
@@ -159,7 +158,7 @@ func MinifyHTML(html []byte) (string, error) {
 	return minifiedHTML, nil
 }
 
-func (v *View) compileTemplates(tmpl *template.Template, filenames []string) (*template.Template, error) {
+func (v *View) compileTemplates(tmpl *template.Template, filenames []string, tpls embed.FS) (*template.Template, error) {
 	wg := sync.WaitGroup{}
 
 	for _, filename := range filenames {
@@ -167,7 +166,7 @@ func (v *View) compileTemplates(tmpl *template.Template, filenames []string) (*t
 
 		go func(filename string) {
 
-			b, err := ioutil.ReadFile(filename)
+			b, err := tpls.ReadFile(filename)
 			if err != nil {
 				log.Print(err)
 			}
@@ -203,7 +202,7 @@ func (v *View) Render(w io.Writer, componentName string, data interface{}, c ech
 
 	files := append(v.LayoutFiles, componentsFiles...)
 
-	templ := template.Must(v.compileTemplates(template.New("").Funcs(getFuncMap()).Funcs(sprig.FuncMap()), files))
+	templ := template.Must(v.compileTemplates(template.New("").Funcs(getFuncMap()).Funcs(sprig.FuncMap()), files, v.tpls))
 
 	messageTypes := make(map[string][]string)
 	mutex.Lock()
