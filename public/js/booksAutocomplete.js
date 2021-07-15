@@ -16,7 +16,7 @@ const autoCompleteJS = new autoComplete({
             // Return Fetched data
             return data;
         },
-        key: ["Title", "Authors"],
+        key: ["Title"],
         cache: false
     },
 
@@ -32,7 +32,9 @@ const autoCompleteJS = new autoComplete({
     selector: "#autoComplete",           // Input field selector              | (Optional)
     threshold: 3,                      // Min. Chars length to start Engine | (Optional)
     debounce: 500,                       // Post duration for engine to start | (Optional)
-    searchEngine: "strict",              // Search Engine type/mode           | (Optional)
+    searchEngine: function (query, record) {
+        return record
+    },              // Search Engine type/mode           | (Optional)
     resultsList: {                       // Rendered results list object      | (Optional)
         container: source => {
            // source.setAttribute("class", "w-full inline-block z-50")
