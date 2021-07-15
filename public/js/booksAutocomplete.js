@@ -16,7 +16,7 @@ const autoCompleteJS = new autoComplete({
             // Return Fetched data
             return data;
         },
-        key: ["Title"],
+        key: ["Title", "Authors"],
         cache: false
     },
 
@@ -53,7 +53,6 @@ const autoCompleteJS = new autoComplete({
         },
         content: (data, element) => {
             element.setAttribute("class", "p-4 hover:bg-gray-100 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md")
-            console.log(data);
             data.value["plainTitle"] = data.value.Title
             data.value[data.key] = data.match
 
@@ -76,14 +75,7 @@ function generateBookItem(data, title) {
     var authors = ""
 
     if (data.Authors) {
-        data.Authors.forEach(function (item, index) {
-            if (index === 0) {
-                authors = item;
-            } else {
-                authors = authors + ", " + item;
-            }
-
-        });
+        authors = data.Authors
     }
     finalTitle = data.Title;
     if (title) {

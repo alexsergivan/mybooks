@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strings"
 	"sync"
 
 	"github.com/labstack/echo/v4"
@@ -43,7 +44,7 @@ func NewBooksApiService() *BooksApi {
 }
 
 func (api *BooksApi) SearchBooks(q string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(q).MaxResults(30).Do()
+	volumes, err := api.svc.Volumes.List(q).LangRestrict("en").MaxResults(30).Do()
 	if err != nil {
 		log.Println(err)
 	}
@@ -89,7 +90,7 @@ type AutocompleteBookItem struct {
 	Title      string
 	Subtitle   string
 	GoogleID   string
-	Authors    []string
+	Authors    string
 	Categories []string
 	Thumbnail  string
 }
@@ -104,7 +105,7 @@ func ConvertFromVolumeToAutocompleteItem(volume *books.Volume) *AutocompleteBook
 		Title:      volume.VolumeInfo.Title,
 		Subtitle:   volume.VolumeInfo.Subtitle,
 		GoogleID:   volume.Id,
-		Authors:    volume.VolumeInfo.Authors,
+		Authors:    strings.Join(volume.VolumeInfo.Authors, ","),
 		Categories: volume.VolumeInfo.Categories,
 		Thumbnail:  thumb,
 	}
