@@ -43,11 +43,19 @@ func BookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 		if userID != "" && bookshelfSlug != "" {
 			if nUserID, err := strconv.ParseInt(userID, 10, 64); err == nil {
 				bookshelf := userbook.GetUserBookShelfBySlug(db, nUserID, bookshelfSlug)
-				return c.Render(http.StatusOK, "bookshelf--user-bookshelf", map[string]interface{}{
+				templateData := map[string]interface{}{
 					"bookShelf": bookshelf,
 					"ownPage":   uID != nil && int64(*uID) == nUserID,
 					"userID":    userID,
-				})
+				}
+
+				if c.QueryParam("widget") == "1" {
+					if c.QueryParam("dark") == "1" {
+						templateData["dark"] = true
+					}
+					return c.Render(http.StatusOK, "base:widget---widget", templateData)
+				}
+				return c.Render(http.StatusOK, "bookshelf--user-bookshelf", templateData)
 			}
 
 		}

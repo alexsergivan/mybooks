@@ -1,0 +1,29 @@
+{{ define "widget" }}
+    <!DOCTYPE html>
+    {{ $class := "" }}
+    {{ if $.dark }}
+        {{ $class = "dark" }}
+    {{ end }}
+    <html lang="en" class="{{ $class }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        <link rel="stylesheet" href="/build/main.css">
+    </head>
+    <body class="bg-gray-200 dark:bg-gray-800">
+       {{ template "content" . }}
+    </body>
+
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight, width: document.body.scrollWidth };
+            window.top.postMessage(message, "*");
+        });
+    </script>
+
+    </html>
+{{ end }}

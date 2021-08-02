@@ -1,0 +1,12 @@
+{{ define "bookshelf" }}
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-0 bg-gray-100 dark:bg-gray-700 rounded-t-lg">
+
+        {{ $slug := $.bookShelf.Slug }}
+        {{ range $.bookShelf.UserBooks }}
+            <div class="border-b-8 border-gray-600 dark:border-gray-500 pr-2 pl-2 text-center pt-3 bottom-0">
+                {{ template "bookshelf-item" args "book" .Book "slug" $slug "status" .Status }}
+
+            </div>
+        {{ end }}
+    </div>
+{{ end }}

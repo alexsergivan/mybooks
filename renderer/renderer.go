@@ -193,7 +193,12 @@ func (v *View) compileTemplates(tmpl *template.Template, filenames []string, tpl
 func (v *View) Render(w io.Writer, componentName string, data interface{}, c echo.Context) error {
 	templateName := `main`
 	if strings.HasPrefix(componentName, BaseTemplatePrefix) {
-		templateName = strings.TrimPrefix(componentName, BaseTemplatePrefix)
+
+		compSlice := strings.Split(componentName, "---")
+		templateName = strings.TrimPrefix(compSlice[0], BaseTemplatePrefix)
+		if len(compSlice) > 0 {
+			componentName = compSlice[1]
+		}
 	}
 	componentsFiles, err := componentsFiles(componentName, v.tpls)
 	if err != nil {

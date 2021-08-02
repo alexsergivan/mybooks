@@ -19,6 +19,7 @@ module.exports = {
       }
     },
   },
+  darkMode: 'class',
   variants: {},
   plugins: [],
   future: {

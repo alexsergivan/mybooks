@@ -18,7 +18,7 @@
         </span>
       </span>
            {{ end }}
-    <a href="/book/{{ $.book.ID }}" class="block flex-wrap flex content-end">
+    <a target="_PARENT" href="/book/{{ $.book.ID }}" class="block flex-wrap flex content-end">
 
         <img src="{{ $.book.Thumbnail }}" title="{{ $.book.Title }}" alt="{{ $.book.Title }}" class="mx-auto rounded-sm w-30 h-40 shadow-lg hover:shadow-none"/>
 {{/*        <span class="inline-block leading-none mt-1 text-sm font-semibold">*/}}
