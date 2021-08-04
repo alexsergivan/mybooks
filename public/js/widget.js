@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             widget_link = widget_links[i];
             iframe = document.createElement('iframe');
             iframe.setAttribute('id', "bookshelf-" + i);
-            iframe.setAttribute('class', "bookshelf");
+            iframe.setAttribute('class', "bookshelf mx-auto");
             iframe.setAttribute('src', widget_link.href);
             //iframe.setAttribute('width', '300');
             iframe.setAttribute('height', '240');
@@ -30,7 +30,7 @@ window.addEventListener('message', function(e) {
             bookIframes[i].width = message.width + 'px';
         }
     }
-    
+
 } , false);
 
 // function iframeLoaded(id) {
