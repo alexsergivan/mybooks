@@ -32,12 +32,3 @@ window.addEventListener('message', function(e) {
     }
 
 } , false);
-
-// function iframeLoaded(id) {
-//     var iFrameID = document.getElementById(id);
-//     if(iFrameID) {
-//         // here you can make the height, I delete it first, then I make it again
-//         iFrameID.height = "";
-//         iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-//     }
-// }

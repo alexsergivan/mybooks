@@ -8,6 +8,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/alexsergivan/mybooks/cache"
+
 	"github.com/alexsergivan/mybooks/services"
 
 	"github.com/alexsergivan/mybooks/flash"
@@ -126,11 +128,14 @@ func RateBookSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.
 
 func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
+
 		mutex.Lock()
 		defer mutex.Unlock()
 		id := c.Param("id")
 		book := userbook.GetBookByID(id, db)
 		if book.Title != "" {
+			ristrettoCache := cache.NewRistrettoCache()
+
 			pageSize := 15
 			ratingsCount := userbook.GetBookRatingsCount(book.ID, db)
 
@@ -144,18 +149,52 @@ func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book
 				nextPage = page + 1
 			}
 
-			avgRating := userbook.GetAverageBookRating(book.ID, db)
-
-			stars := services.ConvertRateFrom100To5(avgRating)
-
-			return c.Render(http.StatusOK, "book--profile", map[string]interface{}{
+			params := map[string]interface{}{
 				"book":      book,
-				"ratings":   userbook.GetBookRatings(book.ID, db.Scopes(services.Paginate(c, pageSize))),
 				"nextPage":  nextPage,
-				"rate":      userbook.GetAverageBookRating(book.ID, db),
-				"stars":     stars,
 				"rateCount": ratingsCount,
-			})
+			}
+			wg := sync.WaitGroup{}
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				params["ratings"] = userbook.GetBookRatings(book.ID, db.Scopes(services.Paginate(c, pageSize)))
+			}()
+
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				params["rate"] = userbook.GetAverageBookRating(book.ID, db)
+			}()
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				avgRating := userbook.GetAverageBookRating(book.ID, db)
+				params["stars"] = services.ConvertRateFrom100To5(avgRating)
+			}()
+
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				cacheKey := "otherBooks" + book.ID
+				otherBooks, found := ristrettoCache.Get(cacheKey)
+				if !found {
+					bookCat := book.CategoryName
+					if bookCat == "No Category" {
+						bookCat = "novel"
+					}
+
+					oBooks := userbook.ConvertVolumesToBooks(bookApiService.SearchBooksByCategory(bookCat))
+					params["otherBooks"] = oBooks
+					ristrettoCache.Set(cacheKey, oBooks, time.Minute*15)
+					time.Sleep(10 * time.Millisecond)
+				} else {
+					params["otherBooks"] = otherBooks
+				}
+			}()
+			wg.Wait()
+
+			return c.Render(http.StatusOK, "book--profile", params)
 		} else {
 			b, err := getBookFromApi(c, id, bookApiService)
 			if err != nil {
