@@ -221,8 +221,25 @@ func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book
 	}
 }
 
-func BooksPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
+func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		// New books about something.
+		if c.QueryParam("new-about") != "" {
+			aboutTerm := c.QueryParam("new-about")
+			newBooks := userbook.ConvertVolumesToBooks(bookApiService.SearchNewBooks(aboutTerm))
+
+			return c.Render(http.StatusOK, "books--books", map[string]interface{}{
+				"books":    newBooks,
+				"nextPage": nil,
+			})
+
+		}
+
+		// Best rated books about something (rated and stored in our DB)
+		if c.QueryParam("best-about") != "" {
+
+		}
+
 		pageSize := 15
 		booksCount := userbook.GetBooksCount(db)
 
