@@ -218,17 +218,21 @@ func ConvertVolumeToBook(volume *books.Volume) Book {
 	}
 
 	image, thumbnail := "", ""
-	if volume.VolumeInfo.ImageLinks.Large != "" {
-		image = strings.Replace(volume.VolumeInfo.ImageLinks.Large, "http://", "https://", -1)
+	if volume.VolumeInfo.ImageLinks == nil {
+		image, thumbnail = "", ""
 	} else {
-		if volume.VolumeInfo.ImageLinks.Medium != "" {
-			image = strings.Replace(volume.VolumeInfo.ImageLinks.Medium, "http://", "https://", -1)
+		if volume.VolumeInfo.ImageLinks.Large != "" {
+			image = strings.Replace(volume.VolumeInfo.ImageLinks.Large, "http://", "https://", -1)
+		} else {
+			if volume.VolumeInfo.ImageLinks.Medium != "" {
+				image = strings.Replace(volume.VolumeInfo.ImageLinks.Medium, "http://", "https://", -1)
+			}
+		}
+
+		if volume.VolumeInfo.ImageLinks.Thumbnail != "" {
+			thumbnail = strings.Replace(volume.VolumeInfo.ImageLinks.Thumbnail, "http://", "https://", -1)
 		}
 	}
-	if volume.VolumeInfo.ImageLinks.Thumbnail != "" {
-		thumbnail = strings.Replace(volume.VolumeInfo.ImageLinks.Thumbnail, "http://", "https://", -1)
-	}
-
 	return Book{
 		ID:            volume.Id,
 		Title:         volume.VolumeInfo.Title,
