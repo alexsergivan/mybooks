@@ -228,7 +228,7 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 			aboutTerm := c.QueryParam("new-about")
 			newBooks := userbook.ConvertVolumesToBooks(bookApiService.SearchNewBooks(aboutTerm))
 
-			return c.Render(http.StatusOK, "books--books", map[string]interface{}{
+			return c.Render(http.StatusOK, "books--new-books", map[string]interface{}{
 				"books":    newBooks,
 				"nextPage": nil,
 			})
