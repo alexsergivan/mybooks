@@ -231,6 +231,7 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 			return c.Render(http.StatusOK, "books--new-books", map[string]interface{}{
 				"books":    newBooks,
 				"nextPage": nil,
+				"topic":    aboutTerm,
 			})
 
 		}

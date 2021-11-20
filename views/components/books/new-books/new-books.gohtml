@@ -7,22 +7,7 @@
         <div class="col-span-12">
             <div class="px-2 md:px-0 md:mx-auto max-w-lg md:max-w-2xl h-auto">
 
-                <div class="box pt-6 mb-10">
-                    <div class="box-wrapper">
-
-                        <div class=" bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200">
-                            <div class="outline-none focus:outline-none"><svg class=" w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                            <input type="search" name="" id="autoComplete" placeholder="search for books" class="w-full pl-4 text-sm outline-none focus:outline-none bg-transparent">
-                        </div>
-                        <div id="status" class="mt-5"></div>
-
-                    </div>
-                    <p class="text-xs text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 float-left mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                        </svg>If you can't find an already rated book, you can rate a new one <a class="font-bold border-b border-dashed border-gray-800" href="{{ call $.reverse "rateBook" }}">here</a>.</p>
-                </div>
-
-                <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all rated books </h2>
+                <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore newly published books about <span class="font-bold">{{ $.topic }}</span> below👇</h2>
                 {{ if (gt (len $.books) 0) }}
                     <div class="pagecontainer">
                         {{ range $.books }}

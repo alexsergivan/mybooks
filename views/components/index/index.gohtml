@@ -6,10 +6,26 @@
     <div class="hero-wrapper grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
 
       <!-- hero text -->
-      <div class="hero-text col-span-6">
-        <h1 class=" font-bold text-4xl md:text-5xl max-w-xl text-white leading-tight text-shadow font-sanchez">Reading is a conversation. All books talk. But a good book listens as well.</h1>
-        <hr class=" w-12 h-1 bg-mbrrosa rounded-full mt-8"> <p class="text-gray-100 text-sm "> Mark Haddon </p>
-        <p class="text-gray-100 text-base leading-relaxed mt-8 font-semibold">Welcome to a perfect place where you can share your reading experience and find what to read next in a fun way. Create your virtual bookshelves, manage your reading queue. Enjoy personalised book recommendations and read your next favorite book! 😉 <a class="text-gray-700 block" href="/about">More details</a></p>
+      <div class="hero-text col-span-7">
+        <h1 class=" font-bold text-4xl md:text-5xl max-w-full text-white leading-relaxed text-shadow font-sanchez">Welcome to a perfect place where you can share your reading experience and find what to read next in a fun way!</h1>
+        <div class="mt-6 justify-center md:justify-start">
+          <p class="text-gray-100 text-base leading-relaxed mt-8 mb-5 font-light text-xl">
+            Also, you can just explore newly published books on interesting for your topic. Just try it below <span class="text-lg">👇</span>
+          </p>
+          <form action="/books" class="block w-full">
+            <div class=" bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200">
+              <div class="outline-none focus:outline-none text-gray-400 pr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <input type="search" name="new-about" id="new-about" placeholder="Type a book topic here. I.e 'time travel' " class="w-full text-sm outline-none focus:outline-none bg-transparent"><button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md font-semibold text-gray-900 bg-mbrrosa hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit" method="GET">Explore</button></div>
+
+          </form>
+        </div>
+        <p class="text-gray-100 text-base leading-relaxed mt-8 font-light text-xl">You also can create your virtual bookshelves, manage your reading queue. Enjoy personalised book recommendations and read your next favorite book! 😉 <a class="text-gray-700 block" href="/about">More details</a></p>
+
+
         <div class="get-app flex space-x-5 mt-10 justify-center md:justify-start">
           {{ if not $.user }}
           <a href="/auth/google" alt="Sign in with Google" title="Sign in with Google" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4 hover:shadow-sm">
@@ -73,7 +89,7 @@
       </div>
 
       <!-- hero image -->
-      <div class="hero-image col-span-6">
+      <div class="hero-image col-span-5">
         <img src="/images/readers/4.svg" />
       </div>
     </div>
