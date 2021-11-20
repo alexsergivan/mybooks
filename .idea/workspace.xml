@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/mybooks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybooks.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resolvers/bookresolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/resolvers/bookresolver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/components/books/new-books/new-books.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/books/new-books/new-books.gohtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/components/index/index.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/index/index.gohtml" afterDir="false" />
     </list>
@@ -201,7 +202,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/resolvers/bookresolver.go</url>
-          <line>242</line>
+          <line>243</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
