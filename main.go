@@ -106,7 +106,7 @@ func main() {
 	apiGroup := e.Group("/api", auth.IsAuthMiddleware())
 	apiGroup.GET("/books/search", book.BooksAutocomplete(booksApiService))
 
-	e.GET("/books", resolvers.BooksPage(db, store)).Name = "books"
+	e.GET("/books", resolvers.BooksPage(db, store, booksApiService)).Name = "books"
 	e.GET("/books/search", resolvers.BooksSearchAutocomplete(db, store))
 
 	s := &http.Server{
