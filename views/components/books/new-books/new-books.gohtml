@@ -82,7 +82,19 @@
     <script  src="/libs/scroll/scroll.js"></script>
     <script defer src="/js/pagination.js"></script>
     <script defer src="/js/localBooksAutocomplete.js"></script>
-    <meta name="description" content="Check what books people likes and dislikes. Be inspired about next your books to read."/>
+    <meta name="description" content="Explore newly published books about {{ $.topic }}. And find your next favorite book!"/>
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MyBooksRating - a perfect place for a book lover!" />
+    <meta property="og:url" content="https://mybooksrating.com/" />
+    <meta property="og:site_name" content="MyBooksRating" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MyBooksRating - a perfect place for a book lover!" />
+    <meta name="twitter:image" content="https://mybooksrating.com/images/card.png" />
+    <meta property="og:image" content="https://mybooksrating.com/images/card.png" />
+    <meta property="og:image:secure_url" content="https://mybooksrating.com/images/card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:description" content="Explore newly published books about {{ $.topic }}. And find your next favorite book!" />
 {{ end }}
 
 {{ define "title" }}

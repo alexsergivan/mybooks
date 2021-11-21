@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbf8a026-cd9d-46e7-bc51-6a37c2969b86" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/mybooks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybooks.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/logo.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resolvers/bookresolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/resolvers/bookresolver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/components/books/new-books/new-books.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/books/new-books/new-books.gohtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/components/index/index.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/views/components/index/index.gohtml" afterDir="false" />
     </list>
@@ -38,12 +37,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="book-theme" />
-                    <option name="lastUsedInstant" value="1636918646" />
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1637406909" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1636439983" />
+                    <option name="branchName" value="book-theme" />
+                    <option name="lastUsedInstant" value="1636918646" />
                   </RecentBranch>
                 </list>
               </option>
@@ -110,14 +109,23 @@
       <recent name="$PROJECT_DIR$/views/components/bookshelf/add-to-bookshelf" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/views/components/book/profile" />
       <recent name="$PROJECT_DIR$/views/layouts/base" />
-      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/views/components/bookshelf/bookshelf" />
       <recent name="$PROJECT_DIR$/views/components" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="mybooks" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/alexsergivan/mybooks" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build github.com/alexsergivan/mybooks" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mybooks" />
       <working_directory value="$PROJECT_DIR$" />
@@ -125,6 +133,16 @@
       <package value="github.com/alexsergivan/mybooks" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="mybooks" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <package value="github.com/alexsergivan/mybooks" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
