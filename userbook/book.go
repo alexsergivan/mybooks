@@ -190,6 +190,7 @@ func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 
 func GetAlphabet(db *gorm.DB) []string {
 	var letters []string
+	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
 	err := db.Select("substr(REPLACE(title, '\"', ''),1,1) as letter").
 		Order("letter ASC").
 		Table("books").
@@ -199,6 +200,12 @@ func GetAlphabet(db *gorm.DB) []string {
 
 	if err != nil {
 		log.Println(err)
+	}
+
+	for k, letter := range letters {
+		if !isAlpha(letter) {
+			letters = append(letters[:k], letters[k+1:]...)
+		}
 	}
 
 	return letters
