@@ -202,13 +202,14 @@ func GetAlphabet(db *gorm.DB) []string {
 		log.Println(err)
 	}
 
-	for k, letter := range letters {
-		if !isAlpha(letter) {
-			letters = append(letters[:k], letters[k+1:]...)
+	var finalLetters []string
+	for _, letter := range letters {
+		if isAlpha(letter) {
+			finalLetters = append(finalLetters, letter)
 		}
 	}
 
-	return letters
+	return finalLetters
 }
 
 func GetBooksWithRating(db *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
