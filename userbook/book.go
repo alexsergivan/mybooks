@@ -152,7 +152,7 @@ func GetBooksLight(db *gorm.DB) []*Book {
 	return b
 }
 
-func GetBooksListGroupedByLetter(db *gorm.DB) map[string][]Book {
+func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 	var b []struct {
 		ID           string
 		Title        string
@@ -165,6 +165,7 @@ func GetBooksListGroupedByLetter(db *gorm.DB) map[string][]Book {
 	err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
 		Order("title ASC").
 		Table("books").
+		Where("substr(REPLACE(title, '\"', ''),1,1)=?", letter).
 		Find(&b).
 		Error
 
@@ -185,6 +186,22 @@ func GetBooksListGroupedByLetter(db *gorm.DB) map[string][]Book {
 	}
 
 	return booklist
+}
+
+func GetAlphabet(db *gorm.DB) []string {
+	var letters []string
+	err := db.Select("substr(REPLACE(title, '\"', ''),1,1) as letter").
+		Order("letter ASC").
+		Table("books").
+		Group("letter").
+		Find(&letters).
+		Error
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return letters
 }
 
 func GetBooksWithRating(db *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
