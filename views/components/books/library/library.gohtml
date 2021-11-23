@@ -1,0 +1,47 @@
+{{ define "header" }}
+{{ end }}
+
+{{ define "content" }}
+
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12">
+            <div class="px-2 md:px-0 md:mx-auto max-w-lg md:max-w-5xl h-auto">
+
+                <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all books in our Library </h2>
+                {{ if (gt (len $.books) 0) }}
+                    <div class="pagecontainer p-5 bg-white rounded-lg shadow-lg">
+                        {{ range $letter, $books := .books }}
+                            <div class="mb-5">
+                                <div class="mb-2"><h3 class="alphabet-title font-sanchez inline-flex items-center justify-center px-2 py-1 mr-2 text-lg font-light uppercase leading-none text-white bg-gray-600 rounded-full w-10 h-10">{{ $letter }}</h3></div>
+                                <div class="grid justify-items-start grid-cols-1 md:grid-cols-3 auto-rows-auto gap-2 leading-tight">
+                               {{ range $books }}
+                                   <div>
+                                     <a href="{{ call $.reverse "bookProfile" .ID }}" class="font-light text-sm hover:text-mbrblue">{{ .Title }} </a>
+                                   </div>
+                               {{ end }}
+                                </div>
+                                <hr class="text-gray-100 mt-4"/>
+                            </div>
+                         {{ end }}
+
+
+                    </div>
+                {{ end }}
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+{{ end }}
+
+
+{{ define "additional_head" }}
+    <meta name="description" content="The complete list of books in our library. Wondering which book to read next? Find out it on our resource!"/>
+{{ end }}
+
+{{ define "title" }}
+    Explore books
+{{ end }}

@@ -36,7 +36,9 @@
                                             <p class="text-mbrblue font-semibold tracking-tighter">
                                                 {{ .CategoryName }}
                                             </p>
-
+                                            <p class="text-gray-700 font-light text-sm mt-2">
+                                                {{ substr 0 260 (.Description | toString) }}...
+                                            </p>
 
                                         </div>
 
@@ -78,10 +80,6 @@
 
 {{ define "additional_head" }}
     <link rel="stylesheet" href="/libs/autocomplete/autoComplete.min.css">
-    <script src="/libs/autocomplete/autoComplete.min.js"></script>
-    <script  src="/libs/scroll/scroll.js"></script>
-    <script defer src="/js/pagination.js"></script>
-    <script defer src="/js/localBooksAutocomplete.js"></script>
     <meta name="description" content="Explore newly published books about {{ $.topic }}. And find your next favorite book!"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />

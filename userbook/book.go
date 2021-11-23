@@ -3,6 +3,7 @@ package userbook
 import (
 	"html/template"
 	"log"
+	"regexp"
 	"strings"
 	"time"
 
@@ -149,6 +150,41 @@ func GetBooksLight(db *gorm.DB) []*Book {
 	}
 
 	return b
+}
+
+func GetBooksListGroupedByLetter(db *gorm.DB) map[string][]Book {
+	var b []struct {
+		ID           string
+		Title        string
+		Subtitle     string
+		CategoryName string
+		Letter       string `json:"letter"`
+	}
+	booklist := map[string][]Book{}
+
+	err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
+		Order("title ASC").
+		Table("books").
+		Find(&b).
+		Error
+
+	if err != nil {
+		log.Println(err)
+	}
+	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
+	for _, book := range b {
+		if !isAlpha(book.Letter) {
+			continue
+		}
+		booklist[book.Letter] = append(booklist[book.Letter], Book{
+			ID:           book.ID,
+			Title:        book.Title,
+			Subtitle:     book.Subtitle,
+			CategoryName: book.CategoryName,
+		})
+	}
+
+	return booklist
 }
 
 func GetBooksWithRating(db *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
