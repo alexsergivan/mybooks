@@ -80,6 +80,12 @@ func getSitemapContent(c echo.Context, db *gorm.DB) *Sitemap {
 			})
 		}
 
+		sitemap.AddUrl(&Url{
+			Loc:        "https://" + c.Request().Host + "/library",
+			LastMod:    time.Now().Format("2006-01-02"),
+			ChangeFreq: "daily",
+		})
+
 		ristrettoCache.Set(cacheKey, sitemap, time.Hour*12)
 		time.Sleep(10 * time.Millisecond)
 
