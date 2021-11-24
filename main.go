@@ -66,7 +66,8 @@ func main() {
 
 	e.GET("/about", resolvers.AboutPage(db, store)).Name = "about"
 	e.GET("/privacy-policy", resolvers.PrivacyPage(db, store)).Name = "policy"
-	e.GET("/sitemap.xml", resolvers.GetSitemap(db, store))
+	e.GET("/sitemap.xml", resolvers.GetSitemapIndex(db, store))
+	e.GET("/sitemap/:type/sitemap.xml", resolvers.GetSitemap(db, store))
 	e.GET("/robots.txt", resolvers.GetRobots())
 	e.GET("/library", resolvers.GetLibrary(db, store))
 

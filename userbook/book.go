@@ -162,16 +162,27 @@ func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 	}
 	booklist := map[string][]Book{}
 
-	err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
-		Order("title ASC").
-		Table("books").
-		Where("substr(REPLACE(title, '\"', ''),1,1)=?", letter).
-		Find(&b).
-		Error
-
-	if err != nil {
-		log.Println(err)
+	if letter == "all" {
+		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
+			Order("title ASC").
+			Table("books").
+			Find(&b).
+			Error
+		if err != nil {
+			log.Println(err)
+		}
+	} else {
+		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
+			Order("title ASC").
+			Table("books").
+			Where("substr(REPLACE(title, '\"', ''),1,1)=?", letter).
+			Find(&b).
+			Error
+		if err != nil {
+			log.Println(err)
+		}
 	}
+
 	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
 	for _, book := range b {
 		if !isAlpha(book.Letter) {
