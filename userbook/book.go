@@ -158,12 +158,13 @@ func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 		Title        string
 		Subtitle     string
 		CategoryName string
-		Letter       string `json:"letter"`
+		Letter       string    `json:"letter"`
+		CreatedAt    time.Time `json:"created_at"`
 	}
 	booklist := map[string][]Book{}
 
 	if letter == "all" {
-		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
+		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter, created_at").
 			Order("title ASC").
 			Table("books").
 			Find(&b).
@@ -172,7 +173,7 @@ func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 			log.Println(err)
 		}
 	} else {
-		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter").
+		err := db.Select("id, title, subtitle, category_name, substr(REPLACE(title, '\"', ''), 1, 1) AS letter, created_at").
 			Order("title ASC").
 			Table("books").
 			Where("substr(REPLACE(title, '\"', ''),1,1)=?", letter).
@@ -193,6 +194,7 @@ func GetBooksListGroupedByLetter(db *gorm.DB, letter string) map[string][]Book {
 			Title:        book.Title,
 			Subtitle:     book.Subtitle,
 			CategoryName: book.CategoryName,
+			CreatedAt:    book.CreatedAt,
 		})
 	}
 
