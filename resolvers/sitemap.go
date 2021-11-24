@@ -122,21 +122,21 @@ func getSitemapContent(c echo.Context, db *gorm.DB) *Sitemap {
 			for _, user := range usersItems {
 				sitemap.AddUrl(&Url{
 					Loc:        "https://" + c.Request().Host + "/reader/" + strconv.Itoa(int(user.ID)),
-					LastMod:    user.UpdatedAt.Format("2006-01-02"),
+					LastMod:    user.UpdatedAt.Format("2006-01-02T15:04:05-07:00"),
 					ChangeFreq: "daily",
 				})
 			}
 		case "library":
 			sitemap.AddUrl(&Url{
 				Loc:        "https://" + c.Request().Host + "/library",
-				LastMod:    time.Now().Format("2006-01-02"),
+				LastMod:    time.Now().Format("2006-01-02T15:04:05-07:00"),
 				ChangeFreq: "daily",
 			})
 			alphabet := userbook.GetAlphabet(db)
 			for _, letter := range alphabet {
 				sitemap.AddUrl(&Url{
 					Loc:        "https://" + c.Request().Host + "/library?letter=" + letter,
-					LastMod:    time.Now().Format("2006-01-02"),
+					LastMod:    time.Now().Format("2006-01-02T15:04:05-07:00"),
 					ChangeFreq: "daily",
 				})
 			}
@@ -146,7 +146,7 @@ func getSitemapContent(c echo.Context, db *gorm.DB) *Sitemap {
 				for _, book := range sitemapItem {
 					sitemap.AddUrl(&Url{
 						Loc:        "https://" + c.Request().Host + "/book/" + book.ID,
-						LastMod:    book.CreatedAt.Format("2006-01-02"),
+						LastMod:    book.CreatedAt.Format("2006-01-02T15:04:05-07:00"),
 						ChangeFreq: "daily",
 					})
 				}
