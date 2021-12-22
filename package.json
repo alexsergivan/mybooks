@@ -10,7 +10,6 @@
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.2.7"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "npx tailwindcss -i ./styles/main.css -o ./public/build/main.css"
   },
