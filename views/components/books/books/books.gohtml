@@ -22,7 +22,7 @@
                 </svg>If you can't find an already rated book, you can rate a new one <a class="font-bold border-b border-dashed border-gray-800" href="{{ call $.reverse "rateBook" }}">here</a>.</p>
             </div>
 
-            <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all rated books </h2>
+            <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all books </h2>
             {{ if (gt (len $.books) 0) }}
             <div class="pagecontainer">
                 {{ range $.books }}
