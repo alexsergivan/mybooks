@@ -1,6 +1,7 @@
 package userbook
 
 import (
+	"database/sql"
 	"html/template"
 	"log"
 	"regexp"
@@ -86,12 +87,12 @@ func GetBookRatingsCount(id string, db *gorm.DB) int64 {
 }
 
 func GetAverageBookRating(id string, db *gorm.DB) float64 {
-	var avRate float64
+	var avRate sql.NullFloat64
 	result := db.Table("book_ratings").Select("AVG(rate) as rate").Where("book_id = ?", id).Find(&avRate)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}
-	return avRate
+	return avRate.Float64
 }
 
 func GetBestBooks(db *gorm.DB, duration time.Time, limit int) []BookRates {
@@ -139,6 +140,16 @@ func GetBooks(db *gorm.DB) []*Book {
 	}
 
 	return b
+}
+
+func GetBookCategories(db *gorm.DB) []Category {
+	var c []Category
+	result := db.Model(&Category{}).Order("name asc").Find(&c)
+	if result.Error != nil {
+		log.Println(result.Error)
+	}
+
+	return c
 }
 
 func GetBooksLight(db *gorm.DB) []*Book {
@@ -225,8 +236,8 @@ func GetAlphabet(db *gorm.DB) []string {
 	return finalLetters
 }
 
-func GetBooksWithRating(db *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
-	books := GetBooks(db.Scopes(services.Paginate(c, pageSize)))
+func GetBooksWithRating(db *gorm.DB, dbScopes *gorm.DB, c echo.Context, pageSize int) []*BookWithRate {
+	books := GetBooks(dbScopes.Scopes(services.Paginate(c, pageSize)))
 	var br []*BookWithRate
 
 	for _, book := range books {

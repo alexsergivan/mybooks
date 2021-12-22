@@ -217,7 +217,7 @@ input[type=range]::-ms-thumb {
 
 
 @layer utilities {
-    @variants responsive {
+
         .text-shadow {
             text-shadow: 1px 1px 1px gray;
         }
@@ -230,7 +230,6 @@ input[type=range]::-ms-thumb {
         .text-shadow-none {
             text-shadow: none;
         }
-    }
 
 }
 

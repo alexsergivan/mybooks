@@ -1,7 +1,9 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  purge: [
-    './views/**/*.html',
-    './views/**/**/*.html'
+  content: [
+    './views/**/*.gohtml',
+    './views/**/**/*.gohtml'
   ],
   theme: {
     extend: {
@@ -13,14 +15,15 @@ module.exports = {
         mbrbad:'#ff9d9d',
         mbrok: '#ffc078',
         mbrgood: '#83cbfa',
+        green: colors.emerald,
+        yellow: colors.amber,
+        purple: colors.violet,
       },
       fontFamily: {
         sanchez: ['"Sanchez"', 'serif']
       }
     },
   },
-  darkMode: 'class',
-  variants: {},
   plugins: [],
   future: {
     removeDeprecatedGapUtilities: true,

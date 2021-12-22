@@ -11,6 +11,7 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
+	"net/url"
 	"reflect"
 	"regexp"
 	"strings"
@@ -105,6 +106,9 @@ func getFuncMap() template.FuncMap {
 		},
 		"safeHTML": func(s string) template.HTML {
 			return template.HTML(s)
+		},
+		"escape": func(s string) string {
+			return url.QueryEscape(s)
 		},
 	}
 

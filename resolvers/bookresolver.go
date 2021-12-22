@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"sync"
 	"time"
@@ -241,8 +242,20 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 
 		}
 
+		dbScopes := db.Scopes()
+		unescapedCateg := ""
+		if c.QueryParam("category") != "" {
+			var err error
+			unescapedCateg, err = url.QueryUnescape(c.QueryParam("category"))
+			if err != nil {
+				log.Println(err)
+			} else {
+				dbScopes = db.Scopes(BookCategory(c, unescapedCateg))
+			}
+		}
+
 		pageSize := 15
-		booksCount := userbook.GetBooksCount(db)
+		booksCount := userbook.GetBooksCount(dbScopes)
 
 		page, _ := strconv.Atoi(c.QueryParam("page"))
 		if page == 0 {
@@ -253,10 +266,14 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 		if page*pageSize < int(booksCount) {
 			nextPage = page + 1
 		}
-		b := userbook.GetBooksWithRating(db, c, pageSize)
+
+		b := userbook.GetBooksWithRating(db, dbScopes, c, pageSize)
+
 		return c.Render(http.StatusOK, "books--books", map[string]interface{}{
-			"books":    b,
-			"nextPage": nextPage,
+			"books":          b,
+			"nextPage":       nextPage,
+			"categories":     userbook.GetBookCategories(db),
+			"activeCategory": unescapedCateg,
 		})
 	}
 }
@@ -280,6 +297,13 @@ func BookTitleLike(c echo.Context, title string) func(db *gorm.DB) *gorm.DB {
 		return db.Where("title LIKE ?", "%"+title+"%")
 	}
 }
+
+func BookCategory(c echo.Context, category string) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Where("category_name LIKE ?", "%"+category+"%")
+	}
+}
+
 func getBookFromApi(c echo.Context, bookID string, bookApiService *book.BooksApi) (userbook.Book, error) {
 	bookFromApi, err := bookApiService.GetBook(bookID)
 	if err != nil {
