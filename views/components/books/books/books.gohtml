@@ -22,7 +22,14 @@
                 </svg>If you can't find an already rated book, you can rate a new one <a class="font-bold border-b border-dashed border-gray-800" href="{{ call $.reverse "rateBook" }}">here</a>.</p>
             </div>
 
-            <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all books </h2>
+            {{ if eq $.activeCategory "" }}
+                <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5">Explore all books </h2>
+            {{ else }}
+                <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mb-5"> Explore all books in {{ $.activeCategory }} category </h2>
+
+            {{ end }}
+
+
             {{ if (gt (len $.books) 0) }}
             <div class="pagecontainer">
                 {{ range $.books }}
@@ -115,9 +122,18 @@
 <script  src="/libs/scroll/scroll.js"></script>
 <script defer src="/js/pagination.js"></script>
 <script defer src="/js/localBooksAutocomplete.js"></script>
-<meta name="description" content="Check what books people likes and dislikes. Be inspired about next your books to read."/>
+{{ if eq $.activeCategory "" }}
+    <meta name="description" content="Explore new books, check book recommendations and find what to read next."/>
+{{ else }}
+    <meta name="description" content="Explore new books in {{ $.activeCategory }} category, check book recommendations and find what to read next. This is an IMDb like web site for books!"/>
+{{ end }}
+
 {{ end }}
 
 {{ define "title" }}
- Explore new books to read
+  {{ if eq $.activeCategory "" }}
+    Explore new books to read and find what to read next
+  {{ else }}
+      Explore all books in {{ $.activeCategory }} category and find what to read next
+  {{ end }}
 {{ end }}
