@@ -272,7 +272,6 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 		return c.Render(http.StatusOK, "books--books", map[string]interface{}{
 			"books":          b,
 			"nextPage":       nextPage,
-			"categories":     userbook.GetBookCategories(db),
 			"activeCategory": unescapedCateg,
 		})
 	}

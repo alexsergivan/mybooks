@@ -25,11 +25,13 @@ func GetLibrary(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 				ristrettoCache.Set(cacheKey, alphabet, time.Hour*24)
 				time.Sleep(10 * time.Millisecond)
 				templateData = map[string]interface{}{
-					"alphabet": alphabet,
+					"alphabet":   alphabet,
+					"categories": userbook.GetBookCategories(db),
 				}
 			} else {
 				templateData = map[string]interface{}{
-					"alphabet": alphabet.([]string),
+					"alphabet":   alphabet.([]string),
+					"categories": userbook.GetBookCategories(db),
 				}
 			}
 			return c.Render(http.StatusOK, "books--alphabet", templateData)
