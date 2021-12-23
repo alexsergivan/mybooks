@@ -2441,6 +2441,12 @@ body  .light.cookie-consent-preferences-overlay .cookie-consent-preferences-dial
     height: auto;
   }
 
+  .md\:h-fit {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+
   .md\:w-56 {
     width: 14rem;
   }
