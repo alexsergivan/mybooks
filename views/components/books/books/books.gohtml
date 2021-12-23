@@ -56,7 +56,7 @@
                                     {{ end }}
                                 </p>
                                 <p class="text-mbrblue font-semibold tracking-tighter">
-                                    {{ .Book.CategoryName }}
+                                    <a href="/books?category={{ .Book.CategoryName | escape }}" title="{{ .Book.CategoryName }}" alt="{{ .Book.CategoryName }}">{{ .Book.CategoryName }}</a>
                                 </p>
 
 
