@@ -40,7 +40,7 @@
                         {{ if not (eq .Book.Image "") }}
                           {{ $img = .Book.Image }}
                         {{ end }}
-                        <div class="bg-cover bg-bottom h-56 md:h-fit md:w-56" title="{{ .Book.Title }}" alt="{{ .Book.Title }}" style="background-image: url({{ $img }})">
+                        <div class="bg-cover bg-bottom h-56 md:h-full md:w-56" title="{{ .Book.Title }}" alt="{{ .Book.Title }}" style="background-image: url({{ $img }})">
                         </div>
                         <div class="w-full">
                             <div class="p-4 md:p-5">
