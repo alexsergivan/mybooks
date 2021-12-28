@@ -273,6 +273,7 @@ func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.Books
 			"books":          b,
 			"nextPage":       nextPage,
 			"activeCategory": unescapedCateg,
+			"category":       c.QueryParam("category"),
 		})
 	}
 }

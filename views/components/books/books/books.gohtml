@@ -100,8 +100,12 @@
             <div class="pagination">
 
                 {{ if gt $.nextPage 0 }}
+                {{ if ne $.category "" }}
+                    <a href="?page={{ $.nextPage}}&category={{ $.category }}" class="next">Next</a>
+                {{ else }}
+                    <a href="?page={{ $.nextPage}}" class="next">Next</a>
+                {{ end }}
 
-                <a href="?page={{ $.nextPage}}" class="next">Next</a>
                 {{ end }}
             </div>
         </div>
