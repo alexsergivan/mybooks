@@ -81,7 +81,7 @@
                     {{ if (gt (len $.book.Authors) 0) }}
                         {{ $auth = (index $.book.Authors 0).Name }}
                     {{ end }}
-                    <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrati07-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }} {{ $auth }}" alt="Buy {{ $.book.Title }} on Amazon" title="Buy {{ $.book.Title }} on Amazon" class="max-w-lg inline-block bg-red-300 hover:bg-mbrrosa border-gray-100 border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
+                    <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=tavelbooks-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }} {{ $auth }}" alt="Buy {{ $.book.Title }} on Amazon" title="Buy {{ $.book.Title }} on Amazon" class="max-w-lg inline-block bg-red-300 hover:bg-mbrrosa border-gray-100 border-2 shadow-md hover:shadow-sm mt-5 py-2 px-5 md:py-3 md:px-6 rounded-lg flex items-center space-x-4">
                         <div class="logo">
                             <img src="/images/amazon.svg"
                                  class="w-6 h-6"
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="mt-2 mb-1 font-bold text-gray-600"> Do you want to read this book? 😳 </div>
-                <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrati07-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }} {{ $auth }}" alt="Buy a book {{ $.book.Title }}" title="Buy a book {{ $.book.Title }}" class="font-bold mt-1 text-red-400">
+                <a target="_blank" href="https://www.amazon.com/gp/search?ie=UTF8&tag=tavelbooks-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }} {{ $auth }}" alt="Buy a book {{ $.book.Title }}" title="Buy a book {{ $.book.Title }}" class="font-bold mt-1 text-red-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-left" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg> Buy it now!
@@ -244,7 +244,7 @@
         "name": "{{ $.book.Title }}",
         "offers": {
              "@type": "Offer",
-             "url": "https://www.amazon.com/gp/search?ie=UTF8&tag=mybooksrati07-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}",
+             "url": "https://www.amazon.com/gp/search?ie=UTF8&tag=tavelbooks-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}",
              "priceCurrency": "USD",
              "price": "9.99",
              "priceValidUntil": "2030-11-20",
