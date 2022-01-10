@@ -34,7 +34,7 @@
                                                 {{ end }}
                                             </p>
                                             <p class="text-mbrblue font-semibold tracking-tighter">
-                                                <a href="/books?category={{ .CategoryName | escape }}" title="{{ .CategoryName }}" alt="{{ .CategoryName }}">{{ .CategoryName }}</a>
+                                                {{ .CategoryName }}
                                             </p>
                                             <p class="text-gray-700 font-light text-sm mt-2">
                                                 {{ substr 0 260 (.Description | toString) }}...
