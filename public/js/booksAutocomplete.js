@@ -54,7 +54,7 @@ const autoCompleteJS = new autoComplete({
             render: true,                    // Highlight matching results        | (Optional)
         },
         content: (data, element) => {
-            element.setAttribute("class", "p-4 hover:bg-gray-100 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md")
+            element.setAttribute("class", "p-4 hover:bg-purple-800 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md bg-purple-700 border-2 border-purple-400")
             data.value["plainTitle"] = data.value.Title
             data.value[data.key] = data.match
 
@@ -65,7 +65,7 @@ const autoCompleteJS = new autoComplete({
     },
 
     onSelection: feedback => {             // Action script onSelection event | (Optional)
-        document.querySelector(".selection").innerHTML = `<h4 class="text-sm font-semibold mb-3 mt-5 text-gray-900">Selected book:</h4><div class="p-4 hover:bg-gray-100 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md">` + generateBookItem(feedback.selection.value, feedback.selection.value.plainTitle) + `</div>`;
+        document.querySelector(".selection").innerHTML = `<h4 class="text-sm font-semibold mb-3 mt-5 purple-100">Selected book:</h4><div class="p-4 hover:bg-purple-800 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-purple-700 shadow mb-2 rounded-md border-2 border-purple-400">` + generateBookItem(feedback.selection.value, feedback.selection.value.plainTitle) + `</div>`;
         // Replace Input value with the selected value
         document.querySelector("#autoComplete").value = feedback.selection.value.plainTitle;
         document.querySelector("#bookID").value = feedback.selection.value.GoogleID;
@@ -86,9 +86,9 @@ function generateBookItem(data, title) {
     return  `<div class="col-span-1"><img class="w-full h-auto" src="${data.Thumbnail}"/></div> 
              <div class="col-span-5 text-left content-center flex flex-wrap">
                <div>
-                <div class="text-base text-gray-800 font-bold tracking-wide"> ${finalTitle}</div>
-                <div class="text-gray-700 text-sm">${data.Subtitle}</div>
-                <div class="text-gray-700 text-sm uppercase">${authors}</div>
+                <div class="text-base text-purple-50 font-bold tracking-wide"> ${finalTitle}</div>
+                <div class="text-purple-100 text-sm">${data.Subtitle}</div>
+                <div class="text-purple-200 text-sm uppercase">${authors}</div>
                </div>
                 
                 

@@ -6,34 +6,34 @@
     <!-- component -->
     <!-- This is an example component -->
     <div class="w-full flex flex-col items-center">
-        <div class='sm:max-w-xs md:max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
+        <div class='sm:max-w-xs md:max-w-2xl bg-purple-800 shadow-md rounded-lg mx-auto'>
             <div class="py-2 px-4 md:py-4 md:px-8 mt-3">
                 <form action="{{ call $.reverse `rateBookSubmit` }}" method="post">
                    <div class="flex flex-col mb-8">
                        {{ if not $.bookRating }}
                           {{ if $.book }}
-                            <h2 class="text-gray-700 font-semibold text-2xl tracking-wide mb-2">Do you want to rate a selected book?</h2>
-                            <p class="text-gray-500 text-base">You can add your rating and a short comment below.</p>
+                            <h2 class="text-purple-50 font-semibold text-2xl tracking-wide mb-2">Do you want to rate a selected book?</h2>
+                            <p class="text-purple-100 text-base">You can add your rating and a short comment below.</p>
                           {{ else }}
-                            <h2 class="text-gray-700 font-semibold text-2xl tracking-wide mb-2">Do you want to rate a new book?</h2>
-                            <p class="text-gray-500 text-base">First, find the desired book by typing its title in the text field below. After, you can add your rating and a short comment.</p>
+                            <h2 class="text-purple-50 font-semibold text-2xl tracking-wide mb-2">Do you want to rate a new book?</h2>
+                            <p class="text-purple-100 text-base">First, find the desired book by typing its title in the text field below. After, you can add your rating and a short comment.</p>
                           {{ end }}
                        {{ else }}
-                         <h2 class="text-gray-700 font-semibold text-2xl tracking-wide mb-2">Do you want to change your book rating?</h2>
-                         <p class="text-gray-500 text-base">Below you can find your current rating. Just make needed changes and save it.</p>
+                         <h2 class="text-purple-50 font-semibold text-2xl tracking-wide mb-2">Do you want to change your book rating?</h2>
+                         <p class="text-purple-100 text-base">Below you can find your current rating. Just make needed changes and save it.</p>
                        {{ end }}
                    </div>
-                   <div class="bg-gray-100 rounded-lg">
+                   <div class="bg-purple-700 rounded-lg">
                        <div class="py-1 px-1 md:py-4 md:px-4">
                            <div class="flex flex-col">
                                {{ if not $.book }}
-                                 <h4 class="text-lg font-semibold mb-3">Find and rate a book</h4>
+                                 <h4 class="text-lg font-semibold mb-3 text-purple-50">Find and rate a book</h4>
                                {{ end }}
-                               <div class="flex flex-col text-sm text-gray-500">
+                               <div class="flex flex-col text-sm text-purple-100">
                                    {{ if not $.book }}
-                                   <div class=" bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200">
-                                       <div class="outline-none focus:outline-none"><svg class=" w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                                       <input type="search" name="" id="autoComplete" placeholder="search for books" class="w-full pl-4 text-sm outline-none focus:outline-none bg-transparent">
+                                   <div class="bg-purple-800 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-400">
+                                       <div class="outline-none focus:outline-none"><svg class=" w-5 text-purple-100 h-5 cursor-pointer mr-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
+                                       <input type="search" name="" id="autoComplete" placeholder="search for books" class="w-full text-sm outline-none focus:outline-none bg-transparent text-purple-100 placeholder-purple-200">
 
                                    </div>
 
@@ -46,14 +46,14 @@
                                    <div class="selection">
 
                                        {{ if $.book }}
-                                       <h4 class="text-sm font-semibold mb-3 mt-5 text-gray-900">Selected book:</h4>
-                                       <div class="p-4 hover:bg-gray-100 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md">
+                                       <h4 class="text-sm font-semibold mb-3 mt-5 text-purple-100">Selected book:</h4>
+                                       <div class="p-4 hover:bg-purple-800 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-purple-700 shadow mb-2 rounded-md border-2 border-purple-400">
                                            <div class="col-span-1"><img class="w-full h-auto" src="{{ $.book.Thumbnail }}"/></div>
                                            <div class="col-span-5 text-left content-center flex flex-wrap">
                                                <div>
-                                                   <div class="text-base text-gray-800 font-bold tracking-wide"> {{ $.book.Title }}</div>
-                                                   <div class="text-gray-700 text-sm">{{ $.book.Subtitle }}</div>
-                                                   <div class="text-gray-700 text-sm uppercase">
+                                                   <div class="text-base text-purple-50 font-bold tracking-wide"> {{ $.book.Title }}</div>
+                                                   <div class="text-purple-50 text-sm">{{ $.book.Subtitle }}</div>
+                                                   <div class="text-purple-50 text-sm uppercase">
                                                        {{ range $k, $author := $.book.Authors }}
                                                           {{ if gt $k 0 }}
                                                           , {{ $author.Name }}
@@ -72,18 +72,18 @@
                                    </div>
                                    <input id="bookID" name="bookID" type="hidden" value="{{ $.bookID }}" required="required">
                                </div>
-                               <div class="content-center">
-                                  <img class="w-20 h-auto right-0 inline-block float-right mr-3" src="/images/goog.png"/>
-                               </div>
-                               <h4 class="text-sm font-semibold mb-3">How would you rate it?</h4>
-                               <div class="flex flex-col text-sm text-gray-500">
+{{/*                               <div class="content-center">*/}}
+{{/*                                  <img class="w-20 h-auto right-0 inline-block float-right mr-3" src="/images/goog.png"/>*/}}
+{{/*                               </div>*/}}
+                               <h4 class="text-sm font-semibold mb-3 text-purple-100">How would you rate it?</h4>
+                               <div class="flex flex-col text-sm text-purple-100">
                                    {{ $rate := 0 }}
                                      {{ if $.bookRating }}
                                      {{$rate = $.bookRating.Rate }}
                                    {{ end }}
                                        <div x-data="{rate: {{ $rate }} }">
 
-                                           <input class="w-full" type="range" x-model="rate" min="0" max="100" step="1">
+                                           <input class="w-full" type="range" x-model="rate" min="0" max="100" step="1" :class="{'negative': rate < 40, 'ok': rate >= 40 && rate < 75, 'good': rate >= 75}">
 
                                              <span class="text-4xl" x-show="rate <= 5">💩</span>
                                              <span class="text-4xl" x-show="rate <= 20 && rate > 5">🤢</span>
@@ -95,7 +95,7 @@
                                              <span class="text-4xl" x-show="rate <= 100 && rate >= 95">🔥</span>
 
 
-                                             <input id="rate" name="rate" class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-gray-100 w-24" :class="{'text-mbrbad': rate < 40, 'text-mbrok': rate >= 40 && rate < 75, 'text-mbrgood': rate >= 75}" spellcheck="false" placeholder="Rate the book" type="number" step="1" min="0" max="100"  x-model="rate">
+                                             <input id="rate" name="rate" class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-purple-700 w-24" :class="{'text-cerise-500': rate < 40, 'text-cocoa-300': rate >= 40 && rate < 75, 'text-viridian-400': rate >= 75}" spellcheck="false" placeholder="Rate the book" type="number" step="1" min="0" max="100"  x-model="rate">
 
                                        </div>
 
@@ -103,19 +103,19 @@
 
 
                                </div>
-                               <div class="flex flex-col text-sm text-gray-500" x-data="{ count: 0 }" x-init="count = $refs.countme.value.length">
+                               <div class="flex flex-col text-sm text-purple-100" x-data="{ count: 0 }" x-init="count = $refs.countme.value.length">
 
-                                  <textarea id="comment" x-ref="countme" x-on:keyup="count = $refs.countme.value.length" name="comment" maxlength="300" class="description focus:outline-none bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200" spellcheck="true" placeholder="Describe shortly your feelings regarding this book">{{ if $.bookRating }} {{ $.bookRating.Comment }} {{ end }}</textarea>
+                                  <textarea id="comment" x-ref="countme" x-on:keyup="count = $refs.countme.value.length" name="comment" maxlength="300" class="description focus:outline-none bg-purple-800 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-400 placeholder-purple-200" spellcheck="true" placeholder="Describe shortly your feelings regarding this book">{{ if $.bookRating }} {{ $.bookRating.Comment }} {{ end }}</textarea>
 
-                                  <div class="icons flex text-gray-500 m-2">
-                                      <div class="count ml-auto text-gray-400 text-xs font-semibold"><span x-html="count"></span>/<span x-html="$refs.countme.maxLength"></span></div>
+                                  <div class="icons flex text-purple-100 m-2">
+                                      <div class="count ml-auto text-purple-50 text-xs font-semibold"><span x-html="count"></span>/<span x-html="$refs.countme.maxLength"></span></div>
                                   </div>
                                </div>
                            </div>
                        </div>
                    </div>
                    <div class="py-4 content-center">
-                       <input class="inline-block tracking-widest uppercase text-center shadow bg-mbrdarkbrown hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer" type="submit" value="Save and publish">
+                       <input class="inline-block tracking-widest uppercase text-center shadow bg-coral-700 hover:bg-coral-800 focus:shadow-outline focus:outline-none text-purple-100 text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer" type="submit" value="Save and publish">
                    </div>
                     <input type="hidden" name="csrf" value="{{index . "csrf"}}">
                 </form>

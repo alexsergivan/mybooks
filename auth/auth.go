@@ -2,9 +2,13 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/alexsergivan/mybooks/flash"
+	"github.com/wader/gormstore/v2"
 
 	"github.com/alexsergivan/mybooks/services"
 
@@ -68,16 +72,34 @@ func (h *AuthenticatorHandler) StartAuth() echo.HandlerFunc {
 
 func (h *AuthenticatorHandler) LogOut() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		session, err := h.Store.Get(c.Request(), "session")
-		if err != nil {
-			log.Println(err)
-		}
-		session.Options.MaxAge = -1
-		err = h.Store.Save(c.Request(), c.Response(), session)
-		if err != nil {
-			log.Println(err)
-		}
+		h.ClearUserSession(c)
+		return c.Redirect(http.StatusSeeOther, "/")
+	}
+}
+func (h *AuthenticatorHandler) ClearUserSession(c echo.Context) {
+	session, err := h.Store.Get(c.Request(), "session")
+	if err != nil {
+		log.Println(err)
+	}
+	session.Options.MaxAge = -1
+	err = h.Store.Save(c.Request(), c.Response(), session)
+	if err != nil {
+		log.Println(err)
+	}
+}
 
+func DeleteUserSubmit(db *gorm.DB, storage *gormstore.Store, authHandler *AuthenticatorHandler) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		isAuth, _ := IsAuthenticated(c)
+		if isAuth {
+			u := resolvers.GetCurrentUser(c)
+			u.Name = "Lost Ratel"
+			u.Email = nil
+			u.AvatarURL = "/images/lost-ratel.png"
+			userbook.Update(u, db)
+			authHandler.ClearUserSession(c)
+			flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`Your account have been removed`))
+		}
 		return c.Redirect(http.StatusSeeOther, "/")
 	}
 }
@@ -121,6 +143,7 @@ func (h *AuthenticatorHandler) syncGothUser(gothUser goth.User, w http.ResponseW
 	var userID uint
 	if userFromDb.Email == nil {
 		userbook.Create(u, h.DB)
+		userbook.SaveBookshelf(h.DB, resolvers.ReadingQueueName, resolvers.ReadingQueueSlug, "", int64(u.ID))
 		userID = u.ID
 	} else {
 		userID = userFromDb.ID

@@ -61,7 +61,7 @@ const autoCompleteJS = new autoComplete({
     },
 
     onSelection: feedback => {             // Action script onSelection event | (Optional)
-        document.querySelector(".selection").innerHTML = `<h4 class="text-sm font-semibold mb-3 mt-5 text-gray-900">Selected book:</h4><div class="p-4 hover:bg-gray-100 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-white shadow mb-2 rounded-md">` + generateBookItem(feedback.selection.value, feedback.selection.value.plainTitle) + `</div>`;
+        document.querySelector(".selection").innerHTML = `<h4 class="text-sm font-semibold mb-3 mt-5 text-purple-100">Selected book:</h4><div class="p-4 hover:bg-purple-800 inline-block cursor-pointer w-full grid grid-cols-6 gap-4 bg-purple-700 shadow mb-2 rounded-md border-2 border-purple-400">` + generateBookItem(feedback.selection.value, feedback.selection.value.plainTitle) + `</div>`;
         // Replace Input value with the selected value
         document.querySelector("#autoComplete").value = feedback.selection.value.plainTitle;
         document.querySelector("#bookID").value = feedback.selection.value.GoogleID;

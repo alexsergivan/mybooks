@@ -1,17 +1,20 @@
 {{ define "bookshelf" }}
     {{ if (eq (len $.books) 0) }}
-      <div class="bg-gray-100 bg-opacity-50 pt-5 pb-5 shadow-inner rounded-t-lg text-center border-b-8 border-gray-600 text-gray-700 w-full">
+
+      <div class="bg-purple-700 bg-opacity-50 pt-5 pb-5 shadow-inner text-center text-purple-100 w-full">
           No books added yet 🙄
-          <p>Just go to the desired book profile page and click <span class="font-semibold">Add to your bookshelf</span> button.</p>
+          {{ if $.ownPage }}
+          You can easily add books <a class="text-cerise-400 font-semibold" href="/bookshelves/{{ $.slug }}/edit">here</a>
+          {{ end }}
       </div>
     {{ end }}
 
-    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-0 bg-gray-100 bg-opacity-50 pt-5 shadow-inner rounded-t-lg">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-0 bg-purple-800 pt-5 rounded-t-lg">
         {{ $ownPage := $.ownPage }}
         {{ $slug := $.slug }}
 
         {{ range  $.books }}
-            <div class="border-b-8 border-gray-600 pr-2 pl-2 text-center pt-3 bottom-0">
+            <div class="pr-2 pl-2 text-center pt-3 pb-3">
                 {{ template "bookshelf-item" args "book" .Book "ownPage" $ownPage "slug" $slug "status" .Status }}
             </div>
         {{ end }}

@@ -6,27 +6,27 @@
         <!-- component -->
         <!-- This is an example component -->
         <div class="w-full flex flex-col items-center">
-            <div class='sm:max-w-xs md:max-w-2xl bg-white shadow-md rounded-lg mx-auto'>
+            <div class='sm:max-w-xs md:max-w-2xl bg-purple-800 shadow-md rounded-lg mx-auto'>
                 <div class="py-2 px-4 md:py-4 md:px-8 mt-3">
                     <form action="{{ call $.reverse `addBookToBookshelfSubmit` }}" method="post">
                         <div class="flex flex-col mb-8">
-                            <h2 class="text-gray-700 font-normal text-2xl tracking-wide mb-2"><span class="font-semibold">{{ $.book.Title }}</span> in your bookshelf <span class="font-semibold">{{ $.bookShelf.Name }}</span></h2>
-                            <p class="text-gray-500 text-base">Below you can update the book status or remove it from your bookshelf</p>
+                            <h2 class="text-purple-100 font-normal text-2xl tracking-wide mb-2"><span class="font-semibold">{{ $.book.Title }}</span> in your bookshelf <span class="font-semibold">{{ $.bookShelf.Name }}</span></h2>
+                            <p class="text-purple-200 text-base">Below you can update the book status or remove it from your bookshelf</p>
 
                         </div>
-                        <div class="bg-gray-100 rounded-lg">
+                        <div class="bg-purple-700 rounded-lg">
                             <div class="py-1 px-1 md:py-4 md:px-4">
                                 <div class="flex flex-col">
 
-                                    <div class="flex flex-col text-sm text-gray-500">
+                                    <div class="flex flex-col text-sm text-purple-100">
 
 
                                         <div class="selection">
 
                                             {{ if $.book }}
                                                 {{ template "bookthumb" $.book }}
-                                                <input type="checkbox" id="status" name="status" {{ if eq $.userBook.Status 1 }} checked="checked" {{ end }}>
-                                                <label for="status"> I'm reading it now</label>
+                                                <input type="checkbox" class="w-5 h-5 text-purple-600 border-0 rounded-md focus:ring-0" id="status" name="status" {{ if eq $.userBook.Status 1 }} checked="checked" {{ end }}>
+                                                <label for="status" class="text-lg text-purple-100"> I'm reading it now</label>
                                             {{ end }}
 
                                         </div>
@@ -40,11 +40,11 @@
 
 
                         <div class="py-4 content-center">
-                            <button type="submit" class="inline-block tracking-widest uppercase text-center shadow bg-mbrdarkbrown hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer">
+                            <button type="submit" class="inline-block tracking-widest uppercase text-center shadow bg-coral-700 hover:bg-coral-800 focus:shadow-outline focus:outline-none text-purple-100 text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer">
                                 Update
                             </button>
 
-                            <a href="{{ call $.reverse `addBookToBookshelf` $.bookShelf.Slug $.bookID }}?delete=1" class="ml-5 inline-block tracking-widest uppercase text-center shadow bg-red-400 hover:bg-mbrblue focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-left mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <a href="{{ call $.reverse `addBookToBookshelf` $.bookShelf.Slug $.bookID }}?delete=1" class="ml-5 inline-block tracking-widest uppercase text-center shadow bg-coral-700 hover:bg-coral-800 focus:shadow-outline focus:outline-none text-purple-100 text-xs py-3 px-10 rounded transition ease-in duration-200 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-left mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg> Remove from this bookshelf</a>
                         </div>

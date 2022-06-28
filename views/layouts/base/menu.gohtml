@@ -1,11 +1,11 @@
 {{ define "menu" }}
 {{ $user := index . "user" }}
-<nav class="bg-gray-700 bg-opacity-50" x-data="{ mobopen: false }">
+<nav class="bg-purple-800" x-data="{ mobopen: false }">
     <div class="container px-4 sm:px-4 lg:px-4 xl:px-4 mx-auto">
         <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
-                <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-gray-700 focus:outline-none ring-2 focus:ring-inset ring-white" aria-controls="mobile-menu" aria-expanded="false" @click="mobopen = (mobopen) ? false : true">
+                <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-purple-100 hover:text-purple-100 hover:bg-gray-700 focus:outline-none ring-2 focus:ring-inset ring-white" aria-controls="mobile-menu" aria-expanded="false" @click="mobopen = (mobopen) ? false : true">
                     <span class="sr-only">Open main menu</span>
 
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" x-show="!mobopen">
@@ -19,12 +19,13 @@
             </div>
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
-                   <a class="text-gray-200 text-xl font-bold font-sanchez leading-10" href="/"><img class="h-10 float-left" src="/images/girl.svg"/> MyBooksRating</a>
+                   <a class="text-purple-100 text-xl font-bold font-sanchez leading-10" href="/"><img class="h-10 float-left" src="/images/logo-header.svg"/> BookRatel</a>
                 </div>
                 <div class="hidden sm:block sm:ml-6">
                     <div class="flex space-x-4">
-                        <a href="/about" class="hover:bg-mbrblue text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="/books" class="hover:bg-mbrblue text-white px-3 py-2 rounded-md text-sm font-medium">Explore all books</a>
+                        <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Rate a book</a>
+                        <a href="/about" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="/books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Explore all books</a>
                     </div>
                 </div>
             </div>
@@ -45,7 +46,7 @@
 
                     </div>
 
-                    <div class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    <div class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-coral-800 ring-1 ring-black ring-opacity-5 focus:outline-none text-purple-100"
                          role="menu"
                          aria-orientation="vertical"
                          aria-labelledby="user-menu"
@@ -59,13 +60,13 @@
                          x-transition:leave-end="transform opacity-0 scale-95"
                     >
                         {{ if $.user }}
-                        <a href="{{ call $.reverse "userHome" }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
-                        <a href="{{ call $.reverse "rateBook" }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Rate a new book</a>
-                        <a href="{{ call $.reverse "bookshelf" $.user.ID `reading-queue` }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">My reading queue</a>
-                        <a href="{{ call $.reverse "bookshelves" $.user.ID }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">My bookshelves</a>
-                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Log Out</a>
+                        <a href="{{ call $.reverse "userHome" }}" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">Profile</a>
+                        <a href="{{ call $.reverse "rateBook" }}" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">Rate a new book</a>
+                        <a href="{{ call $.reverse "bookshelf" $.user.ID `reading-queue` }}" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">My reading queue</a>
+                        <a href="{{ call $.reverse "bookshelves" $.user.ID }}" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">My bookshelves</a>
+                        <a href="/logout" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">Log Out</a>
                         {{ else }}
-                          <a href="/auth/google" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign In with Google</a>
+                          <a href="/auth/google" class="block px-4 py-2 text-sm hover:bg-coral-900" role="menuitem">Sign In with Google</a>
                         {{ end }}
                     </div>
                 </div>
@@ -76,8 +77,9 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu" x-show="mobopen">
         <div class="px-2 pt-2 pb-3 space-y-1">
-            <a href="/about" class="hover:bg-mbrblue text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-            <a href="/books" class="hover:bg-mbrblue text-white block px-3 py-2 rounded-md text-base font-medium">Explore all books</a>
+            <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Rate a book</a>
+            <a href="/about" class="hover:bg-mbrblue text-purple-100 block px-3 py-2 rounded-md text-base font-medium">About</a>
+            <a href="/books" class="hover:bg-mbrblue text-purple-100 block px-3 py-2 rounded-md text-base font-medium">Explore all books</a>
         </div>
     </div>
 </nav>

@@ -4,8 +4,6 @@
 package renderer
 
 import (
-	"bufio"
-	"bytes"
 	"embed"
 	"errors"
 	"html/template"
@@ -13,7 +11,6 @@ import (
 	"io/fs"
 	"net/url"
 	"reflect"
-	"regexp"
 	"strings"
 	"sync"
 
@@ -127,41 +124,6 @@ func NewView(tpls embed.FS) *View {
 	return view
 }
 
-func RemoveHTMLComments(content []byte) []byte {
-	htmlcmt := regexp.MustCompile(`<!--[^>]*-->`)
-	return htmlcmt.ReplaceAll(content, []byte(""))
-}
-
-func MinifyHTML(html []byte) (string, error) {
-	// read line by line
-	minifiedHTML := ""
-	tagOpen := false
-	scanner := bufio.NewScanner(bytes.NewReader(RemoveHTMLComments(html)))
-	for scanner.Scan() {
-		// all leading and trailing white space of each line are removed
-		lineTrimmed := strings.TrimSpace(scanner.Text())
-		minifiedHTML += lineTrimmed
-		if strings.Contains(lineTrimmed, "<") {
-			tagOpen = true
-		}
-		if strings.Contains(lineTrimmed, ">") {
-			tagOpen = false
-		}
-		if len(lineTrimmed) > 0 {
-			// in case of following trimmed line:
-			// <div id="foo"
-			if tagOpen {
-				minifiedHTML += " "
-			}
-		}
-	}
-	if err := scanner.Err(); err != nil {
-		return string(html), err
-	}
-
-	return minifiedHTML, nil
-}
-
 func (v *View) compileTemplates(tmpl *template.Template, filenames []string, tpls embed.FS) (*template.Template, error) {
 	wg := sync.WaitGroup{}
 
@@ -175,13 +137,9 @@ func (v *View) compileTemplates(tmpl *template.Template, filenames []string, tpl
 				log.Print(err)
 			}
 
-			minifiedHTML, minifyErr := MinifyHTML(b)
-			if minifyErr != nil {
-				log.Printf("Error in Scanner during minifying the template", err)
-			}
 			v.mux.Lock()
 			defer v.mux.Unlock()
-			_, err = tmpl.Parse(minifiedHTML)
+			_, err = tmpl.Parse(string(b))
 			if err != nil {
 				log.Print(err)
 			}

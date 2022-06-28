@@ -7,8 +7,8 @@
       {{ if eq $type "error"}}
          {{ range $messages }}
            <div class="md:p-2 ransition duration-700 ease-in-out cursor-pointer" x-data="{ show: true }" x-show="show" @click="show = false">
-               <div class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
-                   <span class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center">Error</span>
+               <div class="inline-flex items-center bg-cerise-600 leading-none text-purple-100 rounded-full p-2 shadow text-teal text-sm">
+                   <span class="inline-flex bg-cerise-700 text-purple-50 rounded-full h-6 px-3 justify-center items-center">Error</span>
                    <span class="inline-flex px-2">{{ . }}</span>
                </div>
            </div>
@@ -19,8 +19,8 @@
       {{ if eq $type "message"}}
         {{ range $messages }}
              <div class="md:p-2 transition duration-700 ease-in-out cursor-pointer" x-data="{ show: true }" x-show="show" @click="show = false">
-                <div class="inline-flex items-center bg-white leading-none text-mbrdarkbrown rounded-full p-2 shadow text-teal text-sm">
-                    <span class="inline-flex bg-mbrdarkbrown text-white rounded-full h-6 px-3 justify-center items-center">Success</span>
+                <div class="inline-flex items-center bg-viridian-600 leading-none text-purple-100 rounded-full p-2 shadow text-teal text-sm">
+                    <span class="inline-flex bg-viridian-700 text-purple-100 rounded-full h-6 px-3 justify-center items-center">Success</span>
                     <span class="inline-flex px-2">{{ . }}</span>
                 </div>
             </div>

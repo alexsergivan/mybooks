@@ -197,29 +197,38 @@ func BookProfilePage(db *gorm.DB, storage *gormstore.Store, bookApiService *book
 
 			return c.Render(http.StatusOK, "book--profile", params)
 		} else {
-			b, err := getBookFromApi(c, id, bookApiService)
+			err := SaveBookFromAPI(c, id, bookApiService, db)
 			if err != nil {
 				flash.SetFlashMessage(c, flash.MessageTypeError, `Something went wrong.`)
 				return c.Redirect(http.StatusSeeOther, "/")
 			}
-			if b.Image != "" {
-				b.Image, err = services.SaveBookCover(b.Image, id, "large")
-				if err != nil {
-					log.Println(err)
-				}
-			}
-			if b.Thumbnail != "" {
-				b.Thumbnail, err = services.SaveBookCover(b.Thumbnail, id, "thumbnail")
-				if err != nil {
-					log.Println(err)
-				}
-			}
-
-			db.Create(&b)
 
 			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookProfile", id))
 		}
 	}
+}
+
+func SaveBookFromAPI(c echo.Context, id string, bookApiService *book.BooksApi, db *gorm.DB) error {
+	b, err := getBookFromApi(c, id, bookApiService)
+	if err != nil {
+		flash.SetFlashMessage(c, flash.MessageTypeError, `Something went wrong.`)
+		return err
+	}
+	if b.Image != "" {
+		b.Image, err = services.SaveBookCover(b.Image, id, "large")
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if b.Thumbnail != "" {
+		b.Thumbnail, err = services.SaveBookCover(b.Thumbnail, id, "thumbnail")
+		if err != nil {
+			log.Println(err)
+		}
+	}
+
+	db.Create(&b)
+	return nil
 }
 
 func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {

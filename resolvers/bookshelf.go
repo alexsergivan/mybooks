@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/alexsergivan/mybooks/book"
+
 	"github.com/alexsergivan/mybooks/services"
 
 	"github.com/alexsergivan/mybooks/flash"
@@ -15,8 +17,8 @@ import (
 	"gorm.io/gorm"
 )
 
-const readingQueueSlug = "reading-queue"
-const readingQueueName = "Reading Queue"
+const ReadingQueueSlug = "reading-queue"
+const ReadingQueueName = "Reading Queue"
 
 func BookshelvesPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -74,8 +76,8 @@ func AddBookToBookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerF
 
 		bookShelf := userbook.GetUserBookShelfBySlug(db, int64(u.ID), bookshelfSlug)
 		if bookShelf.Slug == "" {
-			if bookshelfSlug == readingQueueSlug {
-				bookShelf = userbook.SaveBookshelf(db, readingQueueName, readingQueueSlug, "", int64(u.ID))
+			if bookshelfSlug == ReadingQueueSlug {
+				bookShelf = userbook.SaveBookshelf(db, ReadingQueueName, ReadingQueueSlug, "", int64(u.ID))
 			} else {
 				flash.SetFlashMessage(c, flash.MessageTypeError, "This Book Shelf does not exists")
 				return c.Redirect(http.StatusSeeOther, "/")
@@ -157,7 +159,7 @@ func AddBookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 		} else {
 			bookShelf = nil
 		}
-		if c.QueryParam("delete") != "" && bookshelfSlug != readingQueueSlug {
+		if c.QueryParam("delete") != "" && bookshelfSlug != ReadingQueueSlug {
 			return c.Render(http.StatusOK, "bookshelf--delete-bookshelf", map[string]interface{}{
 				"profile":   u,
 				"bookshelf": bookShelf,
@@ -171,7 +173,7 @@ func AddBookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 	}
 }
 
-func AddBookshelfSubmit(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
+func AddBookshelfSubmit(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		name := c.FormValue("name")
 		description := c.FormValue("description")
@@ -186,7 +188,19 @@ func AddBookshelfSubmit(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc 
 		bookshelf := userbook.SaveBookshelf(db, name, slug, description, int64(*uID))
 
 		if bookshelf.Name != "" {
-			flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`Bookshelf "%s" have been saved. Don't forget to add some books to it 😉 You can do it from any book profile page.`, bookshelf.Name))
+
+			if c.FormValue("bookID") != "" {
+				b := userbook.GetBookByID(c.FormValue("bookID"), db)
+				if b.Title == "" {
+					err := SaveBookFromAPI(c, c.FormValue("bookID"), bookApiService, db)
+					if err != nil {
+						flash.SetFlashMessage(c, flash.MessageTypeError, "Something went wrong. Please try again.")
+						return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookshelf"))
+					}
+				}
+				return SaveBookToBookshelf(c, db, storage)
+			}
+			flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`Bookshelf "%s" have been saved. Don't forget to add some books to it 😉`, bookshelf.Name))
 			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelf", int64(*uID), bookshelf.Slug))
 		}
 
@@ -197,59 +211,63 @@ func AddBookshelfSubmit(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc 
 
 func AddBookToBookshelfSubmit(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		uID := GetUserIdFromSession(c, storage)
-		bookShelfSlug := c.FormValue("bookShelfSlug")
 
-		bookID := c.FormValue("bookID")
-
-		if bookShelfSlug == "" {
-			flash.SetFlashMessage(c, flash.MessageTypeError, "Please select a bookshelf.")
-			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToSelectedBookshelf", bookID))
-		}
-
-		userBookID := c.FormValue("userBookID")
-		if userBookID != "" {
-			n, err := strconv.ParseInt(userBookID, 10, 64)
-			if err == nil {
-				log.Print(err)
-			}
-			ub := userbook.GetUserBookByID(db, n)
-			bookStatus := c.FormValue("status")
-			if bookStatus == "on" {
-				ub.Status = 1
-			} else {
-				ub.Status = 0
-			}
-
-			err = userbook.SaveUserBook(db, ub)
-			if err != nil {
-				flash.SetFlashMessage(c, flash.MessageTypeError, "Something went wrong. Please try again.")
-				return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToBookshelf", bookShelfSlug, bookID))
-			} else {
-				flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`The book has been updated`))
-			}
-		} else {
-
-			ub := userbook.GetUserBookFromBooksShelf(db, int64(*uID), bookShelfSlug, bookID)
-			if ub.BookID != "" {
-				flash.SetFlashMessage(c, flash.MessageTypeError, "This book already exists in your selected bookshelf.")
-				return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelf", int64(*uID), bookShelfSlug))
-			}
-
-			bookShelf := userbook.GetUserBookShelfBySlug(db, int64(*uID), bookShelfSlug)
-
-			b := userbook.GetBookByID(bookID, db)
-			err := bookShelf.AddBook(db, b)
-			if err != nil {
-				log.Println(err)
-				flash.SetFlashMessage(c, flash.MessageTypeError, "Something went wrong. Please try again.")
-				return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToBookshelf", bookShelfSlug, bookID))
-			}
-			flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`The book "%s" has been added to your "%s" bookshelf`, b.Title, bookShelf.Name))
-		}
-
-		return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelf", int64(*uID), bookShelfSlug))
+		return SaveBookToBookshelf(c, db, storage)
 	}
+}
+
+func SaveBookToBookshelf(c echo.Context, db *gorm.DB, storage *gormstore.Store) error {
+	uID := GetUserIdFromSession(c, storage)
+	bookShelfSlug := c.FormValue("bookShelfSlug")
+
+	bookID := c.FormValue("bookID")
+
+	if bookShelfSlug == "" {
+		flash.SetFlashMessage(c, flash.MessageTypeError, "Please select a bookshelf.")
+		return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToSelectedBookshelf", bookID))
+	}
+
+	userBookID := c.FormValue("userBookID")
+	if userBookID != "" {
+		n, err := strconv.ParseInt(userBookID, 10, 64)
+		if err == nil {
+			log.Print(err)
+		}
+		ub := userbook.GetUserBookByID(db, n)
+		bookStatus := c.FormValue("status")
+		if bookStatus == "on" {
+			ub.Status = 1
+		} else {
+			ub.Status = 0
+		}
+
+		err = userbook.SaveUserBook(db, ub)
+		if err != nil {
+			flash.SetFlashMessage(c, flash.MessageTypeError, "Something went wrong. Please try again.")
+			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToBookshelf", bookShelfSlug, bookID))
+		} else {
+			flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`The book has been updated`))
+		}
+	} else {
+
+		ub := userbook.GetUserBookFromBooksShelf(db, int64(*uID), bookShelfSlug, bookID)
+		if ub.BookID != "" {
+			flash.SetFlashMessage(c, flash.MessageTypeError, "This book already exists in your selected bookshelf.")
+			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelf", int64(*uID), bookShelfSlug))
+		}
+
+		bookShelf := userbook.GetUserBookShelfBySlug(db, int64(*uID), bookShelfSlug)
+
+		b := userbook.GetBookByID(bookID, db)
+		err := bookShelf.AddBook(db, b)
+		if err != nil {
+			log.Println(err)
+			flash.SetFlashMessage(c, flash.MessageTypeError, "Something went wrong. Please try again.")
+			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("addBookToBookshelf", bookShelfSlug, bookID))
+		}
+		flash.SetFlashMessage(c, flash.MessageTypeMessage, fmt.Sprintf(`The book "%s" has been added to your "%s" bookshelf`, b.Title, bookShelf.Name))
+	}
+	return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelf", int64(*uID), bookShelfSlug))
 }
 
 func DeleteBookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
@@ -257,8 +275,8 @@ func DeleteBookshelfPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc
 		bookshelfSlug := c.FormValue("bookShelfSlug")
 		uID := GetUserIdFromSession(c, storage)
 
-		if bookshelfSlug == readingQueueSlug {
-			flash.SetFlashMessage(c, flash.MessageTypeError, "It's not possible to remove "+readingQueueName)
+		if bookshelfSlug == ReadingQueueSlug {
+			flash.SetFlashMessage(c, flash.MessageTypeError, "It's not possible to remove "+ReadingQueueName)
 			return c.Redirect(http.StatusSeeOther, c.Echo().Reverse("bookshelves", int64(*uID)))
 		}
 		err := userbook.DeleteBookshelf(db, int64(*uID), bookshelfSlug)

@@ -2,36 +2,36 @@
 {{ end }}
 
 {{ define "content" }}
-<div class="text-center content-center">
+<div class="text-center content-center text-purple-100">
     <div class="max-w-4xl inline-block">
-        <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">Where am I?</h2>
-        <div class="max-w-4xl shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg inline-block">
-            If you're looking for a way to quickly rate the books you've read and explore new ones based on personal recommendations and reviews from other readers, then look no further than MyBooksRating. This is a resource where people can simply rate the books they read, and explore new books to read based on those ratings.
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mt-3 mb-5">Where am I?</h2>
+        <div class="max-w-4xl shadow-lg w-full p-4 bg-purple-800 rounded-lg text-purple-100 text-center text-lg inline-block">
+            If you're looking for a way to quickly rate the books you've read and explore new ones based on personal recommendations and reviews from other readers, then look no further than BookRatel. This is a resource where people can simply rate the books they read, and explore new books to read based on those ratings.
              <br/> Finding the right book to read can be daunting task. With so many books out there, it can be hard to know which one to pick up. Luckily, this resource provides a simple way for readers to rate and explore new books based on personal recommendations and reviews from other readers. With this tool at their fingertips, readers can find the perfect read for them without ever having to leave their comfortable chair.
             <br/> Besides, you can manage your reading queue and create as many bookshelves as you want.
         </div>
 
         <img class="mt-5 mb-5" src="/images/mac.svg"/>
 
-        <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">A rating concept</h2>
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mt-3 mb-5">The rating concept</h2>
 
-        <div class="shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg">
+        <div class="shadow-lg w-full p-4 bg-purple-800 rounded-lg text-purple-100 text-center text-lg">
             Every book is rated in the range from 0 to 100 points:
             <div class="text-center">
-                <p><span class="text-2xl text-mbrbad font-bold">0 - 5</span> <span class="text-4xl">💩</span></p>
-                <p><span class="text-2xl text-mbrbad font-bold">6 - 20</span> <span class="text-4xl">🤢</span></p>
-                <p><span class="text-2xl text-mbrbad font-bold">21 - 39</span> <span class="text-4xl"> 👎</span></p>
-                <p><span class="text-2xl text-mbrok font-bold"> 40 - 60</span> <span class="text-4xl">😐</span></p>
-                <p><span class="text-2xl text-mbrok font-bold"> 61 - 74</span> <span class="text-4xl">👌</span></p>
-                <p><span class="text-2xl text-mbrgood font-bold"> 75 - 89</span> <span class="text-4xl">🤩</span></p>
-                <p><span class="text-2xl text-mbrgood font-bold"> 90 - 94</span><span class="text-4xl"> 💖</span></p>
-                <p><span class="text-2xl text-mbrgood font-bold"> 95 - 100</span> <span class="text-4xl">🔥</span></p>
+                <p><span class="text-2xl text-cerise-500 font-bold">0 - 5</span> <span class="text-4xl">💩</span></p>
+                <p><span class="text-2xl text-cerise-500 font-bold">6 - 20</span> <span class="text-4xl">🤢</span></p>
+                <p><span class="text-2xl text-cerise-500 font-bold">21 - 39</span> <span class="text-4xl"> 👎</span></p>
+                <p><span class="text-2xl text-cocoa-300 font-bold"> 40 - 60</span> <span class="text-4xl">😐</span></p>
+                <p><span class="text-2xl text-cocoa-300 font-bold"> 61 - 74</span> <span class="text-4xl">👌</span></p>
+                <p><span class="text-2xl text-viridian-400 font-bold"> 75 - 89</span> <span class="text-4xl">🤩</span></p>
+                <p><span class="text-2xl text-viridian-400 font-bold"> 90 - 94</span><span class="text-4xl"> 💖</span></p>
+                <p><span class="text-2xl text-viridian-400 font-bold"> 95 - 100</span> <span class="text-4xl">🔥</span></p>
 
 
                 <div class="mt-5" x-data="{rate: 0 }">
                     <h2 class="text-lg"> You can try to use our rating bar below:</h2>
 
-                    <input class="w-full" type="range" x-model="rate" min="0" max="100" step="1">
+                    <input class="w-full" type="range" x-model="rate" min="0" max="100" step="1" :class="{'negative': rate < 40, 'ok': rate >= 40 && rate < 75, 'good': rate >= 75}">
 
                     <span class="text-4xl" x-show="rate <= 5">💩</span>
                     <span class="text-4xl" x-show="rate <= 20 && rate > 5">🤢</span>
@@ -44,8 +44,8 @@
 
 
                     <input id="rate" name="rate"
-                           class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-white w-24"
-                           :class="{'text-mbrbad': rate < 40, 'text-mbrok': rate >= 40 && rate < 75, 'text-mbrgood': rate >= 75}"
+                           class="text-4xl p-2 mb-4 outline-none font-semibold inline-block bg-purple-800 w-24"
+                           :class="{'text-cerise-500': rate < 40, 'text-cocoa-300': rate >= 40 && rate < 75, 'text-viridian-400': rate >= 75}"
                            spellcheck="false" placeholder="Rate the book" type="number" step="1" min="0" max="100"
                            x-model="rate">
 
@@ -53,11 +53,11 @@
             </div>
         </div>
 
-        <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">User account</h2>
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mt-3 mb-5">User account</h2>
 
-        <div class="shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg">
+        <div class="shadow-lg w-full p-4 bg-purple-800 rounded-lg text-center text-lg">
              You can easily create a user account, by signing in with Google:
-            <a href="/auth/google" class="bg-white shadow-md px-3 py-2 rounded-lg flex space-x-4 inline-block mx-auto mt-5" style="width:120px;">
+            <a href="/auth/google" class="bg-purple-100 shadow-md px-3 py-2 rounded-lg flex space-x-4 inline-block mx-auto mt-5" style="width:120px;">
                 <div class="logo">
                     <img src="/images/google-icon.svg"
                          class="w-6 h-6"
@@ -72,13 +72,13 @@
             </a>
         </div>
 
-        <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">Bookshelves</h2>
-        <div class="shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg">
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mt-3 mb-5">Bookshelves</h2>
+        <div class="shadow-lg w-full p-4 bg-purple-800 rounded-lg text-center text-lg">
             Every registered user can create the virtual bookshelves and add books to them.
         </div>
 
-        <h2 class="text-2xl font-bold font-sanchez text-white ml-3 mt-3 mb-5">Reading queue</h2>
-        <div class="shadow-lg w-full p-4 bg-white rounded-lg text-gray-800 text-center text-lg">
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mt-3 mb-5">Reading queue</h2>
+        <div class="shadow-lg w-full p-4 bg-purple-800 rounded-lg text-center text-lg">
             Reading queue - it's a special pre-created bookshelf, which could be used to add some interesting books, which you want to read later. You also have a possibility to highlight the books,  which you are reading now.
         </div>
     </div>

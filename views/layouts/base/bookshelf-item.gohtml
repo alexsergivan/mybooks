@@ -2,14 +2,14 @@
 
 
     {{ if $.ownPage }}
-        <a href="/bookshelves/{{ $.slug }}/{{ $.book.ID }}" class="text-center w-full block -mt-5 tooltip"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 inline-block" viewBox="0 0 20 20" fill="currentColor">
+        <a href="/bookshelves/{{ $.slug }}/{{ $.book.ID }}" class="text-right w-full block -mt-5 tooltip"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-100 inline-block" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                 <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
             </svg>
-            <span class="tooltiptext ttop">Edit</span>
+            <span class="tooltiptext ttop bg-teal-500">Edit</span>
         </a>
     {{ end }}
-    <span class="relative inline-flex -mb-2 h-full">
+    <span class="relative h-full mb-4">
            {{ if eq $.status 1 }}
                <span class="flex absolute h-3 w-3 top-0 right-0 -mr-1 cursor-pointer" title="Reading now...">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -20,10 +20,11 @@
            {{ end }}
     <a target="_PARENT" href="/book/{{ $.book.ID }}" class="block flex-wrap flex content-end">
 
-        <img src="{{ $.book.Thumbnail }}" title="{{ $.book.Title }}" alt="{{ $.book.Title }}" class="mx-auto rounded-sm w-30 h-40 shadow-lg hover:shadow-none"/>
-{{/*        <span class="inline-block leading-none mt-1 text-sm font-semibold">*/}}
+        <img src="{{ $.book.Thumbnail }}" title="{{ $.book.Title }}" alt="{{ $.book.Title }}" class="mx-auto rounded-md w-30 h-40 shadow-lg hover:shadow-none"/>
+
+{{/*        <p class="leading-none mt-1 text-xs font-semibold text-purple-100 truncate w-30 text-center">*/}}
 {{/*            {{ $.book.Title }}*/}}
-{{/*        </span>*/}}
+{{/*        </p>*/}}
 
 
     </a>

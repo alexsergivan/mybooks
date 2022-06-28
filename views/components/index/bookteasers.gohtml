@@ -1,7 +1,7 @@
 {{ define "bookteasers" }}
-  <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-0 bg-gray-100 bg-opacity-50 pt-5 shadow-inner rounded-t-lg">
+  <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-0 bg-purple-800 rounded-lg p-2">
       {{ range . }}
-          <div class="border-b-8 border-gray-600 pr-2 pl-2 text-center pt-3 bottom-0">
+          <div class="pr-2 pl-2 text-center">
             {{ template "bookteaser" . }}
           </div>
       {{ end }}

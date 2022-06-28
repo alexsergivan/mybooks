@@ -47,6 +47,8 @@ func main() {
 
 	e.Static("/", "./public")
 
+	authHandler := auth.NewAuthHandler(db, store)
+
 	//assetHandler := http.FileServer(getFileSystem())
 	//e.GET("/", echo.WrapHandler(assetHandler))
 	//e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", assetHandler)))
@@ -81,8 +83,11 @@ func main() {
 
 	e.GET("/reader/:id/bookshelves", resolvers.BookshelvesPage(db, store)).Name = "bookshelves"
 
+	e.GET("/reader/delete", resolvers.DeleteUserPage(db, store), auth.IsAuthMiddleware()).Name = "deleteUser"
+	e.POST("/reader/delete", auth.DeleteUserSubmit(db, store, authHandler), auth.IsAuthMiddleware()).Name = "deleteUserSubmit"
+
 	e.GET("/bookshelves/new", resolvers.AddBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "addBookshelf"
-	e.POST("/bookshelves/new", resolvers.AddBookshelfSubmit(db, store), auth.IsAuthMiddleware()).Name = "addBookshelfSubmit"
+	e.POST("/bookshelves/new", resolvers.AddBookshelfSubmit(db, store, booksApiService), auth.IsAuthMiddleware()).Name = "addBookshelfSubmit"
 	e.GET("/bookshelves/:bookshelfSlug/edit", resolvers.AddBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "editBookshelf"
 	e.POST("/bookshelves/:bookshelfSlug/delete", resolvers.DeleteBookshelfPage(db, store), auth.IsAuthMiddleware()).Name = "deleteBookshelf"
 
@@ -94,8 +99,6 @@ func main() {
 	e.POST("/bookshelf/deleteBook", resolvers.DeleteBookFromBookshelfSubmit(db, store), auth.IsAuthMiddleware()).Name = "deleteBookFromBookshelfSubmit"
 
 	e.GET("/login", userbook.LoginPage, auth.IsNotAuthMiddleware()).Name = "login"
-
-	authHandler := auth.NewAuthHandler(db, store)
 
 	e.GET("/auth/:provider/callback", authHandler.ProviderCallback())
 

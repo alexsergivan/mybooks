@@ -1,5 +1,5 @@
 {{ define "header" }}
-<div class="hero bg-gray-600 bg-opacity-50 py-16 border-b border-mbrrosa">
+<div class="hero bg-purple-800 py-16 border-b border-purple-400">
   <!-- container -->
   <div class="container px-4 sm:px-4 lg:px-4 xl:px-4 mx-auto">
     <!-- hero wrapper -->
@@ -7,126 +7,42 @@
 
       <!-- hero text -->
       <div class="hero-text col-span-7">
-        <h1 class=" font-bold text-4xl md:text-5xl max-w-full text-white leading-relaxed text-shadow font-sanchez">This is the perfect place to share your reading experience and find recommendations for your next great read.</h1>
+        <h1 class=" font-bold text-4xl md:text-5xl max-w-full text-purple-100 leading-relaxed font-sanchez">This is the perfect place to share your reading experience and find recommendations for your next great read.</h1>
         <div class="mt-6 justify-center md:justify-start">
-          <p class="text-gray-100 text-base leading-relaxed mt-8 mb-5 font-light text-xl">
+          <p class="text-purple-100 text-base leading-relaxed mt-8 mb-5 font-light text-xl">
             Also, you can just explore newly published books on interesting for you topics. Just try it below <span class="text-lg">👇</span>
           </p>
           <form action="/books" class="block w-full">
-            <div class=" bg-white rounded-xl flex items-center w-full p-3 shadow-sm border border-gray-200">
-              <div class="outline-none focus:outline-none text-gray-400 pr-3">
+            <div class="bg-purple-700 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-200">
+              <div class="outline-none focus:outline-none text-purple-100 pr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <input type="search" name="new-about" id="new-about" placeholder="Type a book topic here. I.e 'time travel' " class="w-full text-sm outline-none focus:outline-none bg-transparent"><button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md font-semibold text-gray-900 bg-mbrrosa hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit" method="GET">Explore</button></div>
+              <input type="search" name="new-about" id="new-about" placeholder="Type a book topic here. I.e 'time travel' " class="w-full text-sm outline-none focus:outline-none bg-transparent text-purple-100 placeholder-purple-100"><button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md font-semibold text-cerise-800 bg-purple-200 hover:bg-purple-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit" method="GET">Explore</button></div>
 
           </form>
-          <div class="">
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=metaverse">
-              <span class="text-xs font-semibold text-gray-900">New books about Metaverse</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">✨</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=time travel">
-              <span class="text-xs font-semibold text-gray-900">New books about Time Travel</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">⌛</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=psychology">
-              <span class="text-xs font-semibold text-gray-900">New books about Psychology</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">✨</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=Mental Health">
-              <span class="text-xs font-semibold text-gray-900">New books about Mental Health</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">😌</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=love">
-              <span class="text-xs font-semibold text-gray-900">New books about Love</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">❤️</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=history">
-              <span class="text-xs font-semibold text-gray-900">New books about History</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">📜️</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=sports">
-              <span class="text-xs font-semibold text-gray-900">New books about Sports</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">🏐</span>
-            </a>
-            <a class="mr-2 py-1 px-2 text-gray-900 transition-colors duration-150 bg-red-100 rounded-lg focus:shadow-outline hover:bg-mbrrosa inline-block border-white border-2 shadow-md hover:shadow-sm mt-2" href="/books?new-about=politics">
-              <span class="text-xs font-semibold text-gray-900">New books about Politics</span>
-              <span class="inline-flex items-center justify-center text-lg font-bold leading-none rounded-full pl-2">🕴️</span>
-            </a>
+          <div class="mt-2">
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Metaverse" title="New books about Metaverse" href="/books?new-about=metaverse">Metaverse</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Time Travel" title="New books about Time Travel" href="/books?new-about=time travel">Time Travel</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Psychology" title="New books about Psychology" href="/books?new-about=psychology">Psychology</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Mental Health" title="New books about Mental Health" href="/books?new-about=Mental Health">Mental Health</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Love" title="New books about Love" href="/books?new-about=love">Love</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about History" title="New books about History" href="/books?new-about=history">History</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Sports" title="New books about Sports" href="/books?new-about=sports">Sports</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Politics" title="New books about Politics" href="/books?new-about=politics">Politics</a>
+            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Ukraine" title="New books about Ukraine" href="/books?new-about=ukraine">Ukraine</a>
 
           </div>
 
         </div>
-        <p class="text-gray-100 text-base leading-relaxed mt-8 font-light text-xl">Moreover, you can create your virtual bookshelves, manage your reading queue. Enjoy personalised book recommendations and read your next favorite book! 😉 <a class="text-gray-700 block" href="/about">More details</a></p>
+        <p class="text-purple-100 text-base leading-relaxed mt-8 font-light text-xl">Moreover, you can create your virtual bookshelves, manage your reading queue. Enjoy personalised book recommendations and read your next favorite book! 😉 </p>
 
-
-{{/*        <div class="get-app flex space-x-5 mt-10 justify-center md:justify-start">*/}}
-{{/*          {{ if not $.user }}*/}}
-{{/*          <a href="/auth/google" alt="Sign in with Google" title="Sign in with Google" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4 hover:shadow-sm">*/}}
-{{/*            <div class="logo">*/}}
-{{/*              <img src="/images/google-icon.svg"*/}}
-{{/*                      class="w-6 h-6"*/}}
-{{/*                      xmlns="http://www.w3.org/2000/svg"*/}}
-{{/*                      width="419.955" height="512"*/}}
-{{/*                      viewBox="0 0 419.955 512" />*/}}
-{{/*            </div>*/}}
-{{/*            <div class="text">*/}}
-{{/*              <p class=" text-xs text-mbrdarkbrown" style="font-size: 0.5rem;">Sign in with</p>*/}}
-{{/*              <p class=" text-xs font-semibold text-gray-900">Google</p>*/}}
-{{/*            </div>*/}}
-{{/*          </a>*/}}
-{{/*          {{ else }}*/}}
-{{/*          <a href="/user" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4 hover:shadow-sm">*/}}
-{{/*            <div class="logo">*/}}
-{{/*              <img src="/images/readers/2.svg"*/}}
-{{/*                   class="w-6 h-6"*/}}
-{{/*                   xmlns="http://www.w3.org/2000/svg"*/}}
-{{/*                   width="419.955" height="512"*/}}
-{{/*                   viewBox="0 0 419.955 512" />*/}}
-{{/*            </div>*/}}
-{{/*            <div class="text">*/}}
-{{/*              <p class=" text-xs text-mbrdarkbrown" style="font-size: 0.5rem;">Go to</p>*/}}
-{{/*              <p class=" text-xs font-semibold text-gray-900">Profile</p>*/}}
-{{/*            </div>*/}}
-{{/*          </a>*/}}
-
-{{/*          <a href="{{ call $.reverse "rateBook" }}" alt="Rate a new book" title="Rate a new book" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4">*/}}
-{{/*            <div class="logo">*/}}
-{{/*              <img src="/images/rate.svg"*/}}
-{{/*                   class="w-6 h-6"*/}}
-{{/*                   xmlns="http://www.w3.org/2000/svg"*/}}
-{{/*                   width="419.955" height="512"*/}}
-{{/*                   viewBox="0 0 419.955 512" />*/}}
-{{/*            </div>*/}}
-{{/*            <div class="text">*/}}
-{{/*              <p class=" text-xs text-mbrdarkbrown" style="font-size: 0.5rem;">Rate a</p>*/}}
-{{/*              <p class=" text-xs font-semibold text-gray-900">New book</p>*/}}
-{{/*            </div>*/}}
-{{/*          </a>*/}}
-{{/*          {{ end }}*/}}
-
-{{/*          <a href="/about" alt="About page" title="About page" class="bg-mbrrosa border-white border-2 shadow-md hover:shadow-sm px-3 py-2 rounded-lg flex items-center space-x-4 hover:shadow-sm">*/}}
-{{/*            <div class="logo">*/}}
-{{/*              <img src="/images/book.svg"*/}}
-{{/*                   class="w-6 h-6"*/}}
-{{/*                   xmlns="http://www.w3.org/2000/svg"*/}}
-{{/*                   width="419.955" height="512"*/}}
-{{/*                   viewBox="0 0 419.955 512" />*/}}
-{{/*            </div>*/}}
-{{/*            <div class="text">*/}}
-{{/*              <p class=" text-xs text-mbrdarkbrown" style="font-size: 0.5rem;">Learn</p>*/}}
-{{/*              <p class=" text-xs font-semibold text-gray-900">More</p>*/}}
-{{/*            </div>*/}}
-{{/*          </a>*/}}
-
-{{/*        </div>*/}}
       </div>
 
       <!-- hero image -->
-      <div class="hero-image col-span-5">
-        <img src="/images/readers/4.svg" />
+      <div class="hero-image col-span-5 flex-auto">
+        <img class="overflow-visible" src="/images/readers/4.png" />
       </div>
     </div>
   </div>
@@ -137,11 +53,11 @@
 
 
 
-  <h2 class="text-2xl font-bold font-sanchez text-white mt-3 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25 ml-0 md:-ml-3">Your personal book recommendations</h2>
+  <h2 class="text-2xl font-bold font-sanchez text-purple-100 mt-3 mb-3 inline-block p-2 ml-0 md:-ml-3">Your personal book recommendations</h2>
   {{ if (gt (len $.recommendedBooks) 0) }}
     {{ template "recbookteasers" $.recommendedBooks }}
   {{ else }}
-    <div class="bg-gray-100 bg-opacity-50 pt-5 pb-5 shadow-inner rounded-t-lg text-center border-b-8 border-gray-600 text-gray-700">
+    <div class="bg-purple-800 pt-5 pb-5 rounded-lg text-center text-purple-100">
       As soon as you rate several books, we will recommend some good books for you! You might like them 😉
       <a href="{{ call $.reverse "rateBook" }}" class="block font-bold">
         Rate now!
@@ -151,28 +67,28 @@
   {{ end }}
 
 {{ if (gt (len $.topBooksDay) 0) }}
-  <h2 class="text-2xl font-bold font-sanchez text-white mt-6 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25  ml-0 md:-ml-3">Top rated books of the day</h2>
+  <h2 class="text-2xl font-bold font-sanchez text-purple-100 mt-3 mb-3 inline-block p-2 ml-0 md:-ml-3">Top rated books of the day</h2>
   {{ template "bookteasers" $.topBooksDay }}
 {{ end }}
 
 {{ if (gt (len $.topBooksMonth) 0) }}
-  <h2 class="text-2xl font-bold font-sanchez text-white mt-6 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25  ml-0 md:-ml-3">Top rated books of the month</h2>
+  <h2 class="text-2xl font-bold font-sanchez text-purple-100 mt-3 mb-3 inline-block p-2 ml-0 md:-ml-3">Top rated books of the month</h2>
   {{ template "bookteasers" $.topBooksMonth }}
 {{ end }}
 
 {{ if (gt (len $.topBooksYear) 0) }}
-  <h2 class="text-2xl font-bold font-sanchez text-white mt-6 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25  ml-0 md:-ml-3">Top rated books of the year</h2>
+  <h2 class="text-2xl font-bold font-sanchez text-purple-100 mt-3 mb-3 inline-block p-2 ml-0 md:-ml-3">Top rated books of the year</h2>
   {{ template "bookteasers" $.topBooksYear }}
 {{ end }}
 
 
 
-  <h2 class="text-2xl font-bold font-sanchez text-white mt-6 mb-3 bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25 ml-0 md:-ml-3">Latest ratings stream</h2>
+  <h2 class="text-2xl font-bold font-sanchez text-purple-100 mt-3 mb-3 inline-block p-2 ml-0 md:-ml-3">Latest ratings stream</h2>
   {{ if (gt (len $.ratings) 0) }}
-  <div class="pagecontainer grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="pagecontainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {{ range $.ratings }}
     <div class="relative item">
-      <div class="bg-white shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative rounded-b-xl h-full">
+      <div class="bg-purple-800 shadow-xl hover:shadow-md rounded-t-xl overflow-hidden md:flex mb-5 z-10 block relative rounded-b-xl h-full">
         {{ if eq .Book.Image "" }}
         <a href="{{ call $.reverse "bookProfile" .Book.ID }}" class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url({{ .Book.Thumbnail }})">
         {{ else }}
@@ -181,24 +97,24 @@
         </a>
         <div class="w-full">
           <div class="p-4 md:p-5">
-            <p class=""><a class="font-bold text-xl md:text-xl leading-3" href="{{ call $.reverse "bookProfile" .Book.ID }}">{{ .Book.Title }} </a></p>
-            <p class="text-sm md:text-sm">rated by <a class="font-bold" href="{{ call $.reverse `userProfile` .User.ID }}">{{ .User.Name }} </a></p>
-            <p class="text-mbrbrown font-semibold mt-5">
+            <p class=""><a class="font-bold text-xl md:text-xl leading-3 text-purple-100" href="{{ call $.reverse "bookProfile" .Book.ID }}">{{ .Book.Title }} </a></p>
+            <p class="text-sm md:text-sm text-purple-100">rated by <a class="font-bold" href="{{ call $.reverse `userProfile` .User.ID }}">{{ .User.Name }} </a></p>
+            <p class="text-purple-100 font-semibold mt-5">
               {{ .Comment }}
             </p>
 
           </div>
 
-          <div class="p-4 md:p-5 bg-gray-100 h-full">
+          <div class="p-4 md:p-5 bg-purple-700 h-full">
             {{ template "rating" .Rate }}
             <div class="sm:flex sm:justify-between sm:items-center">
 
               <div>
 
-                <div class="text-sm text-gray-700"><span class="text-gray-900 font-bold">{{ .CreatedAt | date "02" }} </span> {{ .CreatedAt | date "January 2006" }}</div>
+                <div class="text-sm text-purple-100"><span class="text-cerise-100 font-bold">{{ .CreatedAt | date "02" }} </span> {{ .CreatedAt | date "January 2006" }}</div>
 
                 <div class="flex items-center">
-                  <div class="text-gray-600 ml-2 text-sm md:text-base mt-1"> </div>
+                  <div class="text-purple-100 ml-2 text-sm md:text-base mt-1"> </div>
 
                 </div>
               </div>
@@ -237,32 +153,32 @@
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "MyBooksRating",
+    "name": "BookRatel",
     "alternateName": "My Books Rating",
-    "url": "https://www.mybooksrating.com/",
-    "logo": "https://www.mybooksrating.com/images/logo.svg"
+    "url": "https://www.bookratel.com/",
+    "logo": "https://www.bookratel.com/images/logo.svg"
   }
 </script>
 
 <script type="application/ld+json">{
   "@context": "http://schema.org",
   "@type": "WebSite",
-  "name": "MyBooksRating",
-  "url": "https://www.mybooksrating.com/"
+  "name": "BookRatel",
+  "url": "https://www.bookratel.com/"
 }</script>
 
 <meta name="description" content="Book reviews and book recommendations. Read the best books and share your own book reviews. Create your virtual bookshelves, manage your reading queue and enjoy personalised book recommendations"/>
-<link rel="canonical" href="https://mybooksrating.com/" />
+<link rel="canonical" href="https://bookratel.com/" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="MyBooksRating - a perfect place for a book lover!" />
-<meta property="og:url" content="https://mybooksrating.com/" />
-<meta property="og:site_name" content="MyBooksRating" />
+<meta property="og:title" content="BookRatel - a perfect place for a book lover!" />
+<meta property="og:url" content="https://bookratel.com/" />
+<meta property="og:site_name" content="BookRatel" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="MyBooksRating - a perfect place for a book lover!" />
-<meta name="twitter:image" content="https://mybooksrating.com/images/card.png" />
-<meta property="og:image" content="https://mybooksrating.com/images/card.png" />
-<meta property="og:image:secure_url" content="https://mybooksrating.com/images/card.png" />
+<meta name="twitter:title" content="BookRatel - a perfect place for a book lover!" />
+<meta name="twitter:image" content="https://bookratel.com/images/card.png" />
+<meta property="og:image" content="https://bookratel.com/images/card.png" />
+<meta property="og:image:secure_url" content="https://bookratel.com/images/card.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:description" content="Explore book ratings and reviews from other people, rate books by yourself and find your next book to read." />
 {{ end }}

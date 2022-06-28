@@ -17,6 +17,7 @@ import (
 
 var once sync.Once
 var booksApiService *books.Service
+var mutex sync.Mutex
 
 type BooksApi struct {
 	svc *books.Service
@@ -52,10 +53,22 @@ func (api *BooksApi) SearchBooks(q string) *books.Volumes {
 }
 
 func (api *BooksApi) SearchNewBooks(q string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(q).LangRestrict("en").OrderBy("newest").MaxResults(30).Do()
+	volumes, err := api.svc.Volumes.List(q).LangRestrict("en").PrintType("BOOKS").OrderBy("newest").MaxResults(30).Do()
 	if err != nil {
 		log.Println(err)
 	}
+	mutex.Lock()
+	unique := make(map[string]bool)
+	var vol []*books.Volume
+	defer mutex.Unlock()
+	for _, val := range volumes.Items {
+		if _, ok := unique[val.VolumeInfo.Title]; !ok {
+			vol = append(vol, val)
+			unique[val.VolumeInfo.Title] = true
+		}
+	}
+	volumes.Items = vol
+
 	return volumes
 }
 

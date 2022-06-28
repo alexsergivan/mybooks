@@ -105,9 +105,15 @@ func ProfilePage(db *gorm.DB, storage *gormstore.Store, booksApi *book.BooksApi)
 				"avRate":               int(userbook.GetAverageRatingByUser(int64(nId), db)),
 				"positiveRatingsCount": userbook.GePositiveBookRatingsFromUserCount(int64(nId), db),
 				"negativeRatingsCount": userbook.GeNegativeBookRatingsFromUserCount(int64(nId), db),
-				"readingQueue":         userbook.GetUserBookShelfBySlug(db, int64(nId), readingQueueSlug),
+				"readingQueue":         userbook.GetUserBookShelfBySlug(db, int64(nId), ReadingQueueSlug),
 			})
 		}
 		return c.Redirect(http.StatusSeeOther, "/")
+	}
+}
+
+func DeleteUserPage(db *gorm.DB, storage *gormstore.Store) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.Render(http.StatusOK, "user--delete", map[string]interface{}{})
 	}
 }

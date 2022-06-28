@@ -3,8 +3,8 @@
 
 {{ define "content" }}
     <div class="container p-1 md:p-10">
-        <nav class="text-mbrbrown mb-8" aria-label="Breadcrumb">
-            <ol class="list-none p-0 inline-flex">
+        <nav class="text-purple-100 mb-8" aria-label="Breadcrumb">
+            <ol class="list-none p-0 inline-flex text-cerise-300">
                 <li class="flex items-center">
                     <a href="/">Home</a>
                     <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
@@ -18,16 +18,18 @@
                     <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
                 </li>
                 <li>
-                    <span class="text-gray-600" aria-current="page">{{ $.bookShelf.Name }}</span>
+                    <span class="text-purple-200" aria-current="page">{{ $.bookShelf.Name }}</span>
                 </li>
             </ol>
         </nav>
 
+
+        <div class="bg-purple-800 pt-5 rounded-t-lg mt-5 p-5">
         <div class="flex flex-wrap content-center mt-2 mb-5">
-        <h2 class="text-2xl font-bold font-sanchez text-white bg-mbrblue inline-block p-2 rounded-lg bg-opacity-25 ml-0 md:-ml-3">Bookshelf "{{ $.bookShelf.Name }}"</h2>
+        <h2 class="text-2xl font-bold font-sanchez text-purple-100 inline-block p-2 ml-0 md:-ml-3">Bookshelf "{{ $.bookShelf.Name }}"</h2>
         {{ if $.ownPage }}
             <a href="{{ call $.reverse `editBookshelf` $.bookShelf.Slug }}" class="tooltip self-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 text-purple-100" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                     <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
                 </svg>
@@ -36,12 +38,13 @@
             </a>
         {{ end }}
         </div>
-        <p class="ml-2 mb-2 -mt-2 text-gray-600">{{ $.bookShelf.Description }}</p>
+        <p class="ml-2 mb-2 -mt-2 text-purple-100">{{ $.bookShelf.Description }}</p>
         <div class="w-full flex flex-col items-center">
 
                 {{ template "bookshelf" args "books" $.bookShelf.UserBooks "ownPage" $.ownPage  "slug" $.bookShelf.Slug }}
 
         </div>
+    </div>
     </div>
 {{ end }}
 
@@ -49,7 +52,7 @@
     <meta name="description" content="Bookshelf {{ $.bookShelf.Name }} created by {{ $.bookShelf.User.Name }}. There many good books to read!"/>
 
     <meta property="og:title" content="Bookshelf {{ $.bookShelf.Name }} by {{ $.bookShelf.User.Name }}">
-    <meta property="og:site_name" content="MyBooksRating">
+    <meta property="og:site_name" content="BookRatel">
     <meta property="og:type" content="profile">
     <meta property="og:locale" content="en_US">
 
