@@ -263,14 +263,17 @@
         }
             {{ end }}
         ],
+        {{ if (gt $.rateCount 0) }}
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "{{ $.stars }}",
             "ratingCount": "{{ $.rateCount }}"
         }
+        {{ end }}
     }
 </script>
 
+{{ if (gt $.rateCount 0) }}
 <script type="application/ld+json">
     {
         "@context": "https://schema.org/",
@@ -297,7 +300,7 @@
         "ratingCount": "{{ $.rateCount }}"
     }
 </script>
-
+{{ end }}
 
 <script type="application/ld+json">
     {
@@ -321,11 +324,13 @@
             "isbn": "00000000",
             "name": "{{ $.book.Title }}",
             "publisher": "",
+            {{ if (gt $.rateCount 0) }}
             "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "{{ $.stars }}",
                 "ratingCount": "{{ $.rateCount }}"
             }
+            {{ end }}
         }
     }
 </script>
