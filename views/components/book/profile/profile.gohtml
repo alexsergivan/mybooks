@@ -238,15 +238,8 @@
         "mpn": "{{ $.book.ID }}",
         "image": "{{ $img }}",
         "name": "{{ $.book.Title }}",
-        "offers": {
-             "@type": "Offer",
-             "url": "https://www.amazon.com/gp/search?ie=UTF8&tag=tavelbooks-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}",
-             "priceCurrency": "USD",
-             "price": "9.99",
-             "priceValidUntil": "2030-11-20",
-             "itemCondition": "https://schema.org/NewCondition",
-             "availability": "https://schema.org/InStock"
-        },
+         {{ $rc := 1 }}
+         {{ if gt (len $.ratings) 0 }}
         "review": [
             {{ range $.ratings }}
             {
@@ -260,16 +253,34 @@
                 "name": "{{ .User.Name }}"
             },
             "reviewBody": "{{ .Comment }}"
-        }
+
+            {{ if eq $rc $.rateCount }}
+               }
+            {{ else }}
+               {{ $rc = add 1 $rc }}
+               },
+            {{ end }}
+
             {{ end }}
         ],
+        {{ end }}
         {{ if (gt $.rateCount 0) }}
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "{{ $.stars }}",
             "ratingCount": "{{ $.rateCount }}"
-        }
+        },
         {{ end }}
+        "offers": {
+             "@type": "Offer",
+             "url": "https://www.amazon.com/gp/search?ie=UTF8&tag=tavelbooks-20&linkCode=ur2&linkId=46039fe93eae5a7b363e2fa0ef0f3747&camp=1789&creative=9325&index=books&keywords={{ $.book.Title }}",
+             "priceCurrency": "USD",
+             "price": "9.99",
+             "priceValidUntil": "2030-11-20",
+             "itemCondition": "https://schema.org/NewCondition",
+             "availability": "https://schema.org/InStock"
+        }
+
     }
 </script>
 
@@ -323,14 +334,15 @@
             "inLanguage": "English",
             "isbn": "00000000",
             "name": "{{ $.book.Title }}",
-            "publisher": "",
             {{ if (gt $.rateCount 0) }}
             "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "{{ $.stars }}",
                 "ratingCount": "{{ $.rateCount }}"
-            }
+            },
             {{ end }}
+            "publisher": ""
+
         }
     }
 </script>
