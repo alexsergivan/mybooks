@@ -316,7 +316,7 @@ func BookCategory(c echo.Context, category string) func(db *gorm.DB) *gorm.DB {
 func getBookFromApi(c echo.Context, bookID string, bookApiService *book.BooksApi) (userbook.Book, error) {
 	bookFromApi, err := bookApiService.GetBook(bookID)
 	if err != nil {
-		flash.SetFlashMessage(c, flash.MessageTypeError, `Please try to select a book again`)
+		//flash.SetFlashMessage(c, flash.MessageTypeError, `Please try to select a book again`)
 		return userbook.Book{}, c.Redirect(http.StatusSeeOther, c.Echo().Reverse("home"))
 	}
 
