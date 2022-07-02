@@ -1126,10 +1126,6 @@ video {
   align-content: center;
 }
 
-.content-end {
-  align-content: flex-end;
-}
-
 .items-center {
   align-items: center;
 }
@@ -1628,7 +1624,7 @@ video {
 }
 
 .font-sanchez {
-  font-family: "Sanchez", serif;
+  font-family: "Amaranth", serif;
 }
 
 .text-2xl {

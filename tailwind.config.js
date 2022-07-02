@@ -139,7 +139,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sanchez: ['"Sanchez"', 'serif']
+        sanchez: ['"Amaranth"', 'serif']
       }
     },
   },
