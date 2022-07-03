@@ -328,11 +328,17 @@
         "mainEntity":{
             "@type": "Book",
             "author": [
+                {{ $au := 1 }}
                 {{ range $k, $author := $.book.Authors }}
                 {
                 "@type": "Person",
                 "name": "{{ $author.Name }}"
-               }
+                 {{ if eq (len $.book.Authors) $au }}
+                  }
+                {{ else }}
+                  },
+                  {{ $au = add $au 1 }}
+                {{ end }}
                 {{ end }}
             ],
             "bookFormat": "http://schema.org/EBook",
