@@ -2380,11 +2380,6 @@ body  .light.cookie-consent-preferences-overlay .cookie-consent-preferences-dial
   background-color: rgb(60 20 19 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-mbrblue:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(130 167 191 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-coral-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(98 31 32 / var(--tw-bg-opacity));
@@ -2398,6 +2393,11 @@ body  .light.cookie-consent-preferences-overlay .cookie-consent-preferences-dial
 .hover\:bg-purple-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(96 50 137 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-mbrblue:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(130 167 191 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-purple-600:hover {
