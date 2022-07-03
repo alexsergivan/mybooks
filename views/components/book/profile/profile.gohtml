@@ -285,6 +285,7 @@
 </script>
 
 {{ if (gt $.rateCount 0) }}
+{{ $a := 1 }}
 <script type="application/ld+json">
     {
         "@context": "https://schema.org/",
@@ -298,7 +299,13 @@
                 {
                     "@type": "Person",
                     "name": "{{ $author.Name }}"
-                }
+
+                {{ if eq (len $.book.Authors) $a }}
+                  }
+                {{ else }}
+                  },
+                  {{ $a = add $a 1 }}
+                {{ end }}
                 {{ end }}
             ],
             "bookFormat": "http://schema.org/EBook",
