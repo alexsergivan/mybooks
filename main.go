@@ -112,6 +112,7 @@ func main() {
 	apiGroup.GET("/books/search", book.BooksAutocomplete(booksApiService))
 
 	e.GET("/books", resolvers.BooksPage(db, store, booksApiService)).Name = "books"
+	e.GET("/new-books", resolvers.NewBooksPage()).Name = "newBooks"
 	e.GET("/books/search", resolvers.BooksSearchAutocomplete(db, store))
 
 	s := &http.Server{

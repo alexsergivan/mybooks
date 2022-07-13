@@ -59,7 +59,7 @@
        <!-- End Cookie Consent by https://www.CookieConsent.com -->
    </head>
    {{ template "menu" . }}
-   <body class="flex flex-col h-full backgr">
+   <body x-data="{ focus: false }"  class="flex flex-col h-full backgr" x-bind:class="focus ? 'focus' : ''">
      {{ template "header" . }}
 
      <main class="w-full min-h-screen bg-purple-900">

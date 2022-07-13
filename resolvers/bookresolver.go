@@ -231,6 +231,16 @@ func SaveBookFromAPI(c echo.Context, id string, bookApiService *book.BooksApi, d
 	return nil
 }
 
+func NewBooksPage() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.Render(http.StatusOK, "books--new-books", map[string]interface{}{
+			"books":    []userbook.Book{},
+			"nextPage": nil,
+			"topic":    "",
+		})
+	}
+}
+
 func BooksPage(db *gorm.DB, storage *gormstore.Store, bookApiService *book.BooksApi) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// New books about something.

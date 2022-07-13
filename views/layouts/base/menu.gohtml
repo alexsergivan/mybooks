@@ -23,9 +23,10 @@
                 </div>
                 <div class="hidden sm:block sm:ml-6">
                     <div class="flex space-x-4">
-                        <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Rate a book</a>
                         <a href="/about" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="/books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Explore all books</a>
+                        <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Rate a book</a>
+                        <a href="/new-books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Newly published books</a>
+                        <a href="/books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-sm font-medium">Explore books</a>
                     </div>
                 </div>
             </div>
@@ -77,9 +78,10 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu" x-show="mobopen">
         <div class="px-2 pt-2 pb-3 space-y-1">
-            <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-base font-medium">Rate a book</a>
             <a href="/about" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 block px-3 py-2 rounded-md text-base font-medium">About</a>
-            <a href="/books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 block px-3 py-2 rounded-md text-base font-medium">Explore all books</a>
+            <a href="{{ call $.reverse "rateBook" }}" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 px-3 py-2 rounded-md text-base font-medium">Rate a book</a>
+            <a href="/new-books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 block px-3 py-2 rounded-md text-base font-medium">Newly published books</a>
+            <a href="/books" class="hover:bg-cerise-800 hover:text-cerise-100 text-purple-100 block px-3 py-2 rounded-md text-base font-medium">Explore books</a>
         </div>
     </div>
 </nav>

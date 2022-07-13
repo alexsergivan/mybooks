@@ -7,8 +7,38 @@
         <div class="col-span-12">
             <div class="px-2 md:px-0 md:mx-auto max-w-lg md:max-w-2xl h-auto">
 
-                <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mb-5">Explore newly published books about <span class="font-bold">{{ $.topic }}</span> below👇</h2>
+                <div class="mb-5 justify-center md:justify-start">
+                    <p class="text-purple-100 text-base leading-relaxed mt-8 mb-5 font-light text-xl">
+                        Search for the newly published books by topics <span class="text-lg">👇</span>
+                    </p>
+                    <form action="/books" class="block w-full">
+                        <div class="bg-purple-700 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-200">
+                            <div class="outline-none focus:outline-none text-purple-100 pr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </div>
+                            <input type="search" value="{{ $.topic }}" name="new-about" id="new-about" placeholder="Type a book topic here. I.e 'time travel' " class="w-full text-sm outline-none focus:outline-none bg-transparent text-purple-100 placeholder-purple-100"><button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md font-semibold text-cerise-800 bg-purple-200 hover:bg-purple-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit" method="GET">Explore</button></div>
+
+                    </form>
+                    <div class="mt-2">
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Metaverse" title="New books about Metaverse" href="/books?new-about=metaverse">Metaverse</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Time Travel" title="New books about Time Travel" href="/books?new-about=time travel">Time Travel</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Psychology" title="New books about Psychology" href="/books?new-about=psychology">Psychology</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Mental Health" title="New books about Mental Health" href="/books?new-about=Mental Health">Mental Health</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Love" title="New books about Love" href="/books?new-about=love">Love</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about History" title="New books about History" href="/books?new-about=history">History</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Sports" title="New books about Sports" href="/books?new-about=sports">Sports</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Politics" title="New books about Politics" href="/books?new-about=politics">Politics</a>
+                        <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Ukraine" title="New books about Ukraine" href="/books?new-about=ukraine">Ukraine</a>
+
+                    </div>
+
+                </div>
+
                 {{ if (gt (len $.books) 0) }}
+                <h2 class="text-2xl font-bold font-sanchez text-purple-100 ml-3 mb-5">Newly published books about <span class="font-bold">{{ $.topic }}</span> below👇</h2>
+
                     <div class="pagecontainer">
                         {{ range $.books }}
 

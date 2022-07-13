@@ -45,7 +45,7 @@ func NewBooksApiService() *BooksApi {
 }
 
 func (api *BooksApi) SearchBooks(q string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(q).LangRestrict("en").MaxResults(30).Do()
+	volumes, err := api.svc.Volumes.List(q).LangRestrict("en").PrintType("BOOKS").OrderBy("relevance").MaxResults(30).Do()
 	if err != nil {
 		log.Println(err)
 	}
@@ -73,7 +73,7 @@ func (api *BooksApi) SearchNewBooks(q string) *books.Volumes {
 }
 
 func (api *BooksApi) SearchBooksByCategory(category string) *books.Volumes {
-	volumes, err := api.svc.Volumes.List(`subject:"` + category + `"`).LangRestrict("en").OrderBy("newest").MaxResults(10).Do()
+	volumes, err := api.svc.Volumes.List(`subject:"` + category + `"`).LangRestrict("en").PrintType("BOOKS").OrderBy("newest").MaxResults(10).Do()
 	if err != nil {
 		log.Println(err)
 	}

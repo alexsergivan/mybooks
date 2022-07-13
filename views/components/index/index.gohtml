@@ -7,37 +7,26 @@
 
       <!-- hero text -->
       <div class="hero-text col-span-7">
-        <h1 class=" font-bold text-4xl md:text-5xl max-w-full text-purple-100 leading-relaxed font-sanchez">This is the perfect place to share your reading experience and find recommendations for your next great read.</h1>
+        <h1 class="font-bold text-4xl md:text-5xl max-w-full text-purple-100 leading-relaxed font-sanchez">This is the perfect place to share your reading experience and find recommendations for your next great read.</h1>
         <div class="mt-6 justify-center md:justify-start">
           <p class="text-purple-100 text-base leading-relaxed mt-8 mb-5 font-light text-xl">
-            Also, you can just explore newly published books on interesting for you topics. Just try it below <span class="text-lg">👇</span>
+            Simply start searching your favorite book <span class="text-lg">👇</span>
           </p>
-          <form action="/books" class="block w-full">
-            <div class="bg-purple-700 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-200">
-              <div class="outline-none focus:outline-none text-purple-100 pr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <input type="search" name="new-about" id="new-about" placeholder="Type a book topic here. I.e 'time travel' " class="w-full text-sm outline-none focus:outline-none bg-transparent text-purple-100 placeholder-purple-100"><button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md font-semibold text-cerise-800 bg-purple-200 hover:bg-purple-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit" method="GET">Explore</button></div>
-
-          </form>
-          <div class="mt-2">
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Metaverse" title="New books about Metaverse" href="/books?new-about=metaverse">Metaverse</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Time Travel" title="New books about Time Travel" href="/books?new-about=time travel">Time Travel</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Psychology" title="New books about Psychology" href="/books?new-about=psychology">Psychology</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Mental Health" title="New books about Mental Health" href="/books?new-about=Mental Health">Mental Health</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Love" title="New books about Love" href="/books?new-about=love">Love</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about History" title="New books about History" href="/books?new-about=history">History</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Sports" title="New books about Sports" href="/books?new-about=sports">Sports</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Politics" title="New books about Politics" href="/books?new-about=politics">Politics</a>
-            <a class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block" alt="New books about Ukraine" title="New books about Ukraine" href="/books?new-about=ukraine">Ukraine</a>
-
+          <div class="flex flex-col text-sm text-purple-100 relative z-50">
+            <div class="bg-purple-700 rounded-xl flex items-center w-full p-3 shadow-sm border border-purple-200 h-16">
+              <div class="outline-none focus:outline-none"><svg class=" w-5 text-purple-100 h-5 cursor-pointer mr-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
+              <input autocomplete="off" x-on:focus="focus = true" x-on:blur="focus = false" type="search" name="" id="autoComplete" placeholder="search for books" class="w-full text-sm outline-none focus:outline-none bg-transparent text-purple-100 placeholder-purple-200">
+            </div>
+            <div id="status" class="mt-5 absolute -top-20 z-50 self-center"></div>
+            <div class="selection"></div>
+            <input id="bookID" name="bookID" type="hidden" value="{{ $.bookID }}" required="required">
           </div>
 
         </div>
         <p class="text-purple-100 text-base leading-relaxed mt-8 font-light text-xl">Moreover, you can create your virtual bookshelves, manage your reading queue. Enjoy personalised book recommendations and read your next favorite book! 😉 </p>
-
+        <a href="/about#book-rating" title="Unique book rating concept" alt="Unique book rating concept" class="mr-2 py-1 text-cerise-300 mt-2 font-bold border-b border-dashed border-cerise-300 inline-block">Read about our unique book rating concept <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg></a>
       </div>
 
       <!-- hero image -->
@@ -181,8 +170,14 @@
 <meta property="og:image:secure_url" content="https://bookratel.com/images/card.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:description" content="Explore book ratings and reviews from other people, rate books by yourself and find your next book to read." />
+
+<link rel="stylesheet" href="/libs/autocomplete/autoComplete.min.css">
+<script src="/libs/autocomplete/autoComplete.min.js"></script>
+<script defer src="/js/booksAutocompleteHome.js"></script>
 {{ end }}
 
 {{ define "title" }}
   Book ratings and reviews - Find out which book to read next
 {{ end }}
+
+<span class="w-96 top-20 max-h-24 min-h-24 w-2/3 lg:w-2/3"></span>
