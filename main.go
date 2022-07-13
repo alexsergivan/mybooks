@@ -108,7 +108,7 @@ func main() {
 	bookGroup := e.Group("/book")
 	bookGroup.GET("/:id", resolvers.BookProfilePage(db, store, booksApiService)).Name = "bookProfile"
 
-	apiGroup := e.Group("/api", auth.IsAuthMiddleware())
+	apiGroup := e.Group("/api")
 	apiGroup.GET("/books/search", book.BooksAutocomplete(booksApiService))
 
 	e.GET("/books", resolvers.BooksPage(db, store, booksApiService)).Name = "books"
