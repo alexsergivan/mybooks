@@ -120,7 +120,7 @@ func ConvertFromVolumeToAutocompleteItem(volume *books.Volume) *AutocompleteBook
 
 	thumb := ""
 	if volume.VolumeInfo.ImageLinks != nil {
-		thumb = volume.VolumeInfo.ImageLinks.SmallThumbnail
+		thumb = volume.VolumeInfo.ImageLinks.Thumbnail
 	}
 	return &AutocompleteBookItem{
 		Title:      volume.VolumeInfo.Title,
@@ -128,7 +128,7 @@ func ConvertFromVolumeToAutocompleteItem(volume *books.Volume) *AutocompleteBook
 		GoogleID:   volume.Id,
 		Authors:    strings.Join(volume.VolumeInfo.Authors, ","),
 		Categories: volume.VolumeInfo.Categories,
-		Thumbnail:  thumb,
+		Thumbnail:  strings.Replace(thumb, "http://", "https://", 1),
 	}
 
 }
